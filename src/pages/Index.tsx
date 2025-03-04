@@ -32,7 +32,7 @@ const Index = () => {
     {
       icon: <BookOpen className="w-10 h-10 text-accent" />,
       title: 'Exclusive Titles',
-      description: 'Enjoy exclusive audiobooks and original productions you won't find anywhere else.'
+      description: "Enjoy exclusive audiobooks and original productions you won't find anywhere else."
     }
   ];
 
