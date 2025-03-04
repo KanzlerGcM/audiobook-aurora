@@ -48,7 +48,7 @@ const Index = () => {
             <div className={`text-center max-w-3xl mx-auto mb-12 ${isLoaded ? 'animate-fade-in' : 'opacity-0'}`}>
               <h2 className="text-2xl md:text-3xl font-bold mb-4">Immerse Yourself in Stories</h2>
               <p className="text-lg text-foreground/70">
-                Aurora brings stories to life with immersive audiobook experiences that transport you to new worlds.
+                Hakim brings stories to life with immersive audiobook experiences that transport you to new worlds.
               </p>
             </div>
             

@@ -10,10 +10,10 @@ const Footer = () => {
           <div>
             <Link to="/" className="flex items-center space-x-2 mb-4">
               <BookAudio className="h-7 w-7 text-accent" />
-              <span className="font-medium text-xl">Aurora</span>
+              <span className="font-medium text-xl">Hakim</span>
             </Link>
             <p className="text-foreground/70 mb-6 max-w-md">
-              Immerse yourself in stories with Aurora, where every audiobook brings a new world to your ears.
+              Immerse yourself in stories with Hakim, where every audiobook brings a new world to your ears.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="w-10 h-10 rounded-full bg-foreground/5 flex items-center justify-center text-foreground/70 hover:bg-accent hover:text-white transition-all">
@@ -61,13 +61,13 @@ const Footer = () => {
         
         <div className="border-t border-foreground/10 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-foreground/60 text-sm mb-4 md:mb-0">
-            © {new Date().getFullYear()} Aurora. All rights reserved.
+            © {new Date().getFullYear()} Hakim. All rights reserved.
           </p>
           
           <div className="flex items-center">
-            <a href="mailto:info@aurora-audiobooks.com" className="text-sm text-foreground/60 hover:text-accent flex items-center">
+            <a href="mailto:info@hakim-audiobooks.com" className="text-sm text-foreground/60 hover:text-accent flex items-center">
               <Mail className="w-4 h-4 mr-2" />
-              info@aurora-audiobooks.com
+              info@hakim-audiobooks.com
             </a>
           </div>
         </div>

@@ -47,7 +47,7 @@ const Navbar = () => {
             onClick={closeMobileMenu}
           >
             <BookAudio className="h-8 w-8 text-accent" />
-            <span className="font-medium text-xl">Aurora</span>
+            <span className="font-medium text-xl">Hakim</span>
           </Link>
 
           {/* Desktop Navigation */}
