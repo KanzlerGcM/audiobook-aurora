@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Search, Menu, X, BookAudio, User } from 'lucide-react';
+import { Search, Menu, X, Headphones, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const Navbar = () => {
@@ -46,7 +46,9 @@ const Navbar = () => {
             className="flex items-center space-x-2"
             onClick={closeMobileMenu}
           >
-            <BookAudio className="h-8 w-8 text-accent" />
+            <div className="w-8 h-8 rounded-full bg-accent flex items-center justify-center">
+              <Headphones className="h-4 w-4 text-white" />
+            </div>
             <span className="font-medium text-xl">Hakim</span>
           </Link>
 
