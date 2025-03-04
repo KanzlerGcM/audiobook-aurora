@@ -46,10 +46,10 @@ const Navbar = () => {
             className="flex items-center space-x-2"
             onClick={closeMobileMenu}
           >
-            <div className="w-8 h-8 rounded-full bg-accent flex items-center justify-center">
-              <Headphones className="h-4 w-4 text-white" />
+            <div className="w-8 h-8 rounded-md bg-hakim-medium flex items-center justify-center">
+              <Headphones className="h-4 w-4 text-hakim-darkest" />
             </div>
-            <span className="font-medium text-xl">Hakim</span>
+            <span className="font-medium text-xl text-hakim-light">Hakim</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -58,10 +58,10 @@ const Navbar = () => {
               <Link
                 key={link.name}
                 to={link.path}
-                className={`text-sm transition-smooth hover:text-accent ${
+                className={`text-sm transition-smooth hover:text-hakim-light ${
                   location.pathname === link.path 
-                    ? 'text-accent font-medium' 
-                    : 'text-foreground/80'
+                    ? 'text-hakim-light font-medium' 
+                    : 'text-hakim-gray'
                 }`}
               >
                 {link.name}
@@ -71,20 +71,20 @@ const Navbar = () => {
 
           {/* Search and Account */}
           <div className="hidden md:flex items-center space-x-4">
-            <Button variant="ghost" size="icon" className="text-foreground/80 hover:text-accent">
+            <Button variant="ghost" size="icon" className="text-hakim-gray hover:text-hakim-light">
               <Search className="h-5 w-5" />
             </Button>
-            <Button variant="ghost" size="icon" className="text-foreground/80 hover:text-accent">
+            <Button variant="ghost" size="icon" className="text-hakim-gray hover:text-hakim-light">
               <User className="h-5 w-5" />
             </Button>
-            <Button variant="default" className="bg-accent hover:bg-accent/90">
+            <Button variant="default" className="bg-hakim-medium hover:bg-hakim-gray text-white">
               Sign In
             </Button>
           </div>
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden text-foreground/80 hover:text-accent"
+            className="md:hidden text-hakim-gray hover:text-hakim-light"
             onClick={toggleMobileMenu}
             aria-label="Toggle mobile menu"
           >
@@ -95,7 +95,7 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 right-0 glass animate-slide-up border-t border-white/10 shadow-sm">
+        <div className="md:hidden absolute top-full left-0 right-0 glass animate-slide-up border-t border-hakim-medium/10 shadow-sm">
           <div className="container mx-auto py-4 px-6 flex flex-col space-y-4">
             {navLinks.map((link) => (
               <Link
@@ -103,8 +103,8 @@ const Navbar = () => {
                 to={link.path}
                 className={`py-2 transition-smooth ${
                   location.pathname === link.path 
-                    ? 'text-accent font-medium' 
-                    : 'text-foreground/80'
+                    ? 'text-hakim-light font-medium' 
+                    : 'text-hakim-gray'
                 }`}
                 onClick={closeMobileMenu}
               >
@@ -112,13 +112,13 @@ const Navbar = () => {
               </Link>
             ))}
             <div className="flex items-center space-x-4 pt-2">
-              <Button variant="ghost" size="icon" className="text-foreground/80">
+              <Button variant="ghost" size="icon" className="text-hakim-gray">
                 <Search className="h-5 w-5" />
               </Button>
-              <Button variant="ghost" size="icon" className="text-foreground/80">
+              <Button variant="ghost" size="icon" className="text-hakim-gray">
                 <User className="h-5 w-5" />
               </Button>
-              <Button variant="default" className="bg-accent hover:bg-accent/90 w-full">
+              <Button variant="default" className="bg-hakim-medium hover:bg-hakim-gray text-white w-full">
                 Sign In
               </Button>
             </div>
