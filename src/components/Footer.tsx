@@ -1,6 +1,7 @@
 
-import { Headphones, Mail, Instagram, Twitter, Facebook } from 'lucide-react';
+import { Mail, Instagram, Twitter, Facebook } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import Logo from './Logo';
 
 const Footer = () => {
   return (
@@ -8,12 +9,9 @@ const Footer = () => {
       <div className="container mx-auto px-4 md:px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           <div>
-            <Link to="/" className="flex items-center space-x-2 mb-4">
-              <div className="w-7 h-7 rounded-md bg-hakim-medium flex items-center justify-center">
-                <Headphones className="h-3.5 w-3.5 text-hakim-darkest" />
-              </div>
-              <span className="font-medium text-xl text-hakim-light">Hakim</span>
-            </Link>
+            <div className="mb-4">
+              <Logo size="md" />
+            </div>
             <p className="text-hakim-gray mb-6 max-w-md">
               Immerse yourself in stories with Hakim, where every audiobook brings a new world to your ears.
             </p>

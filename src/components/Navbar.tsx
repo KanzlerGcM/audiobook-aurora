@@ -1,8 +1,9 @@
 
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Search, Menu, X, Headphones, User } from 'lucide-react';
+import { Search, Menu, X, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import Logo from './Logo';
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -41,16 +42,9 @@ const Navbar = () => {
     >
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between">
-          <Link 
-            to="/" 
-            className="flex items-center space-x-2"
-            onClick={closeMobileMenu}
-          >
-            <div className="w-8 h-8 rounded-md bg-hakim-medium flex items-center justify-center">
-              <Headphones className="h-4 w-4 text-hakim-darkest" />
-            </div>
-            <span className="font-medium text-xl text-hakim-light">Hakim</span>
-          </Link>
+          <div onClick={closeMobileMenu}>
+            <Logo size={scrolled ? 'sm' : 'md'} />
+          </div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
