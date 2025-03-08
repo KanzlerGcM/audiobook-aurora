@@ -1,16 +1,27 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Search, Menu, X, User, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/context/LanguageContext';
 import TranslateButton from './TranslateButton';
 import Logo from './Logo';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [categoriesOpen, setCategoriesOpen] = useState(false);
   const location = useLocation();
   const { t } = useLanguage();
 
@@ -77,38 +88,46 @@ const Navbar = () => {
               </Link>
             ))}
             
-            {/* Categories Dropdown - Show on Hover */}
-            <div 
-              className="relative"
-              onMouseEnter={() => setCategoriesOpen(true)}
-              onMouseLeave={() => setCategoriesOpen(false)}
-            >
-              <button className="flex items-center space-x-1 text-sm text-hakim-gray hover:text-hakim-light transition-smooth">
-                <span>{t('categories')}</span>
-                <ChevronDown className="h-4 w-4" />
-              </button>
-              
-              {categoriesOpen && (
-                <div className="absolute left-0 top-full mt-1 w-56 bg-hakim-darkest border border-hakim-medium/20 rounded-md shadow-lg z-50 animate-fade-in py-1">
-                  {categories.map((category) => (
+            {/* Categories Dropdown using Radix UI */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="flex items-center space-x-1 text-sm text-hakim-gray hover:text-hakim-light transition-smooth">
+                  <span>{t('categories')}</span>
+                  <ChevronDown className="h-4 w-4" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent 
+                align="start"
+                className="w-56 bg-hakim-darkest border border-hakim-medium/20 rounded-md shadow-lg z-50 animate-fade-in py-1"
+              >
+                {categories.map((category) => (
+                  <DropdownMenuItem key={category.name} asChild>
                     <Link
-                      key={category.name}
                       to={category.path}
                       className="block px-4 py-2 text-hakim-light hover:bg-hakim-dark text-sm"
                     >
                       {category.name}
                     </Link>
-                  ))}
-                </div>
-              )}
-            </div>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
 
           {/* Search and Account */}
           <div className="hidden md:flex items-center space-x-4">
-            <Button variant="ghost" size="icon" className="text-hakim-gray hover:text-hakim-light">
-              <Search className="h-5 w-5" />
-            </Button>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button variant="ghost" size="icon" className="text-hakim-gray hover:text-hakim-light">
+                    <Search className="h-5 w-5" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{t('search')}</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
             <TranslateButton />
             <Link to="/login">
               <Button variant="outline" size="sm" className="text-hakim-light">
