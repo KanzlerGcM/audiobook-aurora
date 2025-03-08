@@ -62,34 +62,6 @@ const MobileNav = ({ isOpen, navLinks, categories, onClose }: MobileNavProps) =>
             </div>
           </div>
           
-          {/* Company section in Mobile Menu */}
-          <div className="py-2">
-            <div className="text-hakim-light font-medium mb-2">{t('company')}</div>
-            <div className="grid grid-cols-1 gap-2 pl-2">
-              <button
-                className="flex items-center gap-2 text-hakim-gray text-sm py-1 hover:text-hakim-light text-left"
-                onClick={() => openDialog('about')}
-              >
-                <Info className="h-4 w-4" />
-                <span>{t('aboutUs')}</span>
-              </button>
-              <button
-                className="flex items-center gap-2 text-hakim-gray text-sm py-1 hover:text-hakim-light text-left"
-                onClick={() => openDialog('contact')}
-              >
-                <Mail className="h-4 w-4" />
-                <span>{t('contact')}</span>
-              </button>
-              <button
-                className="flex items-center gap-2 text-hakim-gray text-sm py-1 hover:text-hakim-light text-left"
-                onClick={() => openDialog('blog')}
-              >
-                <BookOpen className="h-4 w-4" />
-                <span>{t('blog')}</span>
-              </button>
-            </div>
-          </div>
-          
           <div className="flex items-center gap-3 pt-2">
             <Button variant="ghost" size="icon" className="text-hakim-gray">
               <Search className="h-5 w-5" />
