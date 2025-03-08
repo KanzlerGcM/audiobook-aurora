@@ -24,7 +24,7 @@ const Logo: React.FC<LogoProps> = ({
     <Link to="/" className={`flex items-center space-x-2 ${className}`}>
       <div className="relative">
         <img 
-          src="/lovable-uploads/a00410c9-ed97-4156-97fb-29e98c9f2807.png" 
+          src="/lovable-uploads/cdfdd11b-29b6-4b6b-b3ff-ff4e4d925510.png" 
           alt="Hakim Logo" 
           className={`${sizeClasses[size]} w-auto object-contain transition-all duration-300 hover:opacity-90`}
         />
