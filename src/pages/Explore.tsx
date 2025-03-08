@@ -163,23 +163,25 @@ const Explore = () => {
         </div>
         
         <Tabs defaultValue="audiobooks" onValueChange={setActiveTab} className="w-full">
-          <TabsList className="mb-8 w-full justify-start overflow-x-auto bg-hakim-dark/20 p-1">
-            <TabsTrigger value="audiobooks" className="flex items-center gap-2">
-              <HeadphonesIcon className="h-4 w-4" />
-              <span>{t('audiobooks')}</span>
-            </TabsTrigger>
-            <TabsTrigger value="new-releases" className="flex items-center gap-2">
-              <Sparkles className="h-4 w-4" />
-              <span>{t('newReleases')}</span>
-            </TabsTrigger>
-            <TabsTrigger value="trending" className="flex items-center gap-2">
-              <BarChart className="h-4 w-4" />
-              <span>{t('trendingNow')}</span>
-            </TabsTrigger>
-          </TabsList>
+          <div className="overflow-x-auto pb-2">
+            <TabsList className="mb-8 w-full justify-start bg-hakim-dark/20 p-1">
+              <TabsTrigger value="audiobooks" className="flex items-center gap-2">
+                <HeadphonesIcon className="h-4 w-4" />
+                <span>{t('audiobooks')}</span>
+              </TabsTrigger>
+              <TabsTrigger value="new-releases" className="flex items-center gap-2">
+                <Sparkles className="h-4 w-4" />
+                <span>{t('newReleases')}</span>
+              </TabsTrigger>
+              <TabsTrigger value="trending" className="flex items-center gap-2">
+                <BarChart className="h-4 w-4" />
+                <span>{t('trendingNow')}</span>
+              </TabsTrigger>
+            </TabsList>
+          </div>
           
           <TabsContent value="audiobooks" className="mt-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
               <div className="md:col-span-1">
                 <BookList 
                   books={audiobooks} 
@@ -187,12 +189,14 @@ const Explore = () => {
                   onSelectBook={setSelectedAudiobook} 
                 />
               </div>
-              <BookDetails book={selectedAudiobook} />
+              <div className="md:col-span-2">
+                <BookDetails book={selectedAudiobook} />
+              </div>
             </div>
           </TabsContent>
 
           <TabsContent value="new-releases" className="mt-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
               <div className="md:col-span-1">
                 <BookList 
                   books={newReleases} 
@@ -200,12 +204,14 @@ const Explore = () => {
                   onSelectBook={setSelectedNewRelease} 
                 />
               </div>
-              <BookDetails book={selectedNewRelease} />
+              <div className="md:col-span-2">
+                <BookDetails book={selectedNewRelease} />
+              </div>
             </div>
           </TabsContent>
           
           <TabsContent value="trending" className="mt-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
               <div className="md:col-span-1">
                 <BookList 
                   books={trending} 
@@ -213,7 +219,9 @@ const Explore = () => {
                   onSelectBook={setSelectedTrending} 
                 />
               </div>
-              <BookDetails book={selectedTrending} />
+              <div className="md:col-span-2">
+                <BookDetails book={selectedTrending} />
+              </div>
             </div>
           </TabsContent>
         </Tabs>

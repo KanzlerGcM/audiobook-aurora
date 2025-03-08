@@ -11,7 +11,7 @@ interface BookListProps {
 
 const BookList = ({ books, selectedBook, onSelectBook }: BookListProps) => {
   return (
-    <ScrollArea className="h-[65vh] rounded-lg border border-hakim-medium/10 p-1">
+    <ScrollArea className="h-[60vh] md:h-[65vh] rounded-lg border border-hakim-medium/10 p-1">
       <div className="space-y-1 pr-3">
         {books.map((book, index) => (
           <BookListItem 
