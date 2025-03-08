@@ -1,10 +1,11 @@
 
-import { Star, Clock, Calendar, BookOpenText, ThumbsUp, ThumbsDown } from 'lucide-react';
+import { Star, Clock, Calendar, BookOpenText, ThumbsUp, ThumbsDown, Headphones } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Book } from "@/types/book";
 import { useLanguage } from "@/context/LanguageContext";
 import { useState } from 'react';
 import { toast } from 'sonner';
+import AudioPlayer from '@/components/AudioPlayer';
 
 interface BookDetailsProps {
   book: Book;
@@ -13,6 +14,7 @@ interface BookDetailsProps {
 const BookDetails = ({ book }: BookDetailsProps) => {
   const { t } = useLanguage();
   const [liked, setLiked] = useState<boolean | null>(null);
+  const [isPreviewPlaying, setIsPreviewPlaying] = useState(false);
 
   const handleLike = () => {
     if (liked === true) {
@@ -31,6 +33,13 @@ const BookDetails = ({ book }: BookDetailsProps) => {
     } else {
       setLiked(false);
       toast.error(`You disliked "${book.title}"`);
+    }
+  };
+
+  const togglePreview = () => {
+    setIsPreviewPlaying(!isPreviewPlaying);
+    if (!isPreviewPlaying) {
+      toast.info(`Playing preview for "${book.title}"`);
     }
   };
 
@@ -109,9 +118,28 @@ const BookDetails = ({ book }: BookDetailsProps) => {
             <Button variant="outline" className="gap-2">
               {t('addToLibrary')}
             </Button>
+            <Button 
+              variant="secondary" 
+              className="gap-2"
+              onClick={togglePreview}
+            >
+              <Headphones className="h-4 w-4" />
+              {isPreviewPlaying ? t('stopPreview') : t('preview')}
+            </Button>
           </div>
         </div>
       </div>
+      
+      {isPreviewPlaying && (
+        <div className="mt-6">
+          <AudioPlayer 
+            title={book.title}
+            author={book.author}
+            coverImage={book.coverImage}
+            miniPlayer={true}
+          />
+        </div>
+      )}
     </div>
   );
 };
