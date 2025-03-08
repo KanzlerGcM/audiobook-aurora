@@ -1,9 +1,15 @@
 
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Search, Menu, X, User } from 'lucide-react';
+import { Search, Menu, X, User, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Logo from './Logo';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -27,10 +33,22 @@ const Navbar = () => {
     setMobileMenuOpen(false);
   };
 
+  const categories = [
+    { name: 'Fiction', path: '/categories/fiction' },
+    { name: 'Non-Fiction', path: '/categories/non-fiction' },
+    { name: 'Mystery & Thriller', path: '/categories/mystery-thriller' },
+    { name: 'Science Fiction', path: '/categories/sci-fi' },
+    { name: 'Fantasy', path: '/categories/fantasy' },
+    { name: 'Biography', path: '/categories/biography' },
+    { name: 'History', path: '/categories/history' },
+    { name: 'Self-Help', path: '/categories/self-help' },
+    { name: 'Business', path: '/categories/business' },
+    { name: 'Cookbooks', path: '/categories/cookbooks' },
+  ];
+
   const navLinks = [
     { name: 'Home', path: '/' },
     { name: 'Explore', path: '/explore' },
-    { name: 'Categories', path: '/categories' },
     { name: 'New Releases', path: '/new-releases' }
   ];
 
@@ -61,6 +79,23 @@ const Navbar = () => {
                 {link.name}
               </Link>
             ))}
+            
+            {/* Categories Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="flex items-center space-x-1 text-sm text-hakim-gray hover:text-hakim-light transition-smooth">
+                  <span>Categories</span>
+                  <ChevronDown className="h-4 w-4" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="w-56 bg-hakim-darkest border border-hakim-medium/20">
+                {categories.map((category) => (
+                  <DropdownMenuItem key={category.name} asChild className="text-hakim-light hover:bg-hakim-dark">
+                    <Link to={category.path}>{category.name}</Link>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
 
           {/* Search and Account */}
@@ -105,6 +140,24 @@ const Navbar = () => {
                 {link.name}
               </Link>
             ))}
+            
+            {/* Categories in Mobile Menu */}
+            <div className="py-2">
+              <div className="text-hakim-light font-medium mb-2">Categories</div>
+              <div className="grid grid-cols-2 gap-2 pl-2">
+                {categories.map((category) => (
+                  <Link
+                    key={category.name}
+                    to={category.path}
+                    className="text-hakim-gray text-sm py-1 hover:text-hakim-light"
+                    onClick={closeMobileMenu}
+                  >
+                    {category.name}
+                  </Link>
+                ))}
+              </div>
+            </div>
+            
             <div className="flex items-center space-x-4 pt-2">
               <Button variant="ghost" size="icon" className="text-hakim-gray">
                 <Search className="h-5 w-5" />
