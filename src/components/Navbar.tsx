@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Search, Menu, X, User, ChevronDown } from 'lucide-react';
@@ -109,12 +110,16 @@ const Navbar = () => {
               <Search className="h-5 w-5" />
             </Button>
             <TranslateButton />
-            <Button variant="ghost" size="icon" className="text-hakim-gray hover:text-hakim-light">
-              <User className="h-5 w-5" />
-            </Button>
-            <Button variant="default" className="bg-hakim-medium hover:bg-hakim-gray text-white">
-              {t('signIn')}
-            </Button>
+            <Link to="/login">
+              <Button variant="outline" size="sm" className="text-hakim-light">
+                {t('signIn')}
+              </Button>
+            </Link>
+            <Link to="/signup">
+              <Button variant="default" size="sm" className="bg-hakim-medium hover:bg-hakim-gray text-white">
+                {t('signUp')}
+              </Button>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -164,17 +169,23 @@ const Navbar = () => {
               </div>
             </div>
             
-            <div className="flex items-center space-x-4 pt-2">
+            <div className="flex items-center gap-3 pt-2">
               <Button variant="ghost" size="icon" className="text-hakim-gray">
                 <Search className="h-5 w-5" />
               </Button>
               <TranslateButton />
-              <Button variant="ghost" size="icon" className="text-hakim-gray">
-                <User className="h-5 w-5" />
-              </Button>
-              <Button variant="default" className="bg-hakim-medium hover:bg-hakim-gray text-white w-full">
-                {t('signIn')}
-              </Button>
+              <div className="grid grid-cols-2 gap-2 flex-1">
+                <Link to="/login" className="w-full" onClick={closeMobileMenu}>
+                  <Button variant="outline" className="w-full">
+                    {t('signIn')}
+                  </Button>
+                </Link>
+                <Link to="/signup" className="w-full" onClick={closeMobileMenu}>
+                  <Button variant="default" className="w-full">
+                    {t('signUp')}
+                  </Button>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
