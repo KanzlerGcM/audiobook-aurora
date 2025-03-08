@@ -115,8 +115,6 @@ export const translations: TranslationMap = {
   'popularChoice': { en: 'Popular Choice', pt: 'Escolha Popular', es: 'Elección Popular' },
   'saveYearly': { en: 'Save 25% yearly', pt: 'Economize 25% anualmente', es: 'Ahorra 25% anualmente' },
   'audiobook': { en: 'audiobook', pt: 'audiolivro', es: 'audiolibro' },
-  'audiobooks': { en: 'audiobooks', pt: 'audiolivros', es: 'audiolibros' },
-  'audiobookCredits': { en: 'audiobook credits', pt: 'créditos de audiolivro', es: 'créditos de audiolibro' },
   
   // Genres (for book cards)
   'sci-fi': { en: 'Sci-Fi', pt: 'Ficção Científica', es: 'Ciencia Ficción' },
@@ -188,3 +186,4 @@ export const LanguageProvider = ({ children }: LanguageProviderProps) => {
     </LanguageContext.Provider>
   );
 };
+
