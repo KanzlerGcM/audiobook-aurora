@@ -1,5 +1,6 @@
-
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { translateWithDeepL } from '@/utils/deeplTranslator';
+import { toast } from 'sonner';
 
 type Language = 'en' | 'pt' | 'es';
 
@@ -100,7 +101,7 @@ export const translations: TranslationMap = {
   'smartBookmarks': { en: 'Smart Bookmarks', pt: 'Marcadores Inteligentes', es: 'Marcadores Inteligentes' },
   'continueExactly': { en: 'Continue exactly where you left off, with cloud syncing across all your devices.', pt: 'Continue exatamente de onde parou, com sincronização na nuvem em todos os seus dispositivos.', es: 'Continúa exactamente donde lo dejaste, con sincronización en la nube en todos tus dispositivos.' },
   'exclusiveTitles': { en: 'Exclusive Titles', pt: 'Títulos Exclusivos', es: 'Títulos Exclusivos' },
-  'enjoyExclusive': { en: "Enjoy exclusive audiobooks and original productions you won't find anywhere else.", pt: "Desfrute de audiolivros exclusivos e produções originais que você não encontrará em nenhum outro lugar.", es: "Disfruta de audiolibros exclusivos y producciones originales que no encontrarás en ningún otro lugar." },
+  'enjoyExclusive': { en: "Enjoy exclusive audiobooks and original productions you won't find anywhere else.", pt: "Desfrute de audiolivros exclusivos e produções originais que você não encontrará em nenhum outro lugar.", es: "Disfruta de audiolibros exclusivos y producciones originais que no encontrarás en ningún otro lugar." },
   
   // Subscription Section
   'startYourListening': { en: 'Start Your Listening Journey', pt: 'Comece Sua Jornada de Áudio', es: 'Comienza Tu Viaje de Escucha' },
@@ -141,6 +142,8 @@ interface LanguageContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
   t: (key: string) => string;
+  translateText: (text: string) => Promise<string>;
+  isTranslating: boolean;
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -163,6 +166,7 @@ export const LanguageProvider = ({ children }: LanguageProviderProps) => {
     const savedLanguage = localStorage.getItem('language');
     return (savedLanguage as Language) || 'en';
   });
+  const [isTranslating, setIsTranslating] = useState(false);
 
   // Save language to localStorage whenever it changes
   useEffect(() => {
@@ -171,7 +175,7 @@ export const LanguageProvider = ({ children }: LanguageProviderProps) => {
     document.documentElement.lang = language;
   }, [language]);
 
-  // Translation function
+  // Translation function using predefined translations
   const t = (key: string): string => {
     if (!translations[key]) {
       console.warn(`Translation key not found: ${key}`);
@@ -180,10 +184,28 @@ export const LanguageProvider = ({ children }: LanguageProviderProps) => {
     return translations[key][language];
   };
 
+  // Function to translate arbitrary text using DeepL API
+  const translateText = async (text: string): Promise<string> => {
+    if (language === 'en' || !text) {
+      return text;
+    }
+    
+    try {
+      setIsTranslating(true);
+      const result = await translateWithDeepL(text, language);
+      return result;
+    } catch (error) {
+      console.error('Translation error:', error);
+      toast.error('Translation failed. Using original text.');
+      return text;
+    } finally {
+      setIsTranslating(false);
+    }
+  };
+
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={{ language, setLanguage, t, translateText, isTranslating }}>
       {children}
     </LanguageContext.Provider>
   );
 };
-

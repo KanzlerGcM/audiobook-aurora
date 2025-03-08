@@ -9,9 +9,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { toast } from "sonner";
+import { cn } from '@/lib/utils';
 
 const TranslateButton = () => {
-  const { language, setLanguage } = useLanguage();
+  const { language, setLanguage, isTranslating } = useLanguage();
   
   const handleLanguageChange = (newLanguage: 'en' | 'pt' | 'es') => {
     setLanguage(newLanguage);
@@ -26,7 +27,14 @@ const TranslateButton = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" className="text-hakim-gray hover:text-hakim-light relative">
+        <Button 
+          variant="ghost" 
+          size="icon" 
+          className={cn(
+            "text-hakim-gray hover:text-hakim-light relative",
+            isTranslating && "animate-pulse"
+          )}
+        >
           <Globe className="h-5 w-5" />
           <span className="absolute -top-1 -right-1 text-xs font-bold bg-hakim-medium text-white w-4 h-4 flex items-center justify-center rounded-full">
             {language.toUpperCase()}
