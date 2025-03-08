@@ -1,7 +1,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Search, Menu, X, User, ChevronDown } from 'lucide-react';
+import { Search, Menu, X, User, ChevronDown, Info, Mail, BookOpen } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/context/LanguageContext';
 import TranslateButton from './TranslateButton';
