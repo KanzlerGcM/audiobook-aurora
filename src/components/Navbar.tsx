@@ -14,6 +14,7 @@ import {
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [categoriesOpen, setCategoriesOpen] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -80,22 +81,31 @@ const Navbar = () => {
               </Link>
             ))}
             
-            {/* Categories Dropdown */}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <button className="flex items-center space-x-1 text-sm text-hakim-gray hover:text-hakim-light transition-smooth">
-                  <span>Categories</span>
-                  <ChevronDown className="h-4 w-4" />
-                </button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="w-56 bg-hakim-darkest border border-hakim-medium/20">
-                {categories.map((category) => (
-                  <DropdownMenuItem key={category.name} asChild className="text-hakim-light hover:bg-hakim-dark">
-                    <Link to={category.path}>{category.name}</Link>
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
+            {/* Categories Dropdown - Show on Hover */}
+            <div 
+              className="relative"
+              onMouseEnter={() => setCategoriesOpen(true)}
+              onMouseLeave={() => setCategoriesOpen(false)}
+            >
+              <button className="flex items-center space-x-1 text-sm text-hakim-gray hover:text-hakim-light transition-smooth">
+                <span>Categories</span>
+                <ChevronDown className="h-4 w-4" />
+              </button>
+              
+              {categoriesOpen && (
+                <div className="absolute left-0 top-full mt-1 w-56 bg-hakim-darkest border border-hakim-medium/20 rounded-md shadow-lg z-50 animate-fade-in py-1">
+                  {categories.map((category) => (
+                    <Link
+                      key={category.name}
+                      to={category.path}
+                      className="block px-4 py-2 text-hakim-light hover:bg-hakim-dark text-sm"
+                    >
+                      {category.name}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Search and Account */}
