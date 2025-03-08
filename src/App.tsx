@@ -8,6 +8,7 @@ import { LanguageProvider } from "@/context/LanguageContext";
 import Index from "./pages/Index";
 import BookDetails from "./pages/BookDetails";
 import Explore from "./pages/Explore";
+import NewReleases from "./pages/NewReleases";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -23,6 +24,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/book/:id" element={<BookDetails />} />
             <Route path="/explore" element={<Explore />} />
+            <Route path="/new-releases" element={<NewReleases />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
