@@ -3,6 +3,7 @@ import { HeadphonesIcon, BarChart, BookOpenText, Star, Clock, Calendar, ChevronR
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import AudiobookCard from "@/components/AudiobookCard";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
@@ -179,36 +180,38 @@ const Explore = () => {
           
           <TabsContent value="audiobooks" className="mt-6">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* Left column with book list */}
+              {/* Left column with book list - now with ScrollArea */}
               <div className="md:col-span-1">
-                <div className="space-y-1">
-                  {audiobooks.map((book, index) => (
-                    <div key={book.id}>
-                      <div 
-                        className={`flex items-center p-3 rounded-lg cursor-pointer transition-all hover:bg-hakim-medium/10 ${selectedAudiobook.id === book.id ? 'bg-hakim-medium/10' : ''}`}
-                        onClick={() => setSelectedAudiobook(book)}
-                      >
-                        <img 
-                          src={book.coverImage} 
-                          alt={book.title} 
-                          className="w-16 h-24 object-cover rounded-md" 
-                        />
-                        <div className="ml-4 flex-1">
-                          <h3 className={`font-medium line-clamp-1 ${selectedAudiobook.id === book.id ? 'text-hakim-light' : 'text-foreground'}`}>
-                            {book.title}
-                          </h3>
-                          <p className="text-sm text-foreground/70">
-                            {book.author}
-                          </p>
+                <ScrollArea className="h-[65vh] rounded-lg border border-hakim-medium/10 p-1">
+                  <div className="space-y-1 pr-3">
+                    {audiobooks.map((book, index) => (
+                      <div key={book.id}>
+                        <div 
+                          className={`flex items-center p-3 rounded-lg cursor-pointer transition-all hover:bg-hakim-medium/10 ${selectedAudiobook.id === book.id ? 'bg-hakim-medium/10' : ''}`}
+                          onClick={() => setSelectedAudiobook(book)}
+                        >
+                          <img 
+                            src={book.coverImage} 
+                            alt={book.title} 
+                            className="w-16 h-24 object-cover rounded-md" 
+                          />
+                          <div className="ml-4 flex-1">
+                            <h3 className={`font-medium line-clamp-1 ${selectedAudiobook.id === book.id ? 'text-hakim-light' : 'text-foreground'}`}>
+                              {book.title}
+                            </h3>
+                            <p className="text-sm text-foreground/70">
+                              {book.author}
+                            </p>
+                          </div>
+                          <ChevronRight className={`w-5 h-5 ${selectedAudiobook.id === book.id ? 'text-hakim-light' : 'text-foreground/50'}`} />
                         </div>
-                        <ChevronRight className={`w-5 h-5 ${selectedAudiobook.id === book.id ? 'text-hakim-light' : 'text-foreground/50'}`} />
+                        {index < audiobooks.length - 1 && (
+                          <Separator className="my-1 bg-hakim-medium/10" />
+                        )}
                       </div>
-                      {index < audiobooks.length - 1 && (
-                        <Separator className="my-1 bg-hakim-medium/10" />
-                      )}
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </div>
+                </ScrollArea>
               </div>
               
               {/* Right column with book details */}
@@ -263,36 +266,38 @@ const Explore = () => {
 
           <TabsContent value="new-releases" className="mt-6">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* Left column with book list */}
+              {/* Left column with book list - now with ScrollArea */}
               <div className="md:col-span-1">
-                <div className="space-y-1">
-                  {newReleases.map((book, index) => (
-                    <div key={book.id}>
-                      <div 
-                        className={`flex items-center p-3 rounded-lg cursor-pointer transition-all hover:bg-hakim-medium/10 ${selectedNewRelease.id === book.id ? 'bg-hakim-medium/10' : ''}`}
-                        onClick={() => setSelectedNewRelease(book)}
-                      >
-                        <img 
-                          src={book.coverImage} 
-                          alt={book.title} 
-                          className="w-16 h-24 object-cover rounded-md" 
-                        />
-                        <div className="ml-4 flex-1">
-                          <h3 className={`font-medium line-clamp-1 ${selectedNewRelease.id === book.id ? 'text-hakim-light' : 'text-foreground'}`}>
-                            {book.title}
-                          </h3>
-                          <p className="text-sm text-foreground/70">
-                            {book.author}
-                          </p>
+                <ScrollArea className="h-[65vh] rounded-lg border border-hakim-medium/10 p-1">
+                  <div className="space-y-1 pr-3">
+                    {newReleases.map((book, index) => (
+                      <div key={book.id}>
+                        <div 
+                          className={`flex items-center p-3 rounded-lg cursor-pointer transition-all hover:bg-hakim-medium/10 ${selectedNewRelease.id === book.id ? 'bg-hakim-medium/10' : ''}`}
+                          onClick={() => setSelectedNewRelease(book)}
+                        >
+                          <img 
+                            src={book.coverImage} 
+                            alt={book.title} 
+                            className="w-16 h-24 object-cover rounded-md" 
+                          />
+                          <div className="ml-4 flex-1">
+                            <h3 className={`font-medium line-clamp-1 ${selectedNewRelease.id === book.id ? 'text-hakim-light' : 'text-foreground'}`}>
+                              {book.title}
+                            </h3>
+                            <p className="text-sm text-foreground/70">
+                              {book.author}
+                            </p>
+                          </div>
+                          <ChevronRight className={`w-5 h-5 ${selectedNewRelease.id === book.id ? 'text-hakim-light' : 'text-foreground/50'}`} />
                         </div>
-                        <ChevronRight className={`w-5 h-5 ${selectedNewRelease.id === book.id ? 'text-hakim-light' : 'text-foreground/50'}`} />
+                        {index < newReleases.length - 1 && (
+                          <Separator className="my-1 bg-hakim-medium/10" />
+                        )}
                       </div>
-                      {index < newReleases.length - 1 && (
-                        <Separator className="my-1 bg-hakim-medium/10" />
-                      )}
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </div>
+                </ScrollArea>
               </div>
               
               {/* Right column with book details */}
@@ -347,36 +352,38 @@ const Explore = () => {
           
           <TabsContent value="trending" className="mt-6">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* Left column with book list */}
+              {/* Left column with book list - now with ScrollArea */}
               <div className="md:col-span-1">
-                <div className="space-y-1">
-                  {trending.map((book, index) => (
-                    <div key={book.id}>
-                      <div 
-                        className={`flex items-center p-3 rounded-lg cursor-pointer transition-all hover:bg-hakim-medium/10 ${selectedTrending.id === book.id ? 'bg-hakim-medium/10' : ''}`}
-                        onClick={() => setSelectedTrending(book)}
-                      >
-                        <img 
-                          src={book.coverImage} 
-                          alt={book.title} 
-                          className="w-16 h-24 object-cover rounded-md" 
-                        />
-                        <div className="ml-4 flex-1">
-                          <h3 className={`font-medium line-clamp-1 ${selectedTrending.id === book.id ? 'text-hakim-light' : 'text-foreground'}`}>
-                            {book.title}
-                          </h3>
-                          <p className="text-sm text-foreground/70">
-                            {book.author}
-                          </p>
+                <ScrollArea className="h-[65vh] rounded-lg border border-hakim-medium/10 p-1">
+                  <div className="space-y-1 pr-3">
+                    {trending.map((book, index) => (
+                      <div key={book.id}>
+                        <div 
+                          className={`flex items-center p-3 rounded-lg cursor-pointer transition-all hover:bg-hakim-medium/10 ${selectedTrending.id === book.id ? 'bg-hakim-medium/10' : ''}`}
+                          onClick={() => setSelectedTrending(book)}
+                        >
+                          <img 
+                            src={book.coverImage} 
+                            alt={book.title} 
+                            className="w-16 h-24 object-cover rounded-md" 
+                          />
+                          <div className="ml-4 flex-1">
+                            <h3 className={`font-medium line-clamp-1 ${selectedTrending.id === book.id ? 'text-hakim-light' : 'text-foreground'}`}>
+                              {book.title}
+                            </h3>
+                            <p className="text-sm text-foreground/70">
+                              {book.author}
+                            </p>
+                          </div>
+                          <ChevronRight className={`w-5 h-5 ${selectedTrending.id === book.id ? 'text-hakim-light' : 'text-foreground/50'}`} />
                         </div>
-                        <ChevronRight className={`w-5 h-5 ${selectedTrending.id === book.id ? 'text-hakim-light' : 'text-foreground/50'}`} />
+                        {index < trending.length - 1 && (
+                          <Separator className="my-1 bg-hakim-medium/10" />
+                        )}
                       </div>
-                      {index < trending.length - 1 && (
-                        <Separator className="my-1 bg-hakim-medium/10" />
-                      )}
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </div>
+                </ScrollArea>
               </div>
               
               {/* Right column with book details */}
