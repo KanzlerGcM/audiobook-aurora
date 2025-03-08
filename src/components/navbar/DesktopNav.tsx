@@ -1,7 +1,6 @@
 
 import { Link, useLocation } from 'react-router-dom';
 import { useLanguage } from '@/context/LanguageContext';
-import { useState } from 'react';
 import CategoriesDropdown from './CategoriesDropdown';
 
 interface NavLinkProps {
@@ -30,7 +29,6 @@ interface DesktopNavProps {
 
 const DesktopNav = ({ navLinks, categories }: DesktopNavProps) => {
   const location = useLocation();
-  const [categoriesHover, setCategoriesHover] = useState(false);
   
   return (
     <div className="hidden md:flex items-center space-x-8">
@@ -43,11 +41,7 @@ const DesktopNav = ({ navLinks, categories }: DesktopNavProps) => {
         />
       ))}
       
-      <CategoriesDropdown 
-        categories={categories}
-        isHovered={categoriesHover}
-        onHoverChange={setCategoriesHover}
-      />
+      <CategoriesDropdown categories={categories} />
     </div>
   );
 };

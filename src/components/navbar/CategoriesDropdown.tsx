@@ -1,46 +1,54 @@
 
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronDown } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
 
 interface CategoriesDropdownProps {
   categories: { name: string; path: string }[];
-  isHovered: boolean;
-  onHoverChange: (isHovered: boolean) => void;
 }
 
-const CategoriesDropdown = ({ 
-  categories, 
-  isHovered, 
-  onHoverChange 
-}: CategoriesDropdownProps) => {
+const CategoriesDropdown = ({ categories }: CategoriesDropdownProps) => {
   const { t } = useLanguage();
+  const [open, setOpen] = useState(false);
   
   return (
-    <div 
-      className="relative"
-      onMouseEnter={() => onHoverChange(true)}
-      onMouseLeave={() => onHoverChange(false)}
-    >
-      <button className="flex items-center space-x-1 text-sm text-hakim-gray hover:text-hakim-light transition-smooth">
-        <span>{t('categories')}</span>
-        <ChevronDown className="h-4 w-4" />
-      </button>
+    <DropdownMenu open={open} onOpenChange={setOpen}>
+      <DropdownMenuTrigger asChild>
+        <Button 
+          variant="ghost" 
+          size="sm" 
+          className="flex items-center gap-1 text-hakim-gray hover:text-hakim-light"
+        >
+          <span>{t('categories')}</span>
+          <ChevronDown className="h-4 w-4" />
+        </Button>
+      </DropdownMenuTrigger>
       
-      {isHovered && (
-        <div className="absolute left-0 top-full mt-1 w-56 bg-hakim-darkest border border-hakim-medium/20 rounded-md shadow-lg z-50 animate-fade-in py-1">
-          {categories.map((category) => (
+      <DropdownMenuContent 
+        align="start"
+        className="bg-hakim-darkest border border-hakim-medium/20 rounded-md shadow-lg z-50 animate-fade-in py-1 w-56"
+      >
+        {categories.map((category) => (
+          <DropdownMenuItem key={category.name} asChild>
             <Link
-              key={category.name}
               to={category.path}
               className="block px-4 py-2 text-hakim-light hover:bg-hakim-dark text-sm"
+              onClick={() => setOpen(false)}
             >
               {category.name}
             </Link>
-          ))}
-        </div>
-      )}
-    </div>
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 
