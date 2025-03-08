@@ -18,15 +18,6 @@ interface MobileNavProps {
 
 const MobileNav = ({ isOpen, navLinks, categories, onClose }: MobileNavProps) => {
   const { t } = useLanguage();
-  const [dialogOpen, setDialogOpen] = useState({
-    about: false,
-    contact: false,
-    blog: false
-  });
-  
-  const openDialog = (dialog: 'about' | 'contact' | 'blog') => {
-    setDialogOpen({ ...dialogOpen, [dialog]: true });
-  };
   
   if (!isOpen) return null;
   
@@ -82,19 +73,6 @@ const MobileNav = ({ isOpen, navLinks, categories, onClose }: MobileNavProps) =>
           </div>
         </div>
       </div>
-      
-      <AboutDialog 
-        open={dialogOpen.about} 
-        onOpenChange={(open) => setDialogOpen(prev => ({ ...prev, about: open }))} 
-      />
-      <ContactDialog 
-        open={dialogOpen.contact} 
-        onOpenChange={(open) => setDialogOpen(prev => ({ ...prev, contact: open }))} 
-      />
-      <BlogDialog 
-        open={dialogOpen.blog} 
-        onOpenChange={(open) => setDialogOpen(prev => ({ ...prev, blog: open }))} 
-      />
     </>
   );
 };

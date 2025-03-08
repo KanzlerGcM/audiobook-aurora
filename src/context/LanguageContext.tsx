@@ -20,6 +20,8 @@ export const translations: TranslationMap = {
   'newReleases': { en: 'New Releases', pt: 'Novos Lançamentos', es: 'Nuevos Lanzamientos' },
   'categories': { en: 'Categories', pt: 'Categorias', es: 'Categorías' },
   'signIn': { en: 'Sign In', pt: 'Entrar', es: 'Iniciar sesión' },
+  'signUp': { en: 'Sign Up', pt: 'Cadastrar', es: 'Registrarse' },
+  'search': { en: 'Search', pt: 'Buscar', es: 'Buscar' },
   
   // Categories
   'fiction': { en: 'Fiction', pt: 'Ficção', es: 'Ficción' },
