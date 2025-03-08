@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/context/LanguageContext';
 import TranslateButton from './TranslateButton';
 import Logo from './Logo';
+import SitePopupMenu from './SitePopupMenu';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,6 +23,7 @@ import {
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [categoriesHover, setCategoriesHover] = useState(false);
   const location = useLocation();
   const { t } = useLanguage();
 
@@ -88,33 +90,34 @@ const Navbar = () => {
               </Link>
             ))}
             
-            {/* Categories Dropdown using Radix UI */}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <button className="flex items-center space-x-1 text-sm text-hakim-gray hover:text-hakim-light transition-smooth">
-                  <span>{t('categories')}</span>
-                  <ChevronDown className="h-4 w-4" />
-                </button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent 
-                align="start"
-                className="w-56 bg-hakim-darkest border border-hakim-medium/20 rounded-md shadow-lg z-50 animate-fade-in py-1"
-              >
-                {categories.map((category) => (
-                  <DropdownMenuItem key={category.name} asChild>
+            {/* Categories Dropdown - Show on Hover */}
+            <div 
+              className="relative"
+              onMouseEnter={() => setCategoriesHover(true)}
+              onMouseLeave={() => setCategoriesHover(false)}
+            >
+              <button className="flex items-center space-x-1 text-sm text-hakim-gray hover:text-hakim-light transition-smooth">
+                <span>{t('categories')}</span>
+                <ChevronDown className="h-4 w-4" />
+              </button>
+              
+              {categoriesHover && (
+                <div className="absolute left-0 top-full mt-1 w-56 bg-hakim-darkest border border-hakim-medium/20 rounded-md shadow-lg z-50 animate-fade-in py-1">
+                  {categories.map((category) => (
                     <Link
+                      key={category.name}
                       to={category.path}
                       className="block px-4 py-2 text-hakim-light hover:bg-hakim-dark text-sm"
                     >
                       {category.name}
                     </Link>
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
 
-          {/* Search and Account */}
+          {/* Search, Site Menu and Account */}
           <div className="hidden md:flex items-center space-x-4">
             <TooltipProvider>
               <Tooltip>
@@ -129,6 +132,7 @@ const Navbar = () => {
               </Tooltip>
             </TooltipProvider>
             <TranslateButton />
+            <SitePopupMenu />
             <Link to="/login">
               <Button variant="outline" size="sm" className="text-hakim-light">
                 {t('signIn')}
@@ -185,6 +189,37 @@ const Navbar = () => {
                     {category.name}
                   </Link>
                 ))}
+              </div>
+            </div>
+            
+            {/* About Us, Contact, Blog in Mobile Menu */}
+            <div className="py-2">
+              <div className="text-hakim-light font-medium mb-2">{t('company')}</div>
+              <div className="grid grid-cols-1 gap-2 pl-2">
+                <Link
+                  to="/about"
+                  className="flex items-center gap-2 text-hakim-gray text-sm py-1 hover:text-hakim-light"
+                  onClick={closeMobileMenu}
+                >
+                  <Info className="h-4 w-4" />
+                  <span>{t('aboutUs')}</span>
+                </Link>
+                <Link
+                  to="/contact"
+                  className="flex items-center gap-2 text-hakim-gray text-sm py-1 hover:text-hakim-light"
+                  onClick={closeMobileMenu}
+                >
+                  <Mail className="h-4 w-4" />
+                  <span>{t('contact')}</span>
+                </Link>
+                <Link
+                  to="/blog"
+                  className="flex items-center gap-2 text-hakim-gray text-sm py-1 hover:text-hakim-light"
+                  onClick={closeMobileMenu}
+                >
+                  <BookOpen className="h-4 w-4" />
+                  <span>{t('blog')}</span>
+                </Link>
               </div>
             </div>
             
