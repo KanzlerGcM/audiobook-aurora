@@ -18,7 +18,7 @@ const newReleases = [
     rating: 4.5,
     category: 'Fiction',
     releaseDate: '2023-09-15',
-    description: 'Between life and death there is a library, and within that library, the shelves go on forever. Every book provides a chance to try another life you could have lived. See what would have happened if you had made different choices.'
+    description: "Between life and death there is a library, and within that library, the shelves go on forever. Every book provides a chance to try another life you could have lived. See what would have happened if you had made different choices."
   },
   {
     id: '2',
@@ -29,7 +29,7 @@ const newReleases = [
     rating: 4.9,
     category: 'Self-Help',
     releaseDate: '2023-09-10',
-    description: 'No matter your goals, Atomic Habits offers a proven framework for improving every day. James Clear reveals practical strategies that will teach you how to form good habits, break bad ones, and master tiny behaviors that lead to remarkable results.'
+    description: "No matter your goals, Atomic Habits offers a proven framework for improving every day. James Clear reveals practical strategies that will teach you how to form good habits, break bad ones, and master tiny behaviors that lead to remarkable results."
   },
   {
     id: '3',
@@ -40,7 +40,7 @@ const newReleases = [
     rating: 4.7,
     category: 'Sci-Fi',
     releaseDate: '2023-09-05',
-    description: 'Ryland Grace is the sole survivor on a desperate, last-chance mission—and if he fails, humanity and the Earth itself will perish. The only problem is, he doesn't remember that. He can't even remember his own name, let alone the nature of his assignment.'
+    description: "Ryland Grace is the sole survivor on a desperate, last-chance mission—and if he fails, humanity and the Earth itself will perish. The only problem is, he doesn't remember that. He can't even remember his own name, let alone the nature of his assignment."
   },
   {
     id: '4',
@@ -51,7 +51,7 @@ const newReleases = [
     rating: 4.7,
     category: 'Finance',
     releaseDate: '2023-08-28',
-    description: 'Doing well with money isn't necessarily about what you know. It's about how you behave. And behavior is hard to teach, even to really smart people. In The Psychology of Money, award-winning author Morgan Housel shares 19 short stories exploring the strange ways people think about money.'
+    description: "Doing well with money isn't necessarily about what you know. It's about how you behave. And behavior is hard to teach, even to really smart people. In The Psychology of Money, award-winning author Morgan Housel shares 19 short stories exploring the strange ways people think about money."
   },
   {
     id: '5',
@@ -62,7 +62,7 @@ const newReleases = [
     rating: 4.6, 
     category: 'Fantasy',
     releaseDate: '2023-08-22',
-    description: 'When nineteen-year-old huntress Feyre kills a wolf in the woods, a terrifying creature arrives to demand retribution. Dragged to a treacherous magical land she only knows about from legends, Feyre discovers that her captor is not truly a beast, but one of the lethal, immortal faeries who once ruled her world.'
+    description: "When nineteen-year-old huntress Feyre kills a wolf in the woods, a terrifying creature arrives to demand retribution. Dragged to a treacherous magical land she only knows about from legends, Feyre discovers that her captor is not truly a beast, but one of the lethal, immortal faeries who once ruled her world."
   }
 ];
 
