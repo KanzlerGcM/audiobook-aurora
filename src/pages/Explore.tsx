@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { HeadphonesIcon, BarChart, BookOpenText, Star, Clock, Calendar, ChevronRight, Sparkles } from 'lucide-react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -19,7 +18,7 @@ const audiobooks = [
     duration: '21h 8m',
     rating: 4.8,
     category: 'Sci-Fi',
-    description: 'Set on the desert planet Arrakis, Dune is the story of the boy Paul Atreides, heir to a noble family tasked with ruling an inhospitable world where the only thing of value is the "spice" melange, a drug capable of extending life and enhancing consciousness.'
+    description: "Set on the desert planet Arrakis, Dune is the story of the boy Paul Atreides, heir to a noble family tasked with ruling an inhospitable world where the only thing of value is the \"spice\" melange, a drug capable of extending life and enhancing consciousness."
   },
   {
     id: '2',
@@ -29,7 +28,7 @@ const audiobooks = [
     duration: '5h 35m',
     rating: 4.9,
     category: 'Self-Help',
-    description: 'No matter your goals, Atomic Habits offers a proven framework for improving every day. James Clear reveals practical strategies that will teach you how to form good habits, break bad ones, and master tiny behaviors that lead to remarkable results.'
+    description: "No matter your goals, Atomic Habits offers a proven framework for improving every day. James Clear reveals practical strategies that will teach you how to form good habits, break bad ones, and master tiny behaviors that lead to remarkable results."
   },
   {
     id: '3',
@@ -39,7 +38,7 @@ const audiobooks = [
     duration: '11h 5m',
     rating: 4.7,
     category: 'Fantasy',
-    description: 'Bilbo Baggins is a hobbit who enjoys a comfortable, unambitious life, rarely traveling any farther than his pantry or cellar. But his contentment is disturbed when the wizard Gandalf and a company of dwarves arrive on his doorstep to whisk him away on an adventure.'
+    description: "Bilbo Baggins is a hobbit who enjoys a comfortable, unambitious life, rarely traveling any farther than his pantry or cellar. But his contentment is disturbed when the wizard Gandalf and a company of dwarves arrive on his doorstep to whisk him away on an adventure."
   },
   {
     id: '4',
@@ -49,7 +48,7 @@ const audiobooks = [
     duration: '15h 17m',
     rating: 4.6,
     category: 'History',
-    description: 'From a renowned historian comes a groundbreaking narrative of humanity's creation and evolution that explores the ways in which biology and history have defined us and enhanced our understanding of what it means to be "human."'
+    description: "From a renowned historian comes a groundbreaking narrative of humanity's creation and evolution that explores the ways in which biology and history have defined us and enhanced our understanding of what it means to be \"human.\""
   },
   {
     id: '5',
@@ -59,7 +58,7 @@ const audiobooks = [
     duration: '8h 50m',
     rating: 4.5,
     category: 'Fiction',
-    description: 'Between life and death there is a library, and within that library, the shelves go on forever. Every book provides a chance to try another life you could have lived. See what would have happened if you had made different choices.'
+    description: "Between life and death there is a library, and within that library, the shelves go on forever. Every book provides a chance to try another life you could have lived. See what would have happened if you had made different choices."
   },
   {
     id: '6',
@@ -69,7 +68,7 @@ const audiobooks = [
     duration: '5h 42m',
     rating: 4.7,
     category: 'Finance',
-    description: 'Doing well with money isn't necessarily about what you know. It's about how you behave. And behavior is hard to teach, even to really smart people. In The Psychology of Money, award-winning author Morgan Housel shares 19 short stories exploring the strange ways people think about money.'
+    description: "Doing well with money isn't necessarily about what you know. It's about how you behave. And behavior is hard to teach, even to really smart people. In The Psychology of Money, award-winning author Morgan Housel shares 19 short stories exploring the strange ways people think about money."
   }
 ];
 
@@ -83,7 +82,7 @@ const newReleases = [
     rating: 4.5,
     category: 'Fiction',
     releaseDate: '2023-09-15',
-    description: 'Between life and death there is a library, and within that library, the shelves go on forever. Every book provides a chance to try another life you could have lived. See what would have happened if you had made different choices.'
+    description: "Between life and death there is a library, and within that library, the shelves go on forever. Every book provides a chance to try another life you could have lived. See what would have happened if you had made different choices."
   },
   {
     id: '8',
@@ -94,7 +93,7 @@ const newReleases = [
     rating: 4.9,
     category: 'Self-Help',
     releaseDate: '2023-09-10',
-    description: 'No matter your goals, Atomic Habits offers a proven framework for improving every day. James Clear reveals practical strategies that will teach you how to form good habits, break bad ones, and master tiny behaviors that lead to remarkable results.'
+    description: "No matter your goals, Atomic Habits offers a proven framework for improving every day. James Clear reveals practical strategies that will teach you how to form good habits, break bad ones, and master tiny behaviors that lead to remarkable results."
   },
   {
     id: '9',
@@ -105,7 +104,7 @@ const newReleases = [
     rating: 4.7,
     category: 'Sci-Fi',
     releaseDate: '2023-09-05',
-    description: 'Ryland Grace is the sole survivor on a desperate, last-chance mission—and if he fails, humanity and the Earth itself will perish. The only problem is, he doesn't remember that. He can't even remember his own name, let alone the nature of his assignment.'
+    description: "Ryland Grace is the sole survivor on a desperate, last-chance mission—and if he fails, humanity and the Earth itself will perish. The only problem is, he doesn't remember that. He can't even remember his own name, let alone the nature of his assignment."
   },
   {
     id: '10',
@@ -116,7 +115,7 @@ const newReleases = [
     rating: 4.7,
     category: 'Finance',
     releaseDate: '2023-08-28',
-    description: 'Doing well with money isn't necessarily about what you know. It's about how you behave. And behavior is hard to teach, even to really smart people. In The Psychology of Money, award-winning author Morgan Housel shares 19 short stories exploring the strange ways people think about money.'
+    description: "Doing well with money isn't necessarily about what you know. It's about how you behave. And behavior is hard to teach, even to really smart people. In The Psychology of Money, award-winning author Morgan Housel shares 19 short stories exploring the strange ways people think about money."
   }
 ];
 
@@ -129,7 +128,7 @@ const trending = [
     duration: '20h 2m',
     rating: 4.7,
     category: 'Psychology',
-    description: 'In the international bestseller, Thinking, Fast and Slow, Daniel Kahneman, the renowned psychologist and winner of the Nobel Prize in Economics, takes us on a groundbreaking tour of the mind and explains the two systems that drive the way we think.'
+    description: "In the international bestseller, Thinking, Fast and Slow, Daniel Kahneman, the renowned psychologist and winner of the Nobel Prize in Economics, takes us on a groundbreaking tour of the mind and explains the two systems that drive the way we think."
   },
   {
     id: '15',
@@ -139,7 +138,7 @@ const trending = [
     duration: '3h 8m',
     rating: 4.6,
     category: 'Talk Show',
-    description: 'The Joe Rogan Experience podcast is a long form conversation hosted by comedian Joe Rogan with friends and guests that have included comedians, actors, musicians, MMA fighters, authors, artists, and beyond.'
+    description: "The Joe Rogan Experience podcast is a long form conversation hosted by comedian Joe Rogan with friends and guests that have included comedians, actors, musicians, MMA fighters, authors, artists, and beyond."
   }
 ];
 
