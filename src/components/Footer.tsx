@@ -1,4 +1,3 @@
-
 import { Mail, Instagram, Twitter, Facebook } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/context/LanguageContext';
@@ -30,8 +29,16 @@ const Footer = () => {
     help: false
   });
   
-  const openDialog = (dialog: keyof typeof dialogOpen) => {
+  const [dialogTitle, setDialogTitle] = useState({
+    explore: '',
+    help: ''
+  });
+  
+  const openDialog = (dialog: keyof typeof dialogOpen, title?: string) => {
     setDialogOpen({ ...dialogOpen, [dialog]: true });
+    if (title && (dialog === 'explore' || dialog === 'help')) {
+      setDialogTitle({ ...dialogTitle, [dialog]: title });
+    }
   };
   
   return (
@@ -63,7 +70,7 @@ const Footer = () => {
             <ul className="space-y-3">
               <li>
                 <button
-                  onClick={() => openDialog('explore')}
+                  onClick={() => openDialog('explore', t('categories'))}
                   className="text-hakim-gray hover:text-hakim-light transition-colors text-left"
                 >
                   {t('categories')}
@@ -71,7 +78,7 @@ const Footer = () => {
               </li>
               <li>
                 <button
-                  onClick={() => openDialog('explore')}
+                  onClick={() => openDialog('explore', t('trendingNow'))}
                   className="text-hakim-gray hover:text-hakim-light transition-colors text-left"
                 >
                   {t('trendingNow')}
@@ -79,7 +86,7 @@ const Footer = () => {
               </li>
               <li>
                 <button
-                  onClick={() => openDialog('explore')}
+                  onClick={() => openDialog('explore', t('newReleases'))}
                   className="text-hakim-gray hover:text-hakim-light transition-colors text-left"
                 >
                   {t('newReleases')}
@@ -87,7 +94,7 @@ const Footer = () => {
               </li>
               <li>
                 <button
-                  onClick={() => openDialog('explore')}
+                  onClick={() => openDialog('explore', 'Bestsellers')}
                   className="text-hakim-gray hover:text-hakim-light transition-colors text-left"
                 >
                   Bestsellers
@@ -139,7 +146,7 @@ const Footer = () => {
             <ul className="space-y-3">
               <li>
                 <button 
-                  onClick={() => openDialog('faq')}
+                  onClick={() => openDialog('help', 'FAQ')}
                   className="text-hakim-gray hover:text-hakim-light transition-colors text-left"
                 >
                   {t('faq')}
@@ -147,7 +154,7 @@ const Footer = () => {
               </li>
               <li>
                 <button 
-                  onClick={() => openDialog('terms')}
+                  onClick={() => openDialog('help', 'Terms of Service')}
                   className="text-hakim-gray hover:text-hakim-light transition-colors text-left"
                 >
                   {t('termsOfService')}
@@ -155,7 +162,7 @@ const Footer = () => {
               </li>
               <li>
                 <button 
-                  onClick={() => openDialog('privacy')}
+                  onClick={() => openDialog('help', 'Privacy Policy')}
                   className="text-hakim-gray hover:text-hakim-light transition-colors text-left"
                 >
                   {t('privacyPolicy')}
@@ -163,7 +170,7 @@ const Footer = () => {
               </li>
               <li>
                 <button 
-                  onClick={() => openDialog('support')}
+                  onClick={() => openDialog('help', 'Support')}
                   className="text-hakim-gray hover:text-hakim-light transition-colors text-left"
                 >
                   {t('support')}
@@ -223,10 +230,12 @@ const Footer = () => {
       <ExploreDialog
         open={dialogOpen.explore}
         onOpenChange={(open) => setDialogOpen(prev => ({ ...prev, explore: open }))}
+        title={dialogTitle.explore}
       />
       <HelpDialog
         open={dialogOpen.help}
         onOpenChange={(open) => setDialogOpen(prev => ({ ...prev, help: open }))}
+        title={dialogTitle.help}
       />
     </footer>
   );
