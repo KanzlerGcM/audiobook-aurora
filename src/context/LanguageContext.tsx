@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 type Language = 'en' | 'pt';
@@ -54,6 +53,10 @@ export const translations: TranslationMap = {
   'privacyPolicy': { en: 'Privacy Policy', pt: 'Política de Privacidade' },
   'support': { en: 'Support', pt: 'Suporte' },
   'allRightsReserved': { en: 'All rights reserved', pt: 'Todos os direitos reservados' },
+  
+  // Explore Page
+  'audiobooks': { en: 'Audiobooks', pt: 'Audiolivros' },
+  'loadMore': { en: 'Load More', pt: 'Carregar Mais' },
 };
 
 interface LanguageContextType {
