@@ -3,19 +3,16 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Search, Menu, X, User, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useLanguage } from '@/context/LanguageContext';
+import TranslateButton from './TranslateButton';
 import Logo from './Logo';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [categoriesOpen, setCategoriesOpen] = useState(false);
   const location = useLocation();
+  const { t } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -35,22 +32,22 @@ const Navbar = () => {
   };
 
   const categories = [
-    { name: 'Fiction', path: '/categories/fiction' },
-    { name: 'Non-Fiction', path: '/categories/non-fiction' },
-    { name: 'Mystery & Thriller', path: '/categories/mystery-thriller' },
-    { name: 'Science Fiction', path: '/categories/sci-fi' },
-    { name: 'Fantasy', path: '/categories/fantasy' },
-    { name: 'Biography', path: '/categories/biography' },
-    { name: 'History', path: '/categories/history' },
-    { name: 'Self-Help', path: '/categories/self-help' },
-    { name: 'Business', path: '/categories/business' },
-    { name: 'Cookbooks', path: '/categories/cookbooks' },
+    { name: t('fiction'), path: '/categories/fiction' },
+    { name: t('nonFiction'), path: '/categories/non-fiction' },
+    { name: t('mysteryThriller'), path: '/categories/mystery-thriller' },
+    { name: t('scienceFiction'), path: '/categories/sci-fi' },
+    { name: t('fantasy'), path: '/categories/fantasy' },
+    { name: t('biography'), path: '/categories/biography' },
+    { name: t('history'), path: '/categories/history' },
+    { name: t('selfHelp'), path: '/categories/self-help' },
+    { name: t('business'), path: '/categories/business' },
+    { name: t('cookbooks'), path: '/categories/cookbooks' },
   ];
 
   const navLinks = [
-    { name: 'Home', path: '/' },
-    { name: 'Explore', path: '/explore' },
-    { name: 'New Releases', path: '/new-releases' }
+    { name: t('home'), path: '/' },
+    { name: t('explore'), path: '/explore' },
+    { name: t('newReleases'), path: '/new-releases' }
   ];
 
   return (
@@ -88,7 +85,7 @@ const Navbar = () => {
               onMouseLeave={() => setCategoriesOpen(false)}
             >
               <button className="flex items-center space-x-1 text-sm text-hakim-gray hover:text-hakim-light transition-smooth">
-                <span>Categories</span>
+                <span>{t('categories')}</span>
                 <ChevronDown className="h-4 w-4" />
               </button>
               
@@ -113,11 +110,12 @@ const Navbar = () => {
             <Button variant="ghost" size="icon" className="text-hakim-gray hover:text-hakim-light">
               <Search className="h-5 w-5" />
             </Button>
+            <TranslateButton />
             <Button variant="ghost" size="icon" className="text-hakim-gray hover:text-hakim-light">
               <User className="h-5 w-5" />
             </Button>
             <Button variant="default" className="bg-hakim-medium hover:bg-hakim-gray text-white">
-              Sign In
+              {t('signIn')}
             </Button>
           </div>
 
@@ -153,7 +151,7 @@ const Navbar = () => {
             
             {/* Categories in Mobile Menu */}
             <div className="py-2">
-              <div className="text-hakim-light font-medium mb-2">Categories</div>
+              <div className="text-hakim-light font-medium mb-2">{t('categories')}</div>
               <div className="grid grid-cols-2 gap-2 pl-2">
                 {categories.map((category) => (
                   <Link
@@ -172,11 +170,12 @@ const Navbar = () => {
               <Button variant="ghost" size="icon" className="text-hakim-gray">
                 <Search className="h-5 w-5" />
               </Button>
+              <TranslateButton />
               <Button variant="ghost" size="icon" className="text-hakim-gray">
                 <User className="h-5 w-5" />
               </Button>
               <Button variant="default" className="bg-hakim-medium hover:bg-hakim-gray text-white w-full">
-                Sign In
+                {t('signIn')}
               </Button>
             </div>
           </div>
