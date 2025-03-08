@@ -1,6 +1,5 @@
-
 import { useState } from 'react';
-import { HeadphonesIcon, BarChart, BookOpenText, Star, Clock, Calendar, ChevronRight } from 'lucide-react';
+import { HeadphonesIcon, BarChart, BookOpenText, Star, Clock, Calendar, ChevronRight, Sparkles } from 'lucide-react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -67,6 +66,49 @@ const audiobooks = [
   }
 ];
 
+const newReleases = [
+  {
+    id: '7',
+    title: 'The Midnight Library',
+    author: 'Matt Haig',
+    coverImage: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=1798&auto=format&fit=crop',
+    duration: '8h 50m',
+    rating: 4.5,
+    category: 'Fiction',
+    releaseDate: '2023-09-15'
+  },
+  {
+    id: '8',
+    title: 'Atomic Habits',
+    author: 'James Clear',
+    coverImage: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?q=80&w=1974&auto=format&fit=crop',
+    duration: '5h 35m',
+    rating: 4.9,
+    category: 'Self-Help',
+    releaseDate: '2023-09-10'
+  },
+  {
+    id: '9',
+    title: 'Project Hail Mary',
+    author: 'Andy Weir',
+    coverImage: 'https://images.unsplash.com/photo-1614728263952-84ea256f9679?q=80&w=1774&auto=format&fit=crop',
+    duration: '16h 10m',
+    rating: 4.7,
+    category: 'Sci-Fi',
+    releaseDate: '2023-09-05'
+  },
+  {
+    id: '10',
+    title: 'The Psychology of Money',
+    author: 'Morgan Housel',
+    coverImage: 'https://images.unsplash.com/photo-1633158829585-23ba8f7c8caf?q=80&w=1740&auto=format&fit=crop',
+    duration: '5h 42m',
+    rating: 4.7,
+    category: 'Finance',
+    releaseDate: '2023-08-28'
+  }
+];
+
 const trending = [
   {
     id: '14',
@@ -108,6 +150,10 @@ const Explore = () => {
               <HeadphonesIcon className="h-4 w-4" />
               <span>{t('audiobooks')}</span>
             </TabsTrigger>
+            <TabsTrigger value="new-releases" className="flex items-center gap-2">
+              <Sparkles className="h-4 w-4" />
+              <span>{t('newReleases')}</span>
+            </TabsTrigger>
             <TabsTrigger value="trending" className="flex items-center gap-2">
               <BarChart className="h-4 w-4" />
               <span>{t('trendingNow')}</span>
@@ -117,6 +163,29 @@ const Explore = () => {
           <TabsContent value="audiobooks" className="mt-6">
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 md:gap-6">
               {audiobooks.map((book, index) => (
+                <AudiobookCard 
+                  key={book.id}
+                  id={book.id}
+                  title={book.title}
+                  author={book.author}
+                  coverImage={book.coverImage}
+                  duration={book.duration}
+                  rating={book.rating}
+                  category={book.category}
+                  index={index}
+                />
+              ))}
+            </div>
+            <div className="mt-8 flex justify-center">
+              <Button variant="outline" size="lg">
+                {t('loadMore')}
+              </Button>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="new-releases" className="mt-6">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 md:gap-6">
+              {newReleases.map((book, index) => (
                 <AudiobookCard 
                   key={book.id}
                   id={book.id}
