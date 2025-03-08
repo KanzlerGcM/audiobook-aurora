@@ -1,8 +1,9 @@
 
 import { useState } from 'react';
-import { HeadphonesIcon, BarChart } from 'lucide-react';
+import { HeadphonesIcon, BarChart, BookOpenText, Star, Clock, Calendar, ChevronRight } from 'lucide-react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import AudiobookCard from "@/components/AudiobookCard";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
