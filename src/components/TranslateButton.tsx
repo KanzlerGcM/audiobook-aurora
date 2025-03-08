@@ -13,9 +13,14 @@ import { toast } from "sonner";
 const TranslateButton = () => {
   const { language, setLanguage } = useLanguage();
   
-  const handleLanguageChange = (newLanguage: 'en' | 'pt') => {
+  const handleLanguageChange = (newLanguage: 'en' | 'pt' | 'es') => {
     setLanguage(newLanguage);
-    toast(`Language changed to ${newLanguage === 'en' ? 'English' : 'Portuguese'}`);
+    const languageNames = {
+      en: 'English',
+      pt: 'Portuguese',
+      es: 'Spanish'
+    };
+    toast(`Language changed to ${languageNames[newLanguage]}`);
   };
   
   return (
@@ -40,6 +45,12 @@ const TranslateButton = () => {
           className={`${language === 'pt' ? 'bg-hakim-medium/30' : ''} text-hakim-light hover:bg-hakim-dark`}
         >
           Português
+        </DropdownMenuItem>
+        <DropdownMenuItem 
+          onClick={() => handleLanguageChange('es')}
+          className={`${language === 'es' ? 'bg-hakim-medium/30' : ''} text-hakim-light hover:bg-hakim-dark`}
+        >
+          Español
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
