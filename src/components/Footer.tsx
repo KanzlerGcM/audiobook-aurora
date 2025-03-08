@@ -3,9 +3,22 @@ import { Mail, Instagram, Twitter, Facebook } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/context/LanguageContext';
 import Logo from './Logo';
+import { useState } from 'react';
+import AboutDialog from './dialogs/AboutDialog';
+import ContactDialog from './dialogs/ContactDialog';
+import BlogDialog from './dialogs/BlogDialog';
 
 const Footer = () => {
   const { t } = useLanguage();
+  const [dialogOpen, setDialogOpen] = useState({
+    about: false,
+    contact: false,
+    blog: false
+  });
+  
+  const openDialog = (dialog: 'about' | 'contact' | 'blog') => {
+    setDialogOpen({ ...dialogOpen, [dialog]: true });
+  };
   
   return (
     <footer className="bg-hakim-dark pt-16 pb-8">
@@ -44,10 +57,31 @@ const Footer = () => {
           <div>
             <h3 className="font-medium text-lg mb-4 text-white">Company</h3>
             <ul className="space-y-3">
-              <li><Link to="/about" className="text-hakim-gray hover:text-hakim-light transition-colors">{t('aboutUs')}</Link></li>
+              <li>
+                <button 
+                  onClick={() => openDialog('about')} 
+                  className="text-hakim-gray hover:text-hakim-light transition-colors text-left"
+                >
+                  {t('aboutUs')}
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => openDialog('contact')} 
+                  className="text-hakim-gray hover:text-hakim-light transition-colors text-left"
+                >
+                  {t('contact')}
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => openDialog('blog')} 
+                  className="text-hakim-gray hover:text-hakim-light transition-colors text-left"
+                >
+                  {t('blog')}
+                </button>
+              </li>
               <li><Link to="/careers" className="text-hakim-gray hover:text-hakim-light transition-colors">{t('careers')}</Link></li>
-              <li><Link to="/contact" className="text-hakim-gray hover:text-hakim-light transition-colors">{t('contact')}</Link></li>
-              <li><Link to="/blog" className="text-hakim-gray hover:text-hakim-light transition-colors">{t('blog')}</Link></li>
             </ul>
           </div>
           
@@ -75,6 +109,20 @@ const Footer = () => {
           </div>
         </div>
       </div>
+      
+      {/* Dialog components */}
+      <AboutDialog 
+        open={dialogOpen.about} 
+        onOpenChange={(open) => setDialogOpen(prev => ({ ...prev, about: open }))} 
+      />
+      <ContactDialog 
+        open={dialogOpen.contact} 
+        onOpenChange={(open) => setDialogOpen(prev => ({ ...prev, contact: open }))} 
+      />
+      <BlogDialog 
+        open={dialogOpen.blog} 
+        onOpenChange={(open) => setDialogOpen(prev => ({ ...prev, blog: open }))} 
+      />
     </footer>
   );
 };

@@ -62,7 +62,7 @@ const MobileNav = ({ isOpen, navLinks, categories, onClose }: MobileNavProps) =>
             </div>
           </div>
           
-          {/* About Us, Contact, Blog in Mobile Menu */}
+          {/* Company section in Mobile Menu */}
           <div className="py-2">
             <div className="text-hakim-light font-medium mb-2">{t('company')}</div>
             <div className="grid grid-cols-1 gap-2 pl-2">
