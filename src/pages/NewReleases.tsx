@@ -74,7 +74,7 @@ const NewReleases = () => {
     <div className="min-h-screen flex flex-col bg-background">
       <Navbar />
       
-      <main className="flex-1 container mx-auto px-4 md:px-6 py-16 mt-10">
+      <main className="flex-1 container mx-auto px-4 md:px-6 py-8 mt-10">
         <div className="mb-8">
           <h1 className="text-3xl md:text-4xl font-bold mb-2">{t('newReleases')}</h1>
           <p className="text-foreground/70">{t('discoverNewBooks')}</p>
