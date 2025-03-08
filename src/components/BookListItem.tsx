@@ -1,7 +1,8 @@
 
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, BookPlus } from 'lucide-react';
 import { Separator } from "@/components/ui/separator";
 import { Book } from "@/types/book";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface BookListItemProps {
   book: Book;
@@ -16,6 +17,8 @@ const BookListItem = ({
   isLast, 
   onSelect 
 }: BookListItemProps) => {
+  const { t } = useLanguage();
+  
   return (
     <div>
       <div 
@@ -31,9 +34,20 @@ const BookListItem = ({
           <h3 className={`font-medium line-clamp-1 ${isSelected ? 'text-hakim-light' : 'text-foreground'}`}>
             {book.title}
           </h3>
-          <p className="text-sm text-foreground/70">
+          <p className="text-sm text-foreground/70 mb-2">
             {book.author}
           </p>
+          <button 
+            className="flex items-center text-xs text-hakim-light bg-hakim-medium/10 px-2 py-1 rounded hover:bg-hakim-medium/20"
+            onClick={(e) => {
+              e.stopPropagation();
+              // Add to library functionality would go here
+              console.log(`Added "${book.title}" to library`);
+            }}
+          >
+            <BookPlus className="w-3 h-3 mr-1" />
+            {t('addToLibrary')}
+          </button>
         </div>
         <ChevronRight className={`w-5 h-5 ${isSelected ? 'text-hakim-light' : 'text-foreground/50'}`} />
       </div>

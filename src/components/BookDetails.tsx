@@ -1,8 +1,10 @@
 
-import { Star, Clock, Calendar, BookOpenText } from 'lucide-react';
+import { Star, Clock, Calendar, BookOpenText, ThumbsUp, ThumbsDown } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Book } from "@/types/book";
 import { useLanguage } from "@/context/LanguageContext";
+import { useState } from 'react';
+import { toast } from 'sonner';
 
 interface BookDetailsProps {
   book: Book;
@@ -10,6 +12,27 @@ interface BookDetailsProps {
 
 const BookDetails = ({ book }: BookDetailsProps) => {
   const { t } = useLanguage();
+  const [liked, setLiked] = useState<boolean | null>(null);
+
+  const handleLike = () => {
+    if (liked === true) {
+      setLiked(null);
+      toast.info(`Removed like from "${book.title}"`);
+    } else {
+      setLiked(true);
+      toast.success(`You liked "${book.title}"`);
+    }
+  };
+
+  const handleDislike = () => {
+    if (liked === false) {
+      setLiked(null);
+      toast.info(`Removed dislike from "${book.title}"`);
+    } else {
+      setLiked(false);
+      toast.error(`You disliked "${book.title}"`);
+    }
+  };
 
   return (
     <div className="md:col-span-2 bg-hakim-dark/10 p-6 rounded-xl">
@@ -55,6 +78,29 @@ const BookDetails = ({ book }: BookDetailsProps) => {
           <p className="text-foreground/80 leading-relaxed my-4">
             {book.description}
           </p>
+          
+          <div className="flex items-center gap-3 my-4">
+            <button 
+              onClick={handleLike}
+              className={`flex items-center space-x-1 px-3 py-1.5 rounded-full transition-colors ${
+                liked === true 
+                  ? 'bg-green-500/20 text-green-500' 
+                  : 'bg-hakim-medium/10 hover:bg-hakim-medium/20'
+              }`}
+            >
+              <ThumbsUp className={`w-4 h-4 ${liked === true ? 'fill-green-500' : ''}`} />
+            </button>
+            <button 
+              onClick={handleDislike}
+              className={`flex items-center space-x-1 px-3 py-1.5 rounded-full transition-colors ${
+                liked === false 
+                  ? 'bg-red-500/20 text-red-500' 
+                  : 'bg-hakim-medium/10 hover:bg-hakim-medium/20'
+              }`}
+            >
+              <ThumbsDown className={`w-4 h-4 ${liked === false ? 'fill-red-500' : ''}`} />
+            </button>
+          </div>
           
           <div className="mt-6 flex flex-wrap gap-3">
             <Button variant="default" className="gap-2">
