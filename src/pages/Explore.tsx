@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { HeadphonesIcon, BarChart, Sparkles } from 'lucide-react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -221,9 +222,11 @@ const Explore = () => {
                 onSelectBook={setSelectedAudiobook} 
               />
             </div>
-            <div className="md:col-span-2">
-              <BookDetails book={selectedAudiobook} />
-            </div>
+            {!isMobile && (
+              <div className="md:col-span-2">
+                <BookDetails book={selectedAudiobook} />
+              </div>
+            )}
           </div>
         )}
 
@@ -236,9 +239,11 @@ const Explore = () => {
                 onSelectBook={setSelectedNewRelease} 
               />
             </div>
-            <div className="md:col-span-2">
-              <BookDetails book={selectedNewRelease} />
-            </div>
+            {!isMobile && (
+              <div className="md:col-span-2">
+                <BookDetails book={selectedNewRelease} />
+              </div>
+            )}
           </div>
         )}
           
@@ -251,9 +256,11 @@ const Explore = () => {
                 onSelectBook={setSelectedTrending} 
               />
             </div>
-            <div className="md:col-span-2">
-              <BookDetails book={selectedTrending} />
-            </div>
+            {!isMobile && (
+              <div className="md:col-span-2">
+                <BookDetails book={selectedTrending} />
+              </div>
+            )}
           </div>
         )}
       </main>

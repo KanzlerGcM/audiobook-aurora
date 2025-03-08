@@ -3,6 +3,7 @@ import { ChevronRight, BookPlus } from 'lucide-react';
 import { Separator } from "@/components/ui/separator";
 import { Book } from "@/types/book";
 import { useLanguage } from "@/context/LanguageContext";
+import { useNavigate } from "react-router-dom";
 
 interface BookListItemProps {
   book: Book;
@@ -18,12 +19,18 @@ const BookListItem = ({
   onSelect 
 }: BookListItemProps) => {
   const { t } = useLanguage();
+  const navigate = useNavigate();
+  
+  const handleClick = () => {
+    onSelect(book);
+    navigate(`/book/${book.id}`);
+  };
   
   return (
     <div>
       <div 
         className={`flex items-center p-3 rounded-lg cursor-pointer transition-all hover:bg-hakim-medium/10 ${isSelected ? 'bg-hakim-medium/10' : ''}`}
-        onClick={() => onSelect(book)}
+        onClick={handleClick}
       >
         <img 
           src={book.coverImage} 
