@@ -1,15 +1,15 @@
-
 import { useState } from 'react';
 import { HeadphonesIcon, BarChart, Sparkles } from 'lucide-react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
 import BookList from "@/components/BookList";
 import BookDetails from "@/components/BookDetails";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import { useLanguage } from "@/context/LanguageContext";
 import { Book } from "@/types/book";
+import { useMobile } from "@/hooks/use-mobile";
 
-// Sample data for each category
 const audiobooks: Book[] = [
   {
     id: '1',
@@ -146,11 +146,15 @@ const trending: Book[] = [
 const Explore = () => {
   const [activeTab, setActiveTab] = useState("audiobooks");
   const { t } = useLanguage();
+  const isMobile = useMobile();
   
-  // State to track the selected book in each category
   const [selectedAudiobook, setSelectedAudiobook] = useState(audiobooks[0]);
   const [selectedNewRelease, setSelectedNewRelease] = useState(newReleases[0]);
   const [selectedTrending, setSelectedTrending] = useState(trending[0]);
+
+  const handleTabChange = (value: string) => {
+    setActiveTab(value);
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
@@ -162,8 +166,35 @@ const Explore = () => {
           <p className="text-foreground/70">{t('popularAudiobooks')}</p>
         </div>
         
-        <Tabs defaultValue="audiobooks" onValueChange={setActiveTab} className="w-full">
-          <div className="overflow-x-auto pb-2">
+        {isMobile ? (
+          <div className="mb-6 space-y-2">
+            <Button 
+              variant={activeTab === "audiobooks" ? "default" : "outline"}
+              onClick={() => handleTabChange("audiobooks")}
+              className="w-full justify-start"
+            >
+              <HeadphonesIcon className="h-4 w-4 mr-2" />
+              {t('audiobooks')}
+            </Button>
+            <Button 
+              variant={activeTab === "new-releases" ? "default" : "outline"}
+              onClick={() => handleTabChange("new-releases")}
+              className="w-full justify-start"
+            >
+              <Sparkles className="h-4 w-4 mr-2" />
+              {t('newReleases')}
+            </Button>
+            <Button 
+              variant={activeTab === "trending" ? "default" : "outline"}
+              onClick={() => handleTabChange("trending")}
+              className="w-full justify-start"
+            >
+              <BarChart className="h-4 w-4 mr-2" />
+              {t('trendingNow')}
+            </Button>
+          </div>
+        ) : (
+          <Tabs defaultValue="audiobooks" onValueChange={setActiveTab} className="w-full">
             <TabsList className="mb-8 w-full justify-start bg-hakim-dark/20 p-1">
               <TabsTrigger value="audiobooks" className="flex items-center gap-2">
                 <HeadphonesIcon className="h-4 w-4" />
@@ -178,53 +209,53 @@ const Explore = () => {
                 <span>{t('trendingNow')}</span>
               </TabsTrigger>
             </TabsList>
+          </Tabs>
+        )}
+        
+        {activeTab === "audiobooks" && (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+            <div className="md:col-span-1">
+              <BookList 
+                books={audiobooks} 
+                selectedBook={selectedAudiobook} 
+                onSelectBook={setSelectedAudiobook} 
+              />
+            </div>
+            <div className="md:col-span-2">
+              <BookDetails book={selectedAudiobook} />
+            </div>
           </div>
-          
-          <TabsContent value="audiobooks" className="mt-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-              <div className="md:col-span-1">
-                <BookList 
-                  books={audiobooks} 
-                  selectedBook={selectedAudiobook} 
-                  onSelectBook={setSelectedAudiobook} 
-                />
-              </div>
-              <div className="md:col-span-2">
-                <BookDetails book={selectedAudiobook} />
-              </div>
-            </div>
-          </TabsContent>
+        )}
 
-          <TabsContent value="new-releases" className="mt-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-              <div className="md:col-span-1">
-                <BookList 
-                  books={newReleases} 
-                  selectedBook={selectedNewRelease} 
-                  onSelectBook={setSelectedNewRelease} 
-                />
-              </div>
-              <div className="md:col-span-2">
-                <BookDetails book={selectedNewRelease} />
-              </div>
+        {activeTab === "new-releases" && (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+            <div className="md:col-span-1">
+              <BookList 
+                books={newReleases} 
+                selectedBook={selectedNewRelease} 
+                onSelectBook={setSelectedNewRelease} 
+              />
             </div>
-          </TabsContent>
+            <div className="md:col-span-2">
+              <BookDetails book={selectedNewRelease} />
+            </div>
+          </div>
+        )}
           
-          <TabsContent value="trending" className="mt-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-              <div className="md:col-span-1">
-                <BookList 
-                  books={trending} 
-                  selectedBook={selectedTrending} 
-                  onSelectBook={setSelectedTrending} 
-                />
-              </div>
-              <div className="md:col-span-2">
-                <BookDetails book={selectedTrending} />
-              </div>
+        {activeTab === "trending" && (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+            <div className="md:col-span-1">
+              <BookList 
+                books={trending} 
+                selectedBook={selectedTrending} 
+                onSelectBook={setSelectedTrending} 
+              />
             </div>
-          </TabsContent>
-        </Tabs>
+            <div className="md:col-span-2">
+              <BookDetails book={selectedTrending} />
+            </div>
+          </div>
+        )}
       </main>
       
       <Footer />
