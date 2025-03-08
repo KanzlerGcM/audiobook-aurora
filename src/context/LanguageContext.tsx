@@ -57,6 +57,46 @@ export const translations: TranslationMap = {
   // Explore Page
   'audiobooks': { en: 'Audiobooks', pt: 'Audiolivros' },
   'loadMore': { en: 'Load More', pt: 'Carregar Mais' },
+  
+  // Book Details Page
+  'addToLibrary': { en: 'Add to Library', pt: 'Adicionar à Biblioteca' },
+  'shareBook': { en: 'Share Book', pt: 'Compartilhar Livro' },
+  'narrator': { en: 'Narrator', pt: 'Narrador' },
+  'duration': { en: 'Duration', pt: 'Duração' },
+  'released': { en: 'Released', pt: 'Lançado em' },
+  'publisher': { en: 'Publisher', pt: 'Editora' },
+  'language': { en: 'Language', pt: 'Idioma' },
+  'genre': { en: 'Genre', pt: 'Gênero' },
+  'chapters': { en: 'Chapters', pt: 'Capítulos' },
+  'description': { en: 'Description', pt: 'Descrição' },
+  'allChapters': { en: 'All Chapters', pt: 'Todos os Capítulos' },
+  'expand': { en: 'Expand All', pt: 'Expandir Todos' },
+  'collapse': { en: 'Collapse', pt: 'Recolher' },
+  'freePreview': { en: 'Free Preview', pt: 'Amostra Grátis' },
+  'showAllChapters': { en: 'Show All Chapters', pt: 'Mostrar Todos os Capítulos' },
+  'youMightAlsoLike': { en: 'You Might Also Like', pt: 'Você Também Pode Gostar' },
+  'similarAudiobooks': { en: 'Similar audiobooks you\'ll enjoy', pt: 'Audiolivros semelhantes que você vai gostar' },
+  'writeReview': { en: 'Write a Review', pt: 'Escrever uma Avaliação' },
+  'outOf5': { en: 'out of 5', pt: 'de 5' },
+  'monthsAgo': { en: 'months ago', pt: 'meses atrás' },
+  'loadMoreReviews': { en: 'Load More Reviews', pt: 'Carregar Mais Avaliações' },
+  'by': { en: 'by', pt: 'por' },
+  'chapter': { en: 'Chapter', pt: 'Capítulo' },
+  'selectChapter': { en: 'Select a chapter to start listening', pt: 'Selecione um capítulo para começar a ouvir' },
+  
+  // Audio Player
+  'play': { en: 'Play', pt: 'Reproduzir' },
+  'pause': { en: 'Pause', pt: 'Pausar' },
+  
+  // Genres (for book cards)
+  'sci-fi': { en: 'Sci-Fi', pt: 'Ficção Científica' },
+  'thriller': { en: 'Thriller', pt: 'Suspense' },
+  'romance': { en: 'Romance', pt: 'Romance' },
+  'horror': { en: 'Horror', pt: 'Terror' },
+  'adventure': { en: 'Adventure', pt: 'Aventura' },
+  'memoir': { en: 'Memoir', pt: 'Memórias' },
+  'english': { en: 'English', pt: 'Inglês' },
+  'portuguese': { en: 'Portuguese', pt: 'Português' },
 };
 
 interface LanguageContextType {

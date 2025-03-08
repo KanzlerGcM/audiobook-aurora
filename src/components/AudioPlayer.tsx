@@ -12,6 +12,7 @@ import {
   Clock
 } from 'lucide-react';
 import { Slider } from '@/components/ui/slider';
+import { useLanguage } from '@/context/LanguageContext';
 
 interface AudioPlayerProps {
   title: string;
@@ -35,6 +36,7 @@ const AudioPlayer = ({
   const [currentTime, setCurrentTime] = useState('0:00');
   const [duration, setDuration] = useState('0:00');
   const [isExpanded, setIsExpanded] = useState(false);
+  const { t } = useLanguage();
 
   const togglePlay = () => {
     setIsPlaying(!isPlaying);
@@ -99,6 +101,7 @@ const AudioPlayer = ({
             <button 
               className="w-9 h-9 rounded-full bg-accent flex items-center justify-center hover:bg-accent/90"
               onClick={togglePlay}
+              title={isPlaying ? t('pause') : t('play')}
             >
               {isPlaying 
                 ? <Pause className="w-4 h-4 text-white" /> 
@@ -142,6 +145,7 @@ const AudioPlayer = ({
               <button 
                 className="w-16 h-16 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center"
                 onClick={togglePlay}
+                title={isPlaying ? t('pause') : t('play')}
               >
                 {isPlaying 
                   ? <Pause className="w-8 h-8 text-accent" /> 

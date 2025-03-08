@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Play, Clock, Star, Headphones } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 interface AudiobookCardProps {
   id: string;
@@ -26,6 +27,10 @@ const AudiobookCard = ({
 }: AudiobookCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
+  const { t } = useLanguage();
+
+  // Convert category to lowercase for use as translation key
+  const categoryKey = category.toLowerCase();
 
   return (
     <Link 
@@ -61,7 +66,7 @@ const AudiobookCard = ({
           
           <div className="absolute top-3 left-3">
             <span className="px-2 py-1 text-xs font-medium bg-black/40 backdrop-blur-sm text-white rounded-full">
-              {category}
+              {t(categoryKey)}
             </span>
           </div>
         </div>
@@ -71,7 +76,7 @@ const AudiobookCard = ({
             {title}
           </h3>
           <p className="text-sm text-foreground/70">
-            by {author}
+            {t('by')} {author}
           </p>
           <div className="flex items-center justify-between text-sm pt-1">
             <div className="flex items-center space-x-1">

@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { 
@@ -22,6 +21,7 @@ import AudioPlayer from '@/components/AudioPlayer';
 import AudiobookCard from '@/components/AudiobookCard';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useLanguage } from '@/context/LanguageContext';
 
 interface ChapterType {
   id: string;
@@ -101,6 +101,7 @@ const BookDetails = () => {
   const [activeChapter, setActiveChapter] = useState<ChapterType | null>(null);
   const [showMiniPlayer, setShowMiniPlayer] = useState(false);
   const [expandedChapters, setExpandedChapters] = useState(false);
+  const { t } = useLanguage();
   
   useEffect(() => {
     // Scroll to top on page load
@@ -158,43 +159,43 @@ const BookDetails = () => {
               
               <div className="mt-6 space-y-4">
                 <Button variant="outline" className="w-full flex items-center justify-center gap-2">
-                  <Bookmark className="w-4 h-4" /> Add to Library
+                  <Bookmark className="w-4 h-4" /> {t('addToLibrary')}
                 </Button>
                 <Button variant="outline" className="w-full flex items-center justify-center gap-2">
-                  <Share2 className="w-4 h-4" /> Share Book
+                  <Share2 className="w-4 h-4" /> {t('shareBook')}
                 </Button>
               </div>
               
               <div className="mt-8 space-y-4">
                 <div className="flex justify-between">
-                  <span className="text-foreground/70">Narrator</span>
+                  <span className="text-foreground/70">{t('narrator')}</span>
                   <span className="font-medium">{bookDetails.narrator}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-foreground/70">Duration</span>
+                  <span className="text-foreground/70">{t('duration')}</span>
                   <div className="flex items-center">
                     <Clock className="w-4 h-4 mr-1" />
                     <span className="font-medium">{bookDetails.duration}</span>
                   </div>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-foreground/70">Released</span>
+                  <span className="text-foreground/70">{t('released')}</span>
                   <div className="flex items-center">
                     <Calendar className="w-4 h-4 mr-1" />
                     <span className="font-medium">{bookDetails.releaseDate}</span>
                   </div>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-foreground/70">Publisher</span>
+                  <span className="text-foreground/70">{t('publisher')}</span>
                   <span className="font-medium">{bookDetails.publisher}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-foreground/70">Language</span>
-                  <span className="font-medium">{bookDetails.language}</span>
+                  <span className="text-foreground/70">{t('language')}</span>
+                  <span className="font-medium">{t(bookDetails.language.toLowerCase())}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-foreground/70">Genre</span>
-                  <span className="font-medium">{bookDetails.genre}</span>
+                  <span className="text-foreground/70">{t('genre')}</span>
+                  <span className="font-medium">{t(bookDetails.genre.toLowerCase().replace(' ', ''))}</span>
                 </div>
               </div>
             </div>
@@ -202,10 +203,10 @@ const BookDetails = () => {
             <div className="lg:col-span-2">
               <div className="mb-6 animate-fade-in">
                 <span className="px-3 py-1 text-xs font-medium bg-accent/10 text-accent rounded-full mb-3 inline-block">
-                  {bookDetails.genre}
+                  {t(bookDetails.genre.toLowerCase())}
                 </span>
                 <h1 className="text-3xl md:text-4xl font-bold mb-2">{bookDetails.title}</h1>
-                <p className="text-foreground/70 mb-3">by {bookDetails.author}</p>
+                <p className="text-foreground/70 mb-3">{t('by')} {bookDetails.author}</p>
                 <div className="flex items-center space-x-2 mb-6">
                   <div className="flex">
                     {[...Array(5)].map((_, i) => (
@@ -216,7 +217,7 @@ const BookDetails = () => {
                     ))}
                   </div>
                   <span className="font-medium">{bookDetails.rating}</span>
-                  <span className="text-foreground/70">({bookDetails.reviews} reviews)</span>
+                  <span className="text-foreground/70">({bookDetails.reviews} {t('reviews')})</span>
                 </div>
                 
                 <p className="text-lg mb-6">{bookDetails.blurb}</p>
@@ -230,28 +231,28 @@ const BookDetails = () => {
                 ) : (
                   <div className="glass rounded-xl p-8 text-center animate-pulse">
                     <Headphones className="w-12 h-12 mx-auto mb-4 text-accent/70" />
-                    <p className="text-lg font-medium">Select a chapter to start listening</p>
+                    <p className="text-lg font-medium">{t('selectChapter')}</p>
                   </div>
                 )}
               </div>
               
               <Tabs defaultValue="chapters" className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
                 <TabsList className="grid w-full grid-cols-3 mb-6">
-                  <TabsTrigger value="chapters">Chapters</TabsTrigger>
-                  <TabsTrigger value="description">Description</TabsTrigger>
-                  <TabsTrigger value="reviews">Reviews</TabsTrigger>
+                  <TabsTrigger value="chapters">{t('chapters')}</TabsTrigger>
+                  <TabsTrigger value="description">{t('description')}</TabsTrigger>
+                  <TabsTrigger value="reviews">{t('reviews')}</TabsTrigger>
                 </TabsList>
                 
                 <TabsContent value="chapters" className="space-y-4">
                   <div className="flex justify-between items-center mb-2">
-                    <h3 className="font-medium">All Chapters</h3>
+                    <h3 className="font-medium">{t('allChapters')}</h3>
                     <Button 
                       variant="ghost" 
                       size="sm" 
                       onClick={() => setExpandedChapters(!expandedChapters)}
                       className="text-sm"
                     >
-                      {expandedChapters ? 'Collapse' : 'Expand All'}
+                      {expandedChapters ? t('collapse') : t('expand')}
                       {expandedChapters ? <ChevronDown className="ml-1 w-4 h-4" /> : <ChevronRight className="ml-1 w-4 h-4" />}
                     </Button>
                   </div>
@@ -283,7 +284,7 @@ const BookDetails = () => {
                               {chapter.isFree && (
                                 <span className="flex items-center text-green-600">
                                   <Check className="w-3 h-3 mr-1" />
-                                  Free Preview
+                                  {t('freePreview')}
                                 </span>
                               )}
                             </div>
@@ -309,7 +310,7 @@ const BookDetails = () => {
                         className="w-full mt-2"
                         onClick={() => setExpandedChapters(true)}
                       >
-                        Show All Chapters ({bookDetails.chapters.length})
+                        {t('showAllChapters')} ({bookDetails.chapters.length})
                       </Button>
                     )}
                   </div>
@@ -328,7 +329,7 @@ const BookDetails = () => {
                   <div className="space-y-6">
                     <div className="flex items-center justify-between">
                       <div>
-                        <h3 className="font-medium text-xl">{bookDetails.reviews} Reviews</h3>
+                        <h3 className="font-medium text-xl">{bookDetails.reviews} {t('reviews')}</h3>
                         <div className="flex items-center mt-1">
                           <div className="flex">
                             {[...Array(5)].map((_, i) => (
@@ -338,10 +339,10 @@ const BookDetails = () => {
                               />
                             ))}
                           </div>
-                          <span className="ml-2 font-medium">{bookDetails.rating} out of 5</span>
+                          <span className="ml-2 font-medium">{bookDetails.rating} {t('outOf5')}</span>
                         </div>
                       </div>
-                      <Button>Write a Review</Button>
+                      <Button>{t('writeReview')}</Button>
                     </div>
                     
                     <div className="space-y-6">
@@ -362,7 +363,7 @@ const BookDetails = () => {
                                   />
                                 ))}
                               </div>
-                              <span className="text-xs text-foreground/70 ml-2">2 months ago</span>
+                              <span className="text-xs text-foreground/70 ml-2">2 {t('monthsAgo')}</span>
                             </div>
                           </div>
                         </div>
@@ -389,7 +390,7 @@ const BookDetails = () => {
                                   />
                                 ))}
                               </div>
-                              <span className="text-xs text-foreground/70 ml-2">3 months ago</span>
+                              <span className="text-xs text-foreground/70 ml-2">3 {t('monthsAgo')}</span>
                             </div>
                           </div>
                         </div>
@@ -400,7 +401,7 @@ const BookDetails = () => {
                         </p>
                       </div>
                       
-                      <Button variant="outline" className="w-full">Load More Reviews</Button>
+                      <Button variant="outline" className="w-full">{t('loadMoreReviews')}</Button>
                     </div>
                   </div>
                 </TabsContent>
@@ -411,11 +412,11 @@ const BookDetails = () => {
           <div className="mt-16 animate-fade-in" style={{ animationDelay: '0.4s' }}>
             <div className="flex items-end justify-between mb-8">
               <div>
-                <h2 className="text-2xl md:text-3xl font-bold">You Might Also Like</h2>
-                <p className="text-foreground/70 mt-1">Similar audiobooks you'll enjoy</p>
+                <h2 className="text-2xl md:text-3xl font-bold">{t('youMightAlsoLike')}</h2>
+                <p className="text-foreground/70 mt-1">{t('similarAudiobooks')}</p>
               </div>
               <Link to="/recommended" className="text-accent flex items-center text-sm font-medium hover:underline">
-                View All <ChevronRight className="w-4 h-4 ml-1" />
+                {t('viewAll')} <ChevronRight className="w-4 h-4 ml-1" />
               </Link>
             </div>
             
