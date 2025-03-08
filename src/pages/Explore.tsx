@@ -1,16 +1,16 @@
+
 import { useState } from 'react';
-import { HeadphonesIcon, BarChart, BookOpenText, Star, Clock, Calendar, ChevronRight, Sparkles } from 'lucide-react';
+import { HeadphonesIcon, BarChart, Sparkles } from 'lucide-react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import AudiobookCard from "@/components/AudiobookCard";
+import BookList from "@/components/BookList";
+import BookDetails from "@/components/BookDetails";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import { useLanguage } from "@/context/LanguageContext";
+import { Book } from "@/types/book";
 
 // Sample data for each category
-const audiobooks = [
+const audiobooks: Book[] = [
   {
     id: '1',
     title: 'Dune',
@@ -73,7 +73,7 @@ const audiobooks = [
   }
 ];
 
-const newReleases = [
+const newReleases: Book[] = [
   {
     id: '7',
     title: 'The Midnight Library',
@@ -120,7 +120,7 @@ const newReleases = [
   }
 ];
 
-const trending = [
+const trending: Book[] = [
   {
     id: '14',
     title: 'Thinking, Fast and Slow',
@@ -180,254 +180,40 @@ const Explore = () => {
           
           <TabsContent value="audiobooks" className="mt-6">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* Left column with book list - now with ScrollArea */}
               <div className="md:col-span-1">
-                <ScrollArea className="h-[65vh] rounded-lg border border-hakim-medium/10 p-1">
-                  <div className="space-y-1 pr-3">
-                    {audiobooks.map((book, index) => (
-                      <div key={book.id}>
-                        <div 
-                          className={`flex items-center p-3 rounded-lg cursor-pointer transition-all hover:bg-hakim-medium/10 ${selectedAudiobook.id === book.id ? 'bg-hakim-medium/10' : ''}`}
-                          onClick={() => setSelectedAudiobook(book)}
-                        >
-                          <img 
-                            src={book.coverImage} 
-                            alt={book.title} 
-                            className="w-16 h-24 object-cover rounded-md" 
-                          />
-                          <div className="ml-4 flex-1">
-                            <h3 className={`font-medium line-clamp-1 ${selectedAudiobook.id === book.id ? 'text-hakim-light' : 'text-foreground'}`}>
-                              {book.title}
-                            </h3>
-                            <p className="text-sm text-foreground/70">
-                              {book.author}
-                            </p>
-                          </div>
-                          <ChevronRight className={`w-5 h-5 ${selectedAudiobook.id === book.id ? 'text-hakim-light' : 'text-foreground/50'}`} />
-                        </div>
-                        {index < audiobooks.length - 1 && (
-                          <Separator className="my-1 bg-hakim-medium/10" />
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </ScrollArea>
+                <BookList 
+                  books={audiobooks} 
+                  selectedBook={selectedAudiobook} 
+                  onSelectBook={setSelectedAudiobook} 
+                />
               </div>
-              
-              {/* Right column with book details */}
-              <div className="md:col-span-2 bg-hakim-dark/10 p-6 rounded-xl">
-                <div className="flex flex-col md:flex-row gap-6">
-                  <div className="flex-shrink-0">
-                    <img 
-                      src={selectedAudiobook.coverImage} 
-                      alt={selectedAudiobook.title} 
-                      className="w-40 h-60 object-cover rounded-xl shadow-lg" 
-                    />
-                  </div>
-                  
-                  <div className="flex-1">
-                    <h2 className="text-2xl font-bold mb-2">{selectedAudiobook.title}</h2>
-                    <p className="text-hakim-light mb-3">{t('by')} {selectedAudiobook.author}</p>
-                    
-                    <div className="flex flex-wrap gap-4 my-4">
-                      <div className="flex items-center space-x-1 bg-hakim-medium/10 px-3 py-1.5 rounded-full">
-                        <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
-                        <span className="text-sm">{selectedAudiobook.rating}</span>
-                      </div>
-                      
-                      <div className="flex items-center space-x-1 bg-hakim-medium/10 px-3 py-1.5 rounded-full">
-                        <Clock className="w-4 h-4 text-hakim-light" />
-                        <span className="text-sm">{selectedAudiobook.duration}</span>
-                      </div>
-                      
-                      <div className="flex items-center space-x-1 bg-hakim-medium/10 px-3 py-1.5 rounded-full">
-                        <BookOpenText className="w-4 h-4 text-hakim-light" />
-                        <span className="text-sm">{selectedAudiobook.category}</span>
-                      </div>
-                    </div>
-                    
-                    <p className="text-foreground/80 leading-relaxed my-4">
-                      {selectedAudiobook.description}
-                    </p>
-                    
-                    <div className="mt-6 flex flex-wrap gap-3">
-                      <Button variant="default" className="gap-2">
-                        {t('listen')}
-                      </Button>
-                      <Button variant="outline" className="gap-2">
-                        {t('addToLibrary')}
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <BookDetails book={selectedAudiobook} />
             </div>
           </TabsContent>
 
           <TabsContent value="new-releases" className="mt-6">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* Left column with book list - now with ScrollArea */}
               <div className="md:col-span-1">
-                <ScrollArea className="h-[65vh] rounded-lg border border-hakim-medium/10 p-1">
-                  <div className="space-y-1 pr-3">
-                    {newReleases.map((book, index) => (
-                      <div key={book.id}>
-                        <div 
-                          className={`flex items-center p-3 rounded-lg cursor-pointer transition-all hover:bg-hakim-medium/10 ${selectedNewRelease.id === book.id ? 'bg-hakim-medium/10' : ''}`}
-                          onClick={() => setSelectedNewRelease(book)}
-                        >
-                          <img 
-                            src={book.coverImage} 
-                            alt={book.title} 
-                            className="w-16 h-24 object-cover rounded-md" 
-                          />
-                          <div className="ml-4 flex-1">
-                            <h3 className={`font-medium line-clamp-1 ${selectedNewRelease.id === book.id ? 'text-hakim-light' : 'text-foreground'}`}>
-                              {book.title}
-                            </h3>
-                            <p className="text-sm text-foreground/70">
-                              {book.author}
-                            </p>
-                          </div>
-                          <ChevronRight className={`w-5 h-5 ${selectedNewRelease.id === book.id ? 'text-hakim-light' : 'text-foreground/50'}`} />
-                        </div>
-                        {index < newReleases.length - 1 && (
-                          <Separator className="my-1 bg-hakim-medium/10" />
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </ScrollArea>
+                <BookList 
+                  books={newReleases} 
+                  selectedBook={selectedNewRelease} 
+                  onSelectBook={setSelectedNewRelease} 
+                />
               </div>
-              
-              {/* Right column with book details */}
-              <div className="md:col-span-2 bg-hakim-dark/10 p-6 rounded-xl">
-                <div className="flex flex-col md:flex-row gap-6">
-                  <div className="flex-shrink-0">
-                    <img 
-                      src={selectedNewRelease.coverImage} 
-                      alt={selectedNewRelease.title} 
-                      className="w-40 h-60 object-cover rounded-xl shadow-lg" 
-                    />
-                  </div>
-                  
-                  <div className="flex-1">
-                    <h2 className="text-2xl font-bold mb-2">{selectedNewRelease.title}</h2>
-                    <p className="text-hakim-light mb-3">{t('by')} {selectedNewRelease.author}</p>
-                    
-                    <div className="flex flex-wrap gap-4 my-4">
-                      <div className="flex items-center space-x-1 bg-hakim-medium/10 px-3 py-1.5 rounded-full">
-                        <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
-                        <span className="text-sm">{selectedNewRelease.rating}</span>
-                      </div>
-                      
-                      <div className="flex items-center space-x-1 bg-hakim-medium/10 px-3 py-1.5 rounded-full">
-                        <Clock className="w-4 h-4 text-hakim-light" />
-                        <span className="text-sm">{selectedNewRelease.duration}</span>
-                      </div>
-                      
-                      <div className="flex items-center space-x-1 bg-hakim-medium/10 px-3 py-1.5 rounded-full">
-                        <Calendar className="w-4 h-4 text-hakim-light" />
-                        <span className="text-sm">{selectedNewRelease.releaseDate}</span>
-                      </div>
-                    </div>
-                    
-                    <p className="text-foreground/80 leading-relaxed my-4">
-                      {selectedNewRelease.description}
-                    </p>
-                    
-                    <div className="mt-6 flex flex-wrap gap-3">
-                      <Button variant="default" className="gap-2">
-                        {t('listen')}
-                      </Button>
-                      <Button variant="outline" className="gap-2">
-                        {t('addToLibrary')}
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <BookDetails book={selectedNewRelease} />
             </div>
           </TabsContent>
           
           <TabsContent value="trending" className="mt-6">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* Left column with book list - now with ScrollArea */}
               <div className="md:col-span-1">
-                <ScrollArea className="h-[65vh] rounded-lg border border-hakim-medium/10 p-1">
-                  <div className="space-y-1 pr-3">
-                    {trending.map((book, index) => (
-                      <div key={book.id}>
-                        <div 
-                          className={`flex items-center p-3 rounded-lg cursor-pointer transition-all hover:bg-hakim-medium/10 ${selectedTrending.id === book.id ? 'bg-hakim-medium/10' : ''}`}
-                          onClick={() => setSelectedTrending(book)}
-                        >
-                          <img 
-                            src={book.coverImage} 
-                            alt={book.title} 
-                            className="w-16 h-24 object-cover rounded-md" 
-                          />
-                          <div className="ml-4 flex-1">
-                            <h3 className={`font-medium line-clamp-1 ${selectedTrending.id === book.id ? 'text-hakim-light' : 'text-foreground'}`}>
-                              {book.title}
-                            </h3>
-                            <p className="text-sm text-foreground/70">
-                              {book.author}
-                            </p>
-                          </div>
-                          <ChevronRight className={`w-5 h-5 ${selectedTrending.id === book.id ? 'text-hakim-light' : 'text-foreground/50'}`} />
-                        </div>
-                        {index < trending.length - 1 && (
-                          <Separator className="my-1 bg-hakim-medium/10" />
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </ScrollArea>
+                <BookList 
+                  books={trending} 
+                  selectedBook={selectedTrending} 
+                  onSelectBook={setSelectedTrending} 
+                />
               </div>
-              
-              {/* Right column with book details */}
-              <div className="md:col-span-2 bg-hakim-dark/10 p-6 rounded-xl">
-                <div className="flex flex-col md:flex-row gap-6">
-                  <div className="flex-shrink-0">
-                    <img 
-                      src={selectedTrending.coverImage} 
-                      alt={selectedTrending.title} 
-                      className="w-40 h-60 object-cover rounded-xl shadow-lg" 
-                    />
-                  </div>
-                  
-                  <div className="flex-1">
-                    <h2 className="text-2xl font-bold mb-2">{selectedTrending.title}</h2>
-                    <p className="text-hakim-light mb-3">{t('by')} {selectedTrending.author}</p>
-                    
-                    <div className="flex flex-wrap gap-4 my-4">
-                      <div className="flex items-center space-x-1 bg-hakim-medium/10 px-3 py-1.5 rounded-full">
-                        <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
-                        <span className="text-sm">{selectedTrending.rating}</span>
-                      </div>
-                      
-                      <div className="flex items-center space-x-1 bg-hakim-medium/10 px-3 py-1.5 rounded-full">
-                        <Clock className="w-4 h-4 text-hakim-light" />
-                        <span className="text-sm">{selectedTrending.duration}</span>
-                      </div>
-                    </div>
-                    
-                    <p className="text-foreground/80 leading-relaxed my-4">
-                      {selectedTrending.description}
-                    </p>
-                    
-                    <div className="mt-6 flex flex-wrap gap-3">
-                      <Button variant="default" className="gap-2">
-                        {t('listen')}
-                      </Button>
-                      <Button variant="outline" className="gap-2">
-                        {t('addToLibrary')}
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <BookDetails book={selectedTrending} />
             </div>
           </TabsContent>
         </Tabs>
