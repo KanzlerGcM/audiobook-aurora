@@ -8,7 +8,7 @@ import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import { useLanguage } from "@/context/LanguageContext";
 import { Book } from "@/types/book";
-import { useMobile } from "@/hooks/use-mobile";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const audiobooks: Book[] = [
   {
@@ -146,7 +146,7 @@ const trending: Book[] = [
 const Explore = () => {
   const [activeTab, setActiveTab] = useState("audiobooks");
   const { t } = useLanguage();
-  const isMobile = useMobile();
+  const isMobile = useIsMobile();
   
   const [selectedAudiobook, setSelectedAudiobook] = useState(audiobooks[0]);
   const [selectedNewRelease, setSelectedNewRelease] = useState(newReleases[0]);
