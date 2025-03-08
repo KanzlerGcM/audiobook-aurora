@@ -1,29 +1,16 @@
 
-import { useState, useEffect, useRef } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Search, Menu, X, User, ChevronDown, Info, Mail, BookOpen } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import { Menu, X } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
-import TranslateButton from './TranslateButton';
 import Logo from './Logo';
-import SitePopupMenu from './SitePopupMenu';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import DesktopNav from './navbar/DesktopNav';
+import MobileNav from './navbar/MobileNav';
+import NavActions from './navbar/NavActions';
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [categoriesHover, setCategoriesHover] = useState(false);
   const location = useLocation();
   const { t } = useLanguage();
 
@@ -75,75 +62,13 @@ const Navbar = () => {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                to={link.path}
-                className={`text-sm transition-smooth hover:text-hakim-light ${
-                  location.pathname === link.path 
-                    ? 'text-hakim-light font-medium' 
-                    : 'text-hakim-gray'
-                }`}
-              >
-                {link.name}
-              </Link>
-            ))}
-            
-            {/* Categories Dropdown - Show on Hover */}
-            <div 
-              className="relative"
-              onMouseEnter={() => setCategoriesHover(true)}
-              onMouseLeave={() => setCategoriesHover(false)}
-            >
-              <button className="flex items-center space-x-1 text-sm text-hakim-gray hover:text-hakim-light transition-smooth">
-                <span>{t('categories')}</span>
-                <ChevronDown className="h-4 w-4" />
-              </button>
-              
-              {categoriesHover && (
-                <div className="absolute left-0 top-full mt-1 w-56 bg-hakim-darkest border border-hakim-medium/20 rounded-md shadow-lg z-50 animate-fade-in py-1">
-                  {categories.map((category) => (
-                    <Link
-                      key={category.name}
-                      to={category.path}
-                      className="block px-4 py-2 text-hakim-light hover:bg-hakim-dark text-sm"
-                    >
-                      {category.name}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
+          <DesktopNav 
+            navLinks={navLinks} 
+            categories={categories} 
+          />
 
           {/* Search, Site Menu and Account */}
-          <div className="hidden md:flex items-center space-x-4">
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button variant="ghost" size="icon" className="text-hakim-gray hover:text-hakim-light">
-                    <Search className="h-5 w-5" />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>{t('search')}</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-            <TranslateButton />
-            <SitePopupMenu />
-            <Link to="/login">
-              <Button variant="outline" size="sm" className="text-hakim-light">
-                {t('signIn')}
-              </Button>
-            </Link>
-            <Link to="/signup">
-              <Button variant="default" size="sm" className="bg-hakim-medium hover:bg-hakim-gray text-white">
-                {t('signUp')}
-              </Button>
-            </Link>
-          </div>
+          <NavActions />
 
           {/* Mobile Menu Button */}
           <button
@@ -157,93 +82,12 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Menu */}
-      {mobileMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 right-0 glass animate-slide-up border-t border-hakim-medium/10 shadow-sm">
-          <div className="container mx-auto py-4 px-6 flex flex-col space-y-4">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                to={link.path}
-                className={`py-2 transition-smooth ${
-                  location.pathname === link.path 
-                    ? 'text-hakim-light font-medium' 
-                    : 'text-hakim-gray'
-                }`}
-                onClick={closeMobileMenu}
-              >
-                {link.name}
-              </Link>
-            ))}
-            
-            {/* Categories in Mobile Menu */}
-            <div className="py-2">
-              <div className="text-hakim-light font-medium mb-2">{t('categories')}</div>
-              <div className="grid grid-cols-2 gap-2 pl-2">
-                {categories.map((category) => (
-                  <Link
-                    key={category.name}
-                    to={category.path}
-                    className="text-hakim-gray text-sm py-1 hover:text-hakim-light"
-                    onClick={closeMobileMenu}
-                  >
-                    {category.name}
-                  </Link>
-                ))}
-              </div>
-            </div>
-            
-            {/* About Us, Contact, Blog in Mobile Menu */}
-            <div className="py-2">
-              <div className="text-hakim-light font-medium mb-2">{t('company')}</div>
-              <div className="grid grid-cols-1 gap-2 pl-2">
-                <Link
-                  to="/about"
-                  className="flex items-center gap-2 text-hakim-gray text-sm py-1 hover:text-hakim-light"
-                  onClick={closeMobileMenu}
-                >
-                  <Info className="h-4 w-4" />
-                  <span>{t('aboutUs')}</span>
-                </Link>
-                <Link
-                  to="/contact"
-                  className="flex items-center gap-2 text-hakim-gray text-sm py-1 hover:text-hakim-light"
-                  onClick={closeMobileMenu}
-                >
-                  <Mail className="h-4 w-4" />
-                  <span>{t('contact')}</span>
-                </Link>
-                <Link
-                  to="/blog"
-                  className="flex items-center gap-2 text-hakim-gray text-sm py-1 hover:text-hakim-light"
-                  onClick={closeMobileMenu}
-                >
-                  <BookOpen className="h-4 w-4" />
-                  <span>{t('blog')}</span>
-                </Link>
-              </div>
-            </div>
-            
-            <div className="flex items-center gap-3 pt-2">
-              <Button variant="ghost" size="icon" className="text-hakim-gray">
-                <Search className="h-5 w-5" />
-              </Button>
-              <TranslateButton />
-              <div className="grid grid-cols-2 gap-2 flex-1">
-                <Link to="/login" className="w-full" onClick={closeMobileMenu}>
-                  <Button variant="outline" className="w-full">
-                    {t('signIn')}
-                  </Button>
-                </Link>
-                <Link to="/signup" className="w-full" onClick={closeMobileMenu}>
-                  <Button variant="default" className="w-full">
-                    {t('signUp')}
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      <MobileNav 
+        isOpen={mobileMenuOpen}
+        navLinks={navLinks}
+        categories={categories}
+        onClose={closeMobileMenu}
+      />
     </nav>
   );
 };
