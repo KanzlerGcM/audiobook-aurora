@@ -1,6 +1,7 @@
+
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Lock, Mail, User, Check } from "lucide-react";
+import { Lock, Mail, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -17,7 +18,7 @@ const SignUp = () => {
   const [name, setName] = useState("");
   const [terms, setTerms] = useState(false);
   const navigate = useNavigate();
-  const { signUp } = useAuth();
+  const { register } = useAuth();
   const { toast } = useToast();
   const { t } = useLanguage();
 
@@ -43,12 +44,14 @@ const SignUp = () => {
     }
 
     try {
-      await signUp(email, password, name);
-      toast({
-        title: "Sign up successful",
-        description: "You have successfully signed up.",
-      });
-      navigate("/");
+      const success = register(email, password, name);
+      if (success) {
+        toast({
+          title: "Sign up successful",
+          description: "You have successfully signed up.",
+        });
+        navigate("/");
+      }
     } catch (error: any) {
       toast({
         title: "Sign up failed",
@@ -116,7 +119,11 @@ const SignUp = () => {
               </div>
             </div>
             <div className="flex items-center space-x-2">
-              <Checkbox id="terms" checked={terms} onCheckedChange={setTerms} />
+              <Checkbox 
+                id="terms" 
+                checked={terms} 
+                onCheckedChange={(checked) => setTerms(checked === true)}
+              />
               <Label htmlFor="terms" className="text-sm text-hakim-light cursor-pointer">
                 {t('iAgreeToThe')} <Link to="/terms" className="text-primary">{t('termsOfService')}</Link>
               </Label>
