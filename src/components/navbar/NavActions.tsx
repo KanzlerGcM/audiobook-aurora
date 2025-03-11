@@ -1,12 +1,14 @@
 
 import { Link } from 'react-router-dom';
-import { Search, LogIn } from 'lucide-react';
+import { Search, LogIn, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/context/LanguageContext';
 import TranslateButton from '../TranslateButton';
+import { useAuth } from '@/hooks/use-auth';
 
 const NavActions = () => {
   const { t } = useLanguage();
+  const { isLoggedIn, userData, logout } = useAuth();
   
   return (
     <div className="flex items-center space-x-2">
@@ -16,12 +18,27 @@ const NavActions = () => {
       
       <TranslateButton />
       
-      <Link to="/login">
-        <Button variant="default" size="sm" className="gap-2">
-          <LogIn className="h-4 w-4" />
-          {t('signIn')}
-        </Button>
-      </Link>
+      {isLoggedIn ? (
+        <div className="flex items-center gap-2">
+          <span className="text-sm hidden md:inline-block">{userData?.name || 'User'}</span>
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={logout}
+            className="gap-2"
+          >
+            <User className="h-4 w-4" />
+            {t('signOut')}
+          </Button>
+        </div>
+      ) : (
+        <Link to="/login">
+          <Button variant="default" size="sm" className="gap-2">
+            <LogIn className="h-4 w-4" />
+            {t('signIn')}
+          </Button>
+        </Link>
+      )}
     </div>
   );
 };
