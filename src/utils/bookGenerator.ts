@@ -1,7 +1,7 @@
 
 import { Book } from "@/types/book";
 
-const categories = [
+const bookCategories = [
   "Fiction",
   "Non-Fiction",
   "Mystery",
@@ -59,7 +59,7 @@ export const generateRandomBooks = (count: number): Book[] => {
   const books: Book[] = [];
   
   for (let i = 0; i < count; i++) {
-    const category = categories[Math.floor(Math.random() * categories.length)];
+    const category = bookCategories[Math.floor(Math.random() * bookCategories.length)];
     const title = generateRandomTitle(category);
     
     books.push({
@@ -77,4 +77,4 @@ export const generateRandomBooks = (count: number): Book[] => {
   return books;
 };
 
-export const categories = categories;
+export const categories = bookCategories;
