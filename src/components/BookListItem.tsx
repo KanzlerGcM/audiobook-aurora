@@ -36,10 +36,10 @@ const BookListItem = ({
     
     if (isBookInLibrary) {
       removeFromLibrary(book.id);
-      toast.success(t('bookRemovedFromLibrary'));
+      toast.success(t('removeFromLibrarySuccess') || "Book removed from library");
     } else {
       addToLibrary(book.id);
-      toast.success(t('bookAddedToLibrary'));
+      toast.success(t('addToLibrarySuccess') || "Book added to library");
     }
   };
   

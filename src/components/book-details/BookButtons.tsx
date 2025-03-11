@@ -28,10 +28,10 @@ const BookButtons = ({ bookId, isLoggedIn, isPreviewPlaying, togglePreview, hand
   const handleLibraryToggle = () => {
     if (isBookInLibrary) {
       removeFromLibrary(bookId);
-      toast.success(t('bookRemovedFromLibrary'));
+      toast.success(t('removeFromLibrarySuccess') || "Book removed from library");
     } else {
       addToLibrary(bookId);
-      toast.success(t('bookAddedToLibrary'));
+      toast.success(t('addToLibrarySuccess') || "Book added to library");
     }
   };
 

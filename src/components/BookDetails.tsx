@@ -45,7 +45,7 @@ const BookDetails = ({ book }: BookDetailsProps) => {
     }
     
     addToLibrary(book.id);
-    toast.success(`"${book.title}" added to your library`);
+    toast.success(t('addToLibrarySuccess') || `"${book.title}" added to your library`);
   };
 
   return (
