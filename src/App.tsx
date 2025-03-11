@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -22,6 +21,20 @@ import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
 import Support from "./pages/Support";
 import Bestsellers from "./pages/Bestsellers";
+
+// Category Pages
+import Fiction from "./pages/categories/Fiction";
+import NonFiction from "./pages/categories/NonFiction";
+import Mystery from "./pages/categories/Mystery";
+import SciFi from "./pages/categories/SciFi";
+import Fantasy from "./pages/categories/Fantasy";
+import Romance from "./pages/categories/Romance";
+import Horror from "./pages/categories/Horror";
+import Biography from "./pages/categories/Biography";
+import History from "./pages/categories/History";
+import Business from "./pages/categories/Business";
+import SelfHelp from "./pages/categories/SelfHelp";
+import Technology from "./pages/categories/Technology";
 
 const queryClient = new QueryClient();
 
@@ -47,6 +60,20 @@ const App = () => (
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/support" element={<Support />} />
             <Route path="/bestsellers" element={<Bestsellers />} />
+            
+            <Route path="/categories/fiction" element={<Fiction />} />
+            <Route path="/categories/non-fiction" element={<NonFiction />} />
+            <Route path="/categories/mystery" element={<Mystery />} />
+            <Route path="/categories/sci-fi" element={<SciFi />} />
+            <Route path="/categories/fantasy" element={<Fantasy />} />
+            <Route path="/categories/romance" element={<Romance />} />
+            <Route path="/categories/horror" element={<Horror />} />
+            <Route path="/categories/biography" element={<Biography />} />
+            <Route path="/categories/history" element={<History />} />
+            <Route path="/categories/business" element={<Business />} />
+            <Route path="/categories/self-help" element={<SelfHelp />} />
+            <Route path="/categories/technology" element={<Technology />} />
+            
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
