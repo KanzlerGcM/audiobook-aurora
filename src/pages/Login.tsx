@@ -127,7 +127,7 @@ const Login = () => {
             {/* Audiobook Carousel with Animation */}
             {books.length > 0 && currentBook && (
               <div className="mt-6 w-full max-w-md mx-auto">
-                <div className="bg-hakim-dark/50 p-6 rounded-xl shadow-lg backdrop-blur-sm border border-white/10 relative overflow-hidden transition-all duration-500">
+                <div className="bg-hakim-dark/50 p-6 rounded-xl shadow-lg backdrop-blur-sm relative overflow-hidden transition-all duration-500">
                   <div className="flex gap-6 items-center">
                     <div className="flex-shrink-0 transform transition-all duration-500 hover:scale-105">
                       <div className="h-48 w-32 overflow-hidden rounded-lg shadow-lg relative group">
@@ -153,9 +153,6 @@ const Login = () => {
                         <p>⭐ {currentBook.rating}/5</p>
                         <p className="text-sm mt-1">{currentBook.duration}</p>
                       </div>
-                      <Link to={`/audiobook/${currentBook.id}`} className="mt-4 text-hakim-light hover:text-white text-sm underline underline-offset-4 block">
-                        {t('exploreMore')}
-                      </Link>
                     </div>
                   </div>
                   <div className="absolute bottom-4 right-4 flex space-x-2">
