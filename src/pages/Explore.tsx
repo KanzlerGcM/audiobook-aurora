@@ -23,6 +23,13 @@ const Explore = () => {
     threshold: 0.5,
   });
 
+  // Initial load
+  useEffect(() => {
+    if (activeTab === "audiobooks" && books.length === 0) {
+      loadMore();
+    }
+  }, [activeTab]);
+
   const loadMore = async () => {
     if (loading || !hasMore) return;
     
@@ -51,10 +58,10 @@ const Explore = () => {
     setHasMore(true);
     
     if (value === "new-releases") {
-      setBooks(newReleases);
+      setBooks(newReleases || []);
       setHasMore(false);
     } else if (value === "trending") {
-      setBooks(trending);
+      setBooks(trending || []);
       setHasMore(false);
     } else {
       loadMore();
@@ -73,7 +80,14 @@ const Explore = () => {
         
         <ExploreTabs activeTab={activeTab} onTabChange={handleTabChange} />
         
-        <BookContentSection books={books} />
+        {books.length > 0 ? (
+          <BookContentSection books={books} />
+        ) : (
+          <div className="w-full py-10 text-center">
+            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary mx-auto"></div>
+            <p className="mt-4 text-foreground/70">{t('loading')}</p>
+          </div>
+        )}
         
         {hasMore && (
           <div 
