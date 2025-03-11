@@ -1,152 +1,406 @@
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
 
-// Translation type definitions
-export type Language = 'en' | 'pt' | 'es';
+i18n
+  .use(initReactI18next)
+  .init({
+    debug: false,
+    fallbackLng: "en",
+    interpolation: {
+      escapeValue: false,
+    },
+    resources: {
+      en: {
+        translation: {
+          // General
+          loading: "Loading...",
+          error: "Error",
+          success: "Success",
+          home: "Home",
+          explore: "Explore",
+          categories: "Categories",
+          bestsellers: "Bestsellers",
+          about: "About",
+          blog: "Blog",
+          careers: "Careers",
+          faq: "FAQ",
+          termsOfService: "Terms of Service",
+          privacyPolicy: "Privacy Policy",
+          support: "Support",
+          contactUs: "Contact Us",
+          search: "Search",
+          signIn: "Sign In",
+          signOut: "Sign Out",
+          signUp: "Sign Up",
+          listen: "Listen",
+          preview: "Preview",
+          stopPreview: "Stop Preview",
+          by: "by",
+          youMightAlsoLike: "You might also like",
+          monthsAgo: "months ago",
+          selectChapter: "Select a chapter to start listening",
+          
+          // Index page
+          popularAudiobooks: "Popular audiobooks",
+          newReleases: "New releases",
+          trendingNow: "Trending now",
+          
+          // Sign up page
+          createAccount: "Create an account",
+          name: "Name",
+          yourName: "Your name",
+          email: "Email",
+          yourEmail: "Your email",
+          password: "Password",
+          yourPassword: "Your password",
+          iAgreeToThe: "I agree to the",
+          alreadyHaveAnAccount: "Already have an account",
+          
+          // Explore page
+          audiobooks: "Audiobooks",
+          
+          // Category page
+          fiction: "Fiction",
+          nonFiction: "Non-Fiction",
+          mystery: "Mystery",
+          mysteryThriller: "Mystery & Thriller",
+          sciFi: "Sci-Fi",
+          fantasy: "Fantasy",
+          romance: "Romance",
+          horror: "Horror",
+          biography: "Biography",
+          history: "History",
+          business: "Business",
+          selfHelp: "Self-Help",
+          technology: "Technology",
+          cookbooks: "Cookbooks",
+          
+          // Footer
+          copyright: "Copyright © 2024 Hakim",
+          
+          // Library related
+          library: "Your Library",
+          yourSavedAudiobooks: "Your saved audiobooks collection",
+          yourLibraryIsEmpty: "Your library is empty",
+          browseAudiobooksToAddToLibrary: "Browse our audiobook collection and add titles to your library",
+          exploreAudiobooks: "Explore Audiobooks",
+          removeFromLibrary: "Remove from Library",
+          addToLibrary: "Add to Library",
+        },
+      },
+      es: {
+        translation: {
+          // General
+          loading: "Cargando...",
+          error: "Error",
+          success: "Éxito",
+          home: "Inicio",
+          explore: "Explorar",
+          categories: "Categorías",
+          bestsellers: "Éxitos de venta",
+          about: "Acerca de",
+          blog: "Blog",
+          careers: "Carreras",
+          faq: "Preguntas frecuentes",
+          termsOfService: "Términos de servicio",
+          privacyPolicy: "Política de privacidad",
+          support: "Soporte",
+          contactUs: "Contáctenos",
+          search: "Buscar",
+          signIn: "Iniciar sesión",
+          signOut: "Cerrar sesión",
+          signUp: "Inscribirse",
+          listen: "Escuchar",
+          preview: "Vista previa",
+          stopPreview: "Detener vista previa",
+          by: "por",
+          youMightAlsoLike: "También te puede gustar",
+          monthsAgo: "meses atrás",
+          selectChapter: "Selecciona un capítulo para empezar a escuchar",
+          
+          // Index page
+          popularAudiobooks: "Audiolibros populares",
+          newReleases: "Nuevos lanzamientos",
+          trendingNow: "Tendencias actuales",
+          
+          // Sign up page
+          createAccount: "Crear una cuenta",
+          name: "Nombre",
+          yourName: "Tu nombre",
+          email: "Correo electrónico",
+          yourEmail: "Tu correo electrónico",
+          password: "Contraseña",
+          yourPassword: "Tu contraseña",
+          iAgreeToThe: "Estoy de acuerdo con los",
+          alreadyHaveAnAccount: "¿Ya tienes una cuenta?",
+          
+          // Explore page
+          audiobooks: "Audiolibros",
+          
+          // Category page
+          fiction: "Ficción",
+          nonFiction: "No ficción",
+          mystery: "Misterio",
+          mysteryThriller: "Misterio y suspense",
+          sciFi: "Ciencia ficción",
+          fantasy: "Fantasía",
+          romance: "Romance",
+          horror: "Terror",
+          biography: "Biografía",
+          history: "Historia",
+          business: "Negocios",
+          selfHelp: "Autoayuda",
+          technology: "Tecnología",
+          cookbooks: "Libros de cocina",
+          
+          // Footer
+          copyright: "Copyright © 2024 Hakim",
+          
+          // Library related
+          library: "Tu Biblioteca",
+          yourSavedAudiobooks: "Tu colección de audiolibros guardados",
+          yourLibraryIsEmpty: "Tu biblioteca está vacía",
+          browseAudiobooksToAddToLibrary: "Explora nuestra colección de audiolibros y añade títulos a tu biblioteca",
+          exploreAudiobooks: "Explorar Audiolibros",
+          removeFromLibrary: "Quitar de la Biblioteca",
+          addToLibrary: "Añadir a la Biblioteca",
+        },
+      },
+      pt: {
+        translation: {
+          // General
+          loading: "Carregando...",
+          error: "Erro",
+          success: "Sucesso",
+          home: "Início",
+          explore: "Explorar",
+          categories: "Categorias",
+          bestsellers: "Mais vendidos",
+          about: "Sobre",
+          blog: "Blog",
+          careers: "Carreiras",
+          faq: "Perguntas frequentes",
+          termsOfService: "Termos de serviço",
+          privacyPolicy: "Política de privacidade",
+          support: "Suporte",
+          contactUs: "Contate-nos",
+          search: "Pesquisar",
+          signIn: "Entrar",
+          signOut: "Sair",
+          signUp: "Inscrever-se",
+          listen: "Ouvir",
+          preview: "Pré-visualização",
+          stopPreview: "Parar pré-visualização",
+          by: "por",
+          youMightAlsoLike: "Você também pode gostar",
+          monthsAgo: "meses atrás",
+          selectChapter: "Selecione um capítulo para começar a ouvir",
+          
+          // Index page
+          popularAudiobooks: "Audiolivros populares",
+          newReleases: "Novos lançamentos",
+          trendingNow: "Tendências atuais",
+          
+          // Sign up page
+          createAccount: "Criar uma conta",
+          name: "Nome",
+          yourName: "Seu nome",
+          email: "Email",
+          yourEmail: "Seu email",
+          password: "Senha",
+          yourPassword: "Sua senha",
+          iAgreeToThe: "Eu concordo com os",
+          alreadyHaveAnAccount: "Já tem uma conta?",
+          
+          // Explore page
+          audiobooks: "Audiolivros",
+          
+          // Category page
+          fiction: "Ficção",
+          nonFiction: "Não ficção",
+          mystery: "Mistério",
+          mysteryThriller: "Mistério e suspense",
+          sciFi: "Ficção científica",
+          fantasy: "Fantasia",
+          romance: "Romance",
+          horror: "Terror",
+          biography: "Biografia",
+          history: "História",
+          business: "Negócios",
+          selfHelp: "Autoajuda",
+          technology: "Tecnologia",
+          cookbooks: "Livros de receitas",
+          
+          // Footer
+          copyright: "Copyright © 2024 Hakim",
+          
+          // Library related
+          library: "Sua Biblioteca",
+          yourSavedAudiobooks: "Sua coleção de audiolivros salvos",
+          yourLibraryIsEmpty: "Sua biblioteca está vazia",
+          browseAudiobooksToAddToLibrary: "Navegue pela nossa coleção de audiolivros e adicione títulos à sua biblioteca",
+          exploreAudiobooks: "Explorar Audiolivros",
+          removeFromLibrary: "Remover da Biblioteca",
+          addToLibrary: "Adicionar à Biblioteca",
+        },
+      },
+      fr: {
+        translation: {
+          // General
+          loading: "Chargement...",
+          error: "Erreur",
+          success: "Succès",
+          home: "Accueil",
+          explore: "Explorer",
+          categories: "Catégories",
+          bestsellers: "Meilleures ventes",
+          about: "À propos",
+          blog: "Blog",
+          careers: "Carrières",
+          faq: "FAQ",
+          termsOfService: "Conditions d'utilisation",
+          privacyPolicy: "Politique de confidentialité",
+          support: "Support",
+          contactUs: "Contactez-nous",
+          search: "Rechercher",
+          signIn: "Se connecter",
+          signOut: "Se déconnecter",
+          signUp: "S'inscrire",
+          listen: "Écouter",
+          preview: "Aperçu",
+          stopPreview: "Arrêter l'aperçu",
+          by: "par",
+          youMightAlsoLike: "Vous pourriez aussi aimer",
+          monthsAgo: "mois",
+          selectChapter: "Sélectionnez un chapitre pour commencer à écouter",
+          
+          // Index page
+          popularAudiobooks: "Livres audio populaires",
+          newReleases: "Nouvelles sorties",
+          trendingNow: "Tendances actuelles",
+          
+          // Sign up page
+          createAccount: "Créer un compte",
+          name: "Nom",
+          yourName: "Votre nom",
+          email: "Courriel",
+          yourEmail: "Votre courriel",
+          password: "Mot de passe",
+          yourPassword: "Votre mot de passe",
+          iAgreeToThe: "J'accepte les",
+          alreadyHaveAnAccount: "Vous avez déjà un compte?",
+          
+          // Explore page
+          audiobooks: "Livres audio",
+          
+          // Category page
+          fiction: "Fiction",
+          nonFiction: "Non-fiction",
+          mystery: "Mystère",
+          mysteryThriller: "Mystère et thriller",
+          sciFi: "Science-fiction",
+          fantasy: "Fantaisie",
+          romance: "Romance",
+          horror: "Horreur",
+          biography: "Biographie",
+          history: "Histoire",
+          business: "Affaires",
+          selfHelp: "Développement personnel",
+          technology: "Technologie",
+          cookbooks: "Livres de cuisine",
+          
+          // Footer
+          copyright: "Copyright © 2024 Hakim",
+          
+          // Library related
+          library: "Votre Bibliothèque",
+          yourSavedAudiobooks: "Votre collection d'audiolivres enregistrés",
+          yourLibraryIsEmpty: "Votre bibliothèque est vide",
+          browseAudiobooksToAddToLibrary: "Parcourez notre collection d'audiolivres et ajoutez des titres à votre bibliothèque",
+          exploreAudiobooks: "Explorer les Audiolivres",
+          removeFromLibrary: "Retirer de la Bibliothèque",
+          addToLibrary: "Ajouter à la Bibliothèque",
+        },
+      },
+      de: {
+        translation: {
+          // General
+          loading: "Laden...",
+          error: "Fehler",
+          success: "Erfolg",
+          home: "Startseite",
+          explore: "Entdecken",
+          categories: "Kategorien",
+          bestsellers: "Bestseller",
+          about: "Über",
+          blog: "Blog",
+          careers: "Karriere",
+          faq: "FAQ",
+          termsOfService: "Nutzungsbedingungen",
+          privacyPolicy: "Datenschutzrichtlinie",
+          support: "Support",
+          contactUs: "Kontakt",
+          search: "Suchen",
+          signIn: "Anmelden",
+          signOut: "Abmelden",
+          signUp: "Registrieren",
+          listen: "Hören",
+          preview: "Vorschau",
+          stopPreview: "Vorschau stoppen",
+          by: "von",
+          youMightAlsoLike: "Ihnen könnte auch gefallen",
+          monthsAgo: "Monate",
+          selectChapter: "Wählen Sie ein Kapitel zum Anhören aus",
+          
+          // Index page
+          popularAudiobooks: "Beliebte Hörbücher",
+          newReleases: "Neuerscheinungen",
+          trendingNow: "Aktuelle Trends",
+          
+          // Sign up page
+          createAccount: "Konto erstellen",
+          name: "Name",
+          yourName: "Ihr Name",
+          email: "E-Mail",
+          yourEmail: "Ihre E-Mail",
+          password: "Passwort",
+          yourPassword: "Ihr Passwort",
+          iAgreeToThe: "Ich stimme den",
+          alreadyHaveAnAccount: "Haben Sie bereits ein Konto?",
+          
+          // Explore page
+          audiobooks: "Hörbücher",
+          
+          // Category page
+          fiction: "Belletristik",
+          nonFiction: "Sachbücher",
+          mystery: "Krimi",
+          mysteryThriller: "Krimi & Thriller",
+          sciFi: "Science-Fiction",
+          fantasy: "Fantasy",
+          romance: "Romantik",
+          horror: "Horror",
+          biography: "Biografie",
+          history: "Geschichte",
+          business: "Wirtschaft",
+          selfHelp: "Selbsthilfe",
+          technology: "Technologie",
+          cookbooks: "Kochbücher",
+          
+          // Footer
+          copyright: "Copyright © 2024 Hakim",
+          
+          // Library related
+          library: "Ihre Bibliothek",
+          yourSavedAudiobooks: "Ihre gespeicherte Hörbuchsammlung",
+          yourLibraryIsEmpty: "Ihre Bibliothek ist leer",
+          browseAudiobooksToAddToLibrary: "Durchsuchen Sie unsere Hörbuchsammlung und fügen Sie Titel zu Ihrer Bibliothek hinzu",
+          exploreAudiobooks: "Hörbücher entdecken",
+          removeFromLibrary: "Aus der Bibliothek entfernen",
+          addToLibrary: "Zur Bibliothek hinzufügen",
+        },
+      },
+    },
+  });
 
-export interface TranslationEntry {
-  en: string;
-  pt: string;
-  es: string;
-}
-
-export interface TranslationMap {
-  [key: string]: TranslationEntry;
-}
-
-// Add your translations here
-export const translations: TranslationMap = {
-  // Navbar
-  'home': { en: 'Home', pt: 'Início', es: 'Inicio' },
-  'explore': { en: 'Explore', pt: 'Explorar', es: 'Explorar' },
-  'newReleases': { en: 'New Releases', pt: 'Novos Lançamentos', es: 'Nuevos Lanzamientos' },
-  'categories': { en: 'Categories', pt: 'Categorias', es: 'Categorías' },
-  'signIn': { en: 'Sign In', pt: 'Entrar', es: 'Iniciar sesión' },
-  'signUp': { en: 'Sign Up', pt: 'Cadastrar', es: 'Registrarse' },
-  'search': { en: 'Search', pt: 'Buscar', es: 'Buscar' },
-  
-  // Categories
-  'fiction': { en: 'Fiction', pt: 'Ficção', es: 'Ficción' },
-  'nonFiction': { en: 'Non-Fiction', pt: 'Não-Ficção', es: 'No Ficción' },
-  'mysteryThriller': { en: 'Mystery & Thriller', pt: 'Mistério & Suspense', es: 'Misterio y Suspenso' },
-  'scienceFiction': { en: 'Science Fiction', pt: 'Ficção Científica', es: 'Ciencia Ficción' },
-  'fantasy': { en: 'Fantasy', pt: 'Fantasia', es: 'Fantasía' },
-  'biography': { en: 'Biography', pt: 'Biografia', es: 'Biografía' },
-  'history': { en: 'History', pt: 'História', es: 'Historia' },
-  'selfHelp': { en: 'Self-Help', pt: 'Autoajuda', es: 'Autoayuda' },
-  'business': { en: 'Business', pt: 'Negócios', es: 'Negocios' },
-  'cookbooks': { en: 'Cookbooks', pt: 'Livros de Culinária', es: 'Libros de Cocina' },
-  
-  // Hero Section
-  'featuredAudiobook': { en: 'Featured Audiobook', pt: 'Audiolivro em Destaque', es: 'Audiolibro Destacado' },
-  'listenNow': { en: 'Listen Now', pt: 'Ouvir Agora', es: 'Escuchar Ahora' },
-  'viewDetails': { en: 'View Details', pt: 'Ver Detalhes', es: 'Ver Detalles' },
-  'reviews': { en: 'reviews', pt: 'avaliações', es: 'reseñas' },
-  'hours': { en: 'hours', pt: 'horas', es: 'horas' },
-  'minutes': { en: 'minutes', pt: 'minutos', es: 'minutos' },
-  
-  // Trending Section
-  'trendingNow': { en: 'Trending Now', pt: 'Em Alta', es: 'Tendencias' },
-  'popularAudiobooks': { en: 'Popular audiobooks this week', pt: 'Audiolivros populares desta semana', es: 'Audiolibros populares esta semana' },
-  'viewAll': { en: 'View All', pt: 'Ver Todos', es: 'Ver Todos' },
-  
-  // Footer
-  'aboutUs': { en: 'About Us', pt: 'Sobre Nós', es: 'Sobre Nosotros' },
-  'careers': { en: 'Careers', pt: 'Carreiras', es: 'Carreras' },
-  'contact': { en: 'Contact', pt: 'Contato', es: 'Contacto' },
-  'blog': { en: 'Blog', pt: 'Blog', es: 'Blog' },
-  'faq': { en: 'FAQ', pt: 'Perguntas Frequentes', es: 'Preguntas Frecuentes' },
-  'termsOfService': { en: 'Terms of Service', pt: 'Termos de Serviço', es: 'Términos de Servicio' },
-  'privacyPolicy': { en: 'Privacy Policy', pt: 'Política de Privacidade', es: 'Política de Privacidad' },
-  'support': { en: 'Support', pt: 'Suporte', es: 'Soporte' },
-  'allRightsReserved': { en: 'All rights reserved', pt: 'Todos os direitos reservados', es: 'Todos los derechos reservados' },
-  
-  // Explore Page
-  'audiobooks': { en: 'Audiobooks', pt: 'Audiolivros', es: 'Audiolibros' },
-  'loadMore': { en: 'Load More', pt: 'Carregar Mais', es: 'Cargar Más' },
-  
-  // Book Details Page
-  'addToLibrary': { en: 'Add to Library', pt: 'Adicionar à Biblioteca', es: 'Añadir a la Biblioteca' },
-  'shareBook': { en: 'Share Book', pt: 'Compartilhar Livro', es: 'Compartir Libro' },
-  'narrator': { en: 'Narrator', pt: 'Narrador', es: 'Narrador' },
-  'duration': { en: 'Duration', pt: 'Duração', es: 'Duración' },
-  'released': { en: 'Released', pt: 'Lançado em', es: 'Lanzado en' },
-  'publisher': { en: 'Publisher', pt: 'Editora', es: 'Editorial' },
-  'language': { en: 'Language', pt: 'Idioma', es: 'Idioma' },
-  'genre': { en: 'Genre', pt: 'Gênero', es: 'Género' },
-  'chapters': { en: 'Chapters', pt: 'Capítulos', es: 'Capítulos' },
-  'description': { en: 'Description', pt: 'Descrição', es: 'Descripción' },
-  'allChapters': { en: 'All Chapters', pt: 'Todos os Capítulos', es: 'Todos los Capítulos' },
-  'expand': { en: 'Expand All', pt: 'Expandir Todos', es: 'Expandir Todos' },
-  'collapse': { en: 'Collapse', pt: 'Recolher', es: 'Colapsar' },
-  'freePreview': { en: 'Free Preview', pt: 'Amostra Grátis', es: 'Vista Previa Gratuita' },
-  'showAllChapters': { en: 'Show All Chapters', pt: 'Mostrar Todos os Capítulos', es: 'Mostrar Todos los Capítulos' },
-  'youMightAlsoLike': { en: 'You Might Also Like', pt: 'Você Também Pode Gostar', es: 'Te Podría Gustar' },
-  'similarAudiobooks': { en: 'Similar audiobooks you\'ll enjoy', pt: 'Audiolivros semelhantes que você vai gostar', es: 'Audiolibros similares que te gustarán' },
-  'writeReview': { en: 'Write a Review', pt: 'Escrever uma Avaliação', es: 'Escribir una Reseña' },
-  'outOf5': { en: 'out of 5', pt: 'de 5', es: 'de 5' },
-  'monthsAgo': { en: 'months ago', pt: 'meses atrás', es: 'meses atrás' },
-  'loadMoreReviews': { en: 'Load More Reviews', pt: 'Carregar Mais Avaliações', es: 'Cargar Más Reseñas' },
-  'by': { en: 'by', pt: 'por', es: 'por' },
-  'chapter': { en: 'Chapter', pt: 'Capítulo', es: 'Capítulo' },
-  'selectChapter': { en: 'Select a chapter to start listening', pt: 'Selecione um capítulo para começar a ouvir', es: 'Selecciona un capítulo para comenzar a escuchar' },
-  
-  // Audio Player
-  'play': { en: 'Play', pt: 'Reproduzir', es: 'Reproducir' },
-  'pause': { en: 'Pause', pt: 'Pausar', es: 'Pausar' },
-  
-  // Feature Section on Home Page
-  'immerseYourself': { en: 'Immerse Yourself in Stories', pt: 'Mergulhe em Histórias', es: 'Sumérgete en Historias' },
-  'hakimBringsStories': { en: 'Hakim brings stories to life with immersive audiobook experiences that transport you to new worlds.', pt: 'Hakim dá vida às histórias com experiências imersivas em audiolivros que o transportam para novos mundos.', es: 'Hakim da vida a las historias con experiencias inmersivas de audiolibros que te transportan a nuevos mundos.' },
-  'curatedCollection': { en: 'Curated Collection', pt: 'Coleção Curada', es: 'Colección Curada' },
-  'accessThousands': { en: 'Access thousands of premium audiobooks across every genre, curated by experts.', pt: 'Acesse milhares de audiolivros premium em todos os gêneros, curados por especialistas.', es: 'Accede a miles de audiolibros premium en todos los géneros, seleccionados por expertos.' },
-  'studioQuality': { en: 'Studio Quality', pt: 'Qualidade de Estúdio', es: 'Calidad de Estudio' },
-  'experienceImmersive': { en: 'Experience immersive narration with studio-quality sound and professional voice actors.', pt: 'Experimente narração imersiva com som de qualidade de estúdio e atores de voz profissionais.', es: 'Experimenta narraciones inmersivas con sonido de calidad de estudio y actores de voz profesionales.' },
-  'smartBookmarks': { en: 'Smart Bookmarks', pt: 'Marcadores Inteligentes', es: 'Marcadores Inteligentes' },
-  'continueExactly': { en: 'Continue exactly where you left off, with cloud syncing across all your devices.', pt: 'Continue exatamente de onde parou, com sincronização na nuvem em todos os seus dispositivos.', es: 'Continúa exactamente donde lo dejaste, con sincronización en la nube en todos tus dispositivos.' },
-  'exclusiveTitles': { en: 'Exclusive Titles', pt: 'Títulos Exclusivos', es: 'Títulos Exclusivos' },
-  'enjoyExclusive': { en: "Enjoy exclusive audiobooks and original productions you won't find anywhere else.", pt: "Desfrute de audiolivros exclusivos e produções originais que você não encontrará em nenhum outro lugar.", es: "Disfruta de audiolibros exclusivos y producciones originais que no encontrarás en ningún otro lugar." },
-  
-  // Subscription Section
-  'startYourListening': { en: 'Start Your Listening Journey', pt: 'Comece Sua Jornada de Áudio', es: 'Comienza Tu Viaje de Escucha' },
-  'unlockUnlimited': { en: 'Unlock unlimited access to premium audiobooks with a 30-day free trial. Cancel anytime.', pt: 'Desbloqueie acesso ilimitado a audiolivros premium com um teste gratuito de 30 dias. Cancele quando quiser.', es: 'Desbloquea acceso ilimitado a audiolibros premium con una prueba gratuita de 30 días. Cancela cuando quieras.' },
-  'monthly': { en: 'Monthly', pt: 'Mensal', es: 'Mensual' },
-  'annual': { en: 'Annual', pt: 'Anual', es: 'Anual' },
-  'accessToAll': { en: 'Access to all audiobooks', pt: 'Acesso a todos os audiolivros', es: 'Acceso a todos los audiolibros' },
-  'oneAudiobookCredit': { en: 'One audiobook credit per month', pt: 'Um crédito de audiolivro por mês', es: 'Un crédito de audiolibro por mes' },
-  'offAdditional': { en: '30% off additional purchases', pt: '30% de desconto em compras adicionais', es: '30% de descuento en compras adicionales' },
-  'unlimitedListening': { en: 'Unlimited listening to featured titles', pt: 'Audição ilimitada de títulos em destaque', es: 'Escucha ilimitada de títulos destacados' },
-  'startFreeTrial': { en: 'Start Free Trial', pt: 'Iniciar Teste Gratuito', es: 'Comenzar Prueba Gratuita' },
-  'popularChoice': { en: 'Popular Choice', pt: 'Escolha Popular', es: 'Elección Popular' },
-  'saveYearly': { en: 'Save 25% yearly', pt: 'Economize 25% anualmente', es: 'Ahorra 25% anualmente' },
-  'audiobook': { en: 'audiobook', pt: 'audiolivro', es: 'audiolibro' },
-  
-  // Genres (for book cards)
-  'sci-fi': { en: 'Sci-Fi', pt: 'Ficção Científica', es: 'Ciencia Ficción' },
-  'thriller': { en: 'Thriller', pt: 'Suspense', es: 'Suspense' },
-  'romance': { en: 'Romance', pt: 'Romance', es: 'Romance' },
-  'horror': { en: 'Horror', pt: 'Terror', es: 'Terror' },
-  'adventure': { en: 'Adventure', pt: 'Aventura', es: 'Aventura' },
-  'memoir': { en: 'Memoir', pt: 'Memórias', es: 'Memorias' },
-  'english': { en: 'English', pt: 'Inglês', es: 'Inglés' },
-  'portuguese': { en: 'Portuguese', pt: 'Português', es: 'Portugués' },
-  'spanish': { en: 'Spanish', pt: 'Espanhol', es: 'Español' },
-  'self-help': { en: 'Self-Help', pt: 'Autoajuda', es: 'Autoayuda' },
-  'finance': { en: 'Finance', pt: 'Finanças', es: 'Finanzas' },
-  'talk show': { en: 'Talk Show', pt: 'Talk Show', es: 'Talk Show' },
-  'psychology': { en: 'Psychology', pt: 'Psicologia', es: 'Psicología' },
-  
-  // Index page
-  'bestsellers': { en: 'Bestsellers', pt: 'Mais Vendidos', es: 'Más Vendidos' },
-  'company': { en: 'Company', pt: 'Empresa', es: 'Empresa' },
-  'help': { en: 'Help', pt: 'Ajuda', es: 'Ayuda' },
-  
-  // Library
-  'myLibrary': { en: 'My Library', pt: 'Minha Biblioteca', es: 'Mi Biblioteca' },
-  'yourAudiobooks': { en: 'Your audiobooks collection', pt: 'Sua coleção de audiolivros', es: 'Tu colección de audiolibros' },
-  'emptyLibrary': { en: 'Your library is empty', pt: 'Sua biblioteca está vazia', es: 'Tu biblioteca está vacía' },
-  'pleaseLoginToViewLibrary': { en: 'Please login to view your library', pt: 'Por favor, faça login para ver sua biblioteca', es: 'Por favor, inicia sesión para ver tu biblioteca' },
-  'noBooks': { en: 'No books in your library yet', pt: 'Ainda não há livros em sua biblioteca', es: 'Aún no hay libros en tu biblioteca' },
-  'exploreBooks': { en: 'Explore Books', pt: 'Explorar Livros', es: 'Explorar Libros' },
-  'remove': { en: 'Remove', pt: 'Remover', es: 'Eliminar' },
-  'library': { en: 'Library', pt: 'Biblioteca', es: 'Biblioteca' },
-  'signOut': { en: 'Sign Out', pt: 'Sair', es: 'Cerrar Sesión' },
-};
+export default i18n;

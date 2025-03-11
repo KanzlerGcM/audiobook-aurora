@@ -17,8 +17,10 @@ const BookDetails = ({ book }: BookDetailsProps) => {
   const { t } = useLanguage();
   const [liked, setLiked] = useState<boolean | null>(null);
   const [isPreviewPlaying, setIsPreviewPlaying] = useState(false);
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, addToLibrary, isInLibrary, removeFromLibrary } = useAuth();
   const navigate = useNavigate();
+  
+  const isBookInLibrary = isLoggedIn && isInLibrary(book.id);
 
   const handleLike = () => {
     if (!isLoggedIn) {
@@ -64,6 +66,18 @@ const BookDetails = ({ book }: BookDetailsProps) => {
 
   const handleLogin = () => {
     navigate('/login');
+  };
+
+  const handleListenClick = () => {
+    navigate(`/audiobook/${book.id}`);
+  };
+
+  const handleLibraryToggle = () => {
+    if (isBookInLibrary) {
+      removeFromLibrary(book.id);
+    } else {
+      addToLibrary(book.id);
+    }
   };
 
   return (
@@ -137,11 +151,19 @@ const BookDetails = ({ book }: BookDetailsProps) => {
           <div className="mt-6 flex flex-wrap gap-3">
             {isLoggedIn ? (
               <>
-                <Button variant="default" className="gap-2">
+                <Button 
+                  variant="default" 
+                  className="gap-2"
+                  onClick={handleListenClick}
+                >
                   {t('listen')}
                 </Button>
-                <Button variant="outline" className="gap-2">
-                  {t('addToLibrary')}
+                <Button 
+                  variant={isBookInLibrary ? "secondary" : "outline"} 
+                  className="gap-2"
+                  onClick={handleLibraryToggle}
+                >
+                  {isBookInLibrary ? t('removeFromLibrary') : t('addToLibrary')}
                 </Button>
                 <Button 
                   variant="secondary" 

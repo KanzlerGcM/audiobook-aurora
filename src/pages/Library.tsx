@@ -1,99 +1,96 @@
 
-import { useState, useEffect } from 'react';
-import { BookX } from 'lucide-react';
-import { useLanguage } from '@/hooks/use-language';
-import { useAuth } from '@/hooks/use-auth';
-import { Book } from '@/types/book';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import AudiobookCard from '@/components/AudiobookCard';
-import { Button } from '@/components/ui/button';
-import { getAudiobooks, getBookById } from '@/data/books';
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { BookOpenText } from "lucide-react";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import { useLanguage } from "@/hooks/use-language";
+import { getBookById } from "@/data/books";
+import { Book } from "@/types/book";
+import { useAuth } from "@/hooks/use-auth";
+import AudiobookCard from "@/components/AudiobookCard";
+import { Button } from "@/components/ui/button";
 
 const Library = () => {
+  const [libraryBooks, setLibraryBooks] = useState<Book[]>([]);
+  const [loading, setLoading] = useState(true);
+  const { isLoggedIn, library } = useAuth();
+  const navigate = useNavigate();
   const { t } = useLanguage();
-  const { isLoggedIn, library, removeFromLibrary } = useAuth();
-  const [userBooks, setUserBooks] = useState<Book[]>([]);
-  
+
   useEffect(() => {
-    if (isLoggedIn && library) {
-      // Fetch books that are in user's library
-      const libraryBooks: Book[] = [];
-      library.forEach(bookId => {
-        const book = getBookById(bookId);
-        if (book) libraryBooks.push(book);
-      });
-      setUserBooks(libraryBooks);
-    } else {
-      setUserBooks([]);
+    if (!isLoggedIn) {
+      navigate("/login");
+      return;
     }
-  }, [isLoggedIn, library]);
-  
-  const handleRemoveBook = (bookId: string) => {
-    removeFromLibrary(bookId);
-  };
-  
+
+    const fetchBooks = () => {
+      const books: Book[] = [];
+      library.forEach((bookId) => {
+        const book = getBookById(bookId);
+        if (book) books.push(book);
+      });
+      setLibraryBooks(books);
+      setLoading(false);
+    };
+
+    fetchBooks();
+  }, [isLoggedIn, library, navigate]);
+
+  if (!isLoggedIn) {
+    return null; // Will navigate to login
+  }
+
   return (
-    <>
+    <div className="min-h-screen flex flex-col bg-background">
       <Navbar />
-      <div className="container mx-auto px-4 py-32">
+      
+      <main className="flex-1 container mx-auto px-4 md:px-6 py-8 pt-28">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-hakim-light">{t('myLibrary')}</h1>
-          <p className="text-hakim-gray mt-2">
-            {isLoggedIn 
-              ? userBooks.length > 0 
-                ? t('yourAudiobooks')
-                : t('emptyLibrary')
-              : t('pleaseLoginToViewLibrary')
-            }
-          </p>
+          <h1 className="text-3xl md:text-4xl font-bold mb-2">{t('library')}</h1>
+          <p className="text-foreground/70">{t('yourSavedAudiobooks')}</p>
         </div>
         
-        {!isLoggedIn ? (
-          <div className="text-center py-12">
-            <p className="text-hakim-gray mb-4">{t('pleaseLoginToViewLibrary')}</p>
-            <Button onClick={() => window.location.href = '/login'}>
-              {t('signIn')}
-            </Button>
+        {loading ? (
+          <div className="w-full py-10 text-center">
+            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary mx-auto"></div>
+            <p className="mt-4 text-foreground/70">{t('loading')}</p>
           </div>
-        ) : userBooks.length === 0 ? (
-          <div className="text-center py-12">
-            <BookX className="mx-auto h-16 w-16 text-hakim-gray/50 mb-4" />
-            <p className="text-hakim-gray mb-4">{t('noBooks')}</p>
-            <Button onClick={() => window.location.href = '/explore'}>
-              {t('exploreBooks')}
-            </Button>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {userBooks.map((book) => (
-              <div key={book.id} className="relative group">
-                <AudiobookCard 
-                  id={book.id}
-                  title={book.title}
-                  author={book.author}
-                  coverImage={book.coverImage}
-                  duration={book.duration || ""}
-                  rating={book.rating}
-                  category={book.category || ""}
-                  index={0}
-                />
-                <Button
-                  variant="destructive"
-                  size="sm"
-                  className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
-                  onClick={() => handleRemoveBook(book.id)}
-                >
-                  <BookX className="h-4 w-4 mr-1" />
-                  {t('remove')}
-                </Button>
-              </div>
+        ) : libraryBooks.length > 0 ? (
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+            {libraryBooks.map((book, index) => (
+              <AudiobookCard 
+                key={book.id}
+                id={book.id}
+                title={book.title}
+                author={book.author}
+                coverImage={book.coverImage}
+                duration={book.duration || "Unknown"}
+                rating={book.rating}
+                category={book.category || "Unknown"}
+                index={index}
+              />
             ))}
           </div>
+        ) : (
+          <div className="text-center py-16 bg-hakim-dark/10 rounded-xl">
+            <BookOpenText className="h-16 w-16 mx-auto mb-4 text-hakim-light/50" />
+            <h2 className="text-xl font-semibold mb-2">{t('yourLibraryIsEmpty')}</h2>
+            <p className="max-w-md mx-auto mb-6 text-foreground/70">
+              {t('browseAudiobooksToAddToLibrary')}
+            </p>
+            <Button 
+              onClick={() => navigate('/explore')}
+              variant="default"
+            >
+              {t('exploreAudiobooks')}
+            </Button>
+          </div>
         )}
-      </div>
+      </main>
+      
       <Footer />
-    </>
+    </div>
   );
 };
 

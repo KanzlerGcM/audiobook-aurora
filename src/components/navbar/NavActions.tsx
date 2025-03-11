@@ -16,11 +16,13 @@ const NavActions = () => {
         <Search className="h-5 w-5" />
       </Button>
       
-      <Link to="/library">
-        <Button variant="ghost" size="icon" className="text-hakim-gray hover:text-hakim-light" aria-label="Library">
-          <BookOpen className="h-5 w-5" />
-        </Button>
-      </Link>
+      {isLoggedIn && (
+        <Link to="/library">
+          <Button variant="ghost" size="icon" className="text-hakim-gray hover:text-hakim-light" aria-label="Library">
+            <BookOpen className="h-5 w-5" />
+          </Button>
+        </Link>
+      )}
       
       <TranslateButton />
       
