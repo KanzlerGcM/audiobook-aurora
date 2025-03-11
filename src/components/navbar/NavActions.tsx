@@ -1,6 +1,6 @@
 
 import { Link } from 'react-router-dom';
-import { Search, Headphones } from 'lucide-react';
+import { Search, Headphones, LogIn } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/context/LanguageContext';
 import TranslateButton from '../TranslateButton';
@@ -22,18 +22,12 @@ const NavActions = () => {
       
       <TranslateButton />
       
-      <div className="hidden md:flex items-center space-x-2">
-        <Link to="/login">
-          <Button variant="outline" size="sm">
-            {t('signIn')}
-          </Button>
-        </Link>
-        <Link to="/signup">
-          <Button variant="default" size="sm">
-            {t('signUp')}
-          </Button>
-        </Link>
-      </div>
+      <Link to="/login">
+        <Button variant="default" size="sm" className="gap-2">
+          <LogIn className="h-4 w-4" />
+          {t('signIn')}
+        </Button>
+      </Link>
     </div>
   );
 };

@@ -3,43 +3,11 @@ import { Link } from 'react-router-dom';
 import { useLanguage } from '@/context/LanguageContext';
 import Logo from './Logo';
 import { useState } from 'react';
-import AboutDialog from './dialogs/AboutDialog';
 import ContactDialog from './dialogs/ContactDialog';
-import BlogDialog from './dialogs/BlogDialog';
-import CareersDialog from './dialogs/CareersDialog';
-import FaqDialog from './dialogs/FaqDialog';
-import TermsDialog from './dialogs/TermsDialog';
-import PrivacyDialog from './dialogs/PrivacyDialog';
-import SupportDialog from './dialogs/SupportDialog';
-import ExploreDialog from './dialogs/ExploreDialog';
-import HelpDialog from './dialogs/HelpDialog';
 
 const Footer = () => {
   const { t } = useLanguage();
-  const [dialogOpen, setDialogOpen] = useState({
-    about: false,
-    contact: false,
-    blog: false,
-    careers: false,
-    faq: false,
-    terms: false,
-    privacy: false,
-    support: false,
-    explore: false,
-    help: false
-  });
-  
-  const [dialogTitle, setDialogTitle] = useState({
-    explore: '',
-    help: ''
-  });
-  
-  const openDialog = (dialog: keyof typeof dialogOpen, title?: string) => {
-    setDialogOpen({ ...dialogOpen, [dialog]: true });
-    if (title && (dialog === 'explore' || dialog === 'help')) {
-      setDialogTitle({ ...dialogTitle, [dialog]: title });
-    }
-  };
+  const [contactOpen, setContactOpen] = useState(false);
   
   return (
     <footer className="bg-hakim-dark pt-16 pb-8">
@@ -69,36 +37,24 @@ const Footer = () => {
             <h3 className="font-medium text-lg mb-4 text-white">{t('explore')}</h3>
             <ul className="space-y-3">
               <li>
-                <button
-                  onClick={() => openDialog('explore', t('categories'))}
-                  className="text-hakim-gray hover:text-hakim-light transition-colors text-left"
-                >
+                <Link to="/categories" className="text-hakim-gray hover:text-hakim-light transition-colors">
                   {t('categories')}
-                </button>
+                </Link>
               </li>
               <li>
-                <button
-                  onClick={() => openDialog('explore', t('trendingNow'))}
-                  className="text-hakim-gray hover:text-hakim-light transition-colors text-left"
-                >
+                <Link to="/trending" className="text-hakim-gray hover:text-hakim-light transition-colors">
                   {t('trendingNow')}
-                </button>
+                </Link>
               </li>
               <li>
-                <button
-                  onClick={() => openDialog('explore', t('newReleases'))}
-                  className="text-hakim-gray hover:text-hakim-light transition-colors text-left"
-                >
+                <Link to="/new-releases" className="text-hakim-gray hover:text-hakim-light transition-colors">
                   {t('newReleases')}
-                </button>
+                </Link>
               </li>
               <li>
-                <button
-                  onClick={() => openDialog('explore', 'Bestsellers')}
-                  className="text-hakim-gray hover:text-hakim-light transition-colors text-left"
-                >
+                <Link to="/bestsellers" className="text-hakim-gray hover:text-hakim-light transition-colors">
                   Bestsellers
-                </button>
+                </Link>
               </li>
             </ul>
           </div>
@@ -107,36 +63,27 @@ const Footer = () => {
             <h3 className="font-medium text-lg mb-4 text-white">Company</h3>
             <ul className="space-y-3">
               <li>
-                <button 
-                  onClick={() => openDialog('about')} 
-                  className="text-hakim-gray hover:text-hakim-light transition-colors text-left"
-                >
+                <Link to="/about" className="text-hakim-gray hover:text-hakim-light transition-colors">
                   {t('aboutUs')}
-                </button>
+                </Link>
               </li>
               <li>
                 <button 
-                  onClick={() => openDialog('contact')} 
+                  onClick={() => setContactOpen(true)} 
                   className="text-hakim-gray hover:text-hakim-light transition-colors text-left"
                 >
                   {t('contact')}
                 </button>
               </li>
               <li>
-                <button 
-                  onClick={() => openDialog('blog')} 
-                  className="text-hakim-gray hover:text-hakim-light transition-colors text-left"
-                >
+                <Link to="/blog" className="text-hakim-gray hover:text-hakim-light transition-colors">
                   {t('blog')}
-                </button>
+                </Link>
               </li>
               <li>
-                <button 
-                  onClick={() => openDialog('careers')}
-                  className="text-hakim-gray hover:text-hakim-light transition-colors text-left"
-                >
+                <Link to="/careers" className="text-hakim-gray hover:text-hakim-light transition-colors">
                   {t('careers')}
-                </button>
+                </Link>
               </li>
             </ul>
           </div>
@@ -145,36 +92,24 @@ const Footer = () => {
             <h3 className="font-medium text-lg mb-4 text-white">Help</h3>
             <ul className="space-y-3">
               <li>
-                <button 
-                  onClick={() => openDialog('help', 'FAQ')}
-                  className="text-hakim-gray hover:text-hakim-light transition-colors text-left"
-                >
+                <Link to="/faq" className="text-hakim-gray hover:text-hakim-light transition-colors">
                   {t('faq')}
-                </button>
+                </Link>
               </li>
               <li>
-                <button 
-                  onClick={() => openDialog('help', 'Terms of Service')}
-                  className="text-hakim-gray hover:text-hakim-light transition-colors text-left"
-                >
+                <Link to="/terms" className="text-hakim-gray hover:text-hakim-light transition-colors">
                   {t('termsOfService')}
-                </button>
+                </Link>
               </li>
               <li>
-                <button 
-                  onClick={() => openDialog('help', 'Privacy Policy')}
-                  className="text-hakim-gray hover:text-hakim-light transition-colors text-left"
-                >
+                <Link to="/privacy" className="text-hakim-gray hover:text-hakim-light transition-colors">
                   {t('privacyPolicy')}
-                </button>
+                </Link>
               </li>
               <li>
-                <button 
-                  onClick={() => openDialog('help', 'Support')}
-                  className="text-hakim-gray hover:text-hakim-light transition-colors text-left"
-                >
+                <Link to="/support" className="text-hakim-gray hover:text-hakim-light transition-colors">
                   {t('support')}
-                </button>
+                </Link>
               </li>
             </ul>
           </div>
@@ -194,48 +129,9 @@ const Footer = () => {
         </div>
       </div>
       
-      {/* Dialog components */}
-      <AboutDialog 
-        open={dialogOpen.about} 
-        onOpenChange={(open) => setDialogOpen(prev => ({ ...prev, about: open }))} 
-      />
       <ContactDialog 
-        open={dialogOpen.contact} 
-        onOpenChange={(open) => setDialogOpen(prev => ({ ...prev, contact: open }))} 
-      />
-      <BlogDialog 
-        open={dialogOpen.blog} 
-        onOpenChange={(open) => setDialogOpen(prev => ({ ...prev, blog: open }))} 
-      />
-      <CareersDialog
-        open={dialogOpen.careers}
-        onOpenChange={(open) => setDialogOpen(prev => ({ ...prev, careers: open }))}
-      />
-      <FaqDialog
-        open={dialogOpen.faq}
-        onOpenChange={(open) => setDialogOpen(prev => ({ ...prev, faq: open }))}
-      />
-      <TermsDialog
-        open={dialogOpen.terms}
-        onOpenChange={(open) => setDialogOpen(prev => ({ ...prev, terms: open }))}
-      />
-      <PrivacyDialog
-        open={dialogOpen.privacy}
-        onOpenChange={(open) => setDialogOpen(prev => ({ ...prev, privacy: open }))}
-      />
-      <SupportDialog
-        open={dialogOpen.support}
-        onOpenChange={(open) => setDialogOpen(prev => ({ ...prev, support: open }))}
-      />
-      <ExploreDialog
-        open={dialogOpen.explore}
-        onOpenChange={(open) => setDialogOpen(prev => ({ ...prev, explore: open }))}
-        title={dialogTitle.explore}
-      />
-      <HelpDialog
-        open={dialogOpen.help}
-        onOpenChange={(open) => setDialogOpen(prev => ({ ...prev, help: open }))}
-        title={dialogTitle.help}
+        open={contactOpen} 
+        onOpenChange={(open) => setContactOpen(open)} 
       />
     </footer>
   );
