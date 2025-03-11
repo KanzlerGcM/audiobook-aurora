@@ -127,7 +127,7 @@ const Login = () => {
             {/* Audiobook Carousel with Animation */}
             {books.length > 0 && currentBook && (
               <div className="mt-6 w-full max-w-md mx-auto">
-                <div className="bg-hakim-dark/50 p-6 rounded-xl shadow-lg backdrop-blur-sm relative overflow-hidden transition-all duration-500">
+                <div className="bg-background p-6 rounded-xl shadow-lg relative overflow-hidden transition-all duration-500">
                   <div className="flex gap-6 items-center">
                     <div className="flex-shrink-0 transform transition-all duration-500 hover:scale-105">
                       <div className="h-48 w-32 overflow-hidden rounded-lg shadow-lg relative group">
