@@ -18,16 +18,51 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [books, setBooks] = useState<Book[]>([]);
   const [currentBookIndex, setCurrentBookIndex] = useState(0);
+  const [welcomeMessage, setWelcomeMessage] = useState("");
   const { login } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+
+  // Welcome messages based on time of day and language
+  useEffect(() => {
+    const hour = new Date().getHours();
+    let greeting = "";
+    
+    if (hour >= 5 && hour < 12) {
+      greeting = language === 'en' ? 'Good morning!' : 
+                language === 'es' ? '¡Buenos días!' : 
+                language === 'fr' ? 'Bonjour!' : 
+                language === 'de' ? 'Guten Morgen!' : 'Bom dia!';
+    } else if (hour >= 12 && hour < 18) {
+      greeting = language === 'en' ? 'Good afternoon!' : 
+                language === 'es' ? '¡Buenas tardes!' : 
+                language === 'fr' ? 'Bon après-midi!' : 
+                language === 'de' ? 'Guten Tag!' : 'Boa tarde!';
+    } else {
+      greeting = language === 'en' ? 'Good evening!' : 
+                language === 'es' ? '¡Buenas noches!' : 
+                language === 'fr' ? 'Bonsoir!' : 
+                language === 'de' ? 'Guten Abend!' : 'Boa noite!';
+    }
+    
+    setWelcomeMessage(greeting);
+  }, [language]);
 
   // Fetch books for the carousel
   useEffect(() => {
     const fetchedBooks = getAudiobooks(1, 6);
     setBooks(fetchedBooks);
   }, []);
+
+  // Auto switching books in carousel
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentBookIndex(prevIndex => (prevIndex + 1) % books.length);
+    }, 5000); // Switch books every 5 seconds
+    
+    return () => clearInterval(interval);
+  }, [books.length]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -57,6 +92,21 @@ const Login = () => {
 
   const currentBook = books[currentBookIndex];
 
+  // Function to get login description based on language
+  const getLoginDescription = () => {
+    if (language === 'en') {
+      return "Dive into thousands of audiobooks from bestselling authors and emerging talents. Pick up where you left off on any device.";
+    } else if (language === 'es') {
+      return "Sumérgete en miles de audiolibros de autores superventas y talentos emergentes. Continúa donde lo dejaste en cualquier dispositivo.";
+    } else if (language === 'fr') {
+      return "Plongez dans des milliers de livres audio d'auteurs à succès et de talents émergents. Reprenez où vous vous êtes arrêté sur n'importe quel appareil.";
+    } else if (language === 'de') {
+      return "Tauchen Sie ein in Tausende von Hörbüchern von Bestsellerautoren und aufstrebenden Talenten. Machen Sie auf jedem Gerät dort weiter, wo Sie aufgehört haben.";
+    } else {
+      return "Mergulhe em milhares de audiolivros de autores best-sellers e talentos emergentes. Continue de onde parou em qualquer dispositivo.";
+    }
+  };
+
   return (
     <>
       <Navbar />
@@ -67,28 +117,36 @@ const Login = () => {
             Hakim
           </Link>
           <div className="relative z-10 mt-10">
-            <h2 className="text-3xl font-bold text-white">
-              {t('welcomeBack')}
+            <h2 className="text-3xl font-bold text-white mb-1">
+              {welcomeMessage} <span className="text-hakim-light">{t('welcomeBack')}</span>
             </h2>
             <p className="mt-3 text-lg text-hakim-gray mb-10">
-              {t('loginDescription')}
+              {getLoginDescription()}
             </p>
             
-            {/* Audiobook Carousel */}
+            {/* Audiobook Carousel with Animation */}
             {books.length > 0 && currentBook && (
               <div className="mt-6 w-full max-w-md mx-auto">
-                <div className="bg-hakim-dark/50 p-6 rounded-xl shadow-lg backdrop-blur-sm border border-white/10 relative overflow-hidden">
+                <div className="bg-hakim-dark/50 p-6 rounded-xl shadow-lg backdrop-blur-sm border border-white/10 relative overflow-hidden transition-all duration-500">
                   <div className="flex gap-6 items-center">
-                    <div className="flex-shrink-0">
-                      <div className="h-48 w-32 overflow-hidden rounded-lg shadow-lg transition-all duration-300 animate-fade-in">
+                    <div className="flex-shrink-0 transform transition-all duration-500 hover:scale-105">
+                      <div className="h-48 w-32 overflow-hidden rounded-lg shadow-lg relative group">
                         <img 
                           src={currentBook.coverImage} 
                           alt={currentBook.title} 
-                          className="h-full w-full object-cover"
+                          className="h-full w-full object-cover transition-all duration-500 group-hover:brightness-110"
                         />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-2">
+                          <Link 
+                            to={`/audiobook/${currentBook.id}`} 
+                            className="text-white text-xs font-medium px-2 py-1 bg-hakim-primary/80 rounded-full"
+                          >
+                            {t('preview')}
+                          </Link>
+                        </div>
                       </div>
                     </div>
-                    <div className="flex-grow">
+                    <div className="flex-grow animate-fade-in">
                       <h3 className="text-white font-bold text-xl line-clamp-2 mb-2">{currentBook.title}</h3>
                       <p className="text-hakim-light">{t('by')} {currentBook.author}</p>
                       <div className="mt-3 text-hakim-light">
@@ -123,8 +181,8 @@ const Login = () => {
                   {books.map((_, index) => (
                     <button
                       key={index}
-                      className={`mx-1 h-2 w-2 rounded-full ${
-                        index === currentBookIndex ? "bg-white" : "bg-white/30"
+                      className={`mx-1 h-2 w-2 rounded-full transition-all duration-300 ${
+                        index === currentBookIndex ? "bg-white w-4" : "bg-white/30"
                       }`}
                       onClick={() => setCurrentBookIndex(index)}
                     />
