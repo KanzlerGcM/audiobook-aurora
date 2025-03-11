@@ -1,9 +1,8 @@
-
 import { Book } from "@/types/book";
 import { generateRandomBooks } from "@/utils/bookGenerator";
 
-// Generate 100 random books - do this only once
-const allBooks = generateRandomBooks(100);
+// Generate 90 random books - do this only once
+const allBooks = generateRandomBooks(90);
 
 // Create a map to cache books by category for faster lookup
 const booksByCategory: Record<string, Book[]> = {};
