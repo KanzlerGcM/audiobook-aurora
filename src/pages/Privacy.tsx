@@ -1,7 +1,6 @@
-
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { useLanguage } from "@/context/LanguageContext";
+import { useLanguage } from "@/hooks/use-language";
 
 const Privacy = () => {
   const { t } = useLanguage();

@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { useLanguage } from "@/context/LanguageContext";
+import { useLanguage } from "@/hooks/use-language";
 import BookList from "@/components/BookList";
 import { getAudiobooks, bestsellers } from "@/data/books";
 import { Book } from "@/types/book";

@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Headphones } from 'lucide-react';
@@ -5,7 +6,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import AudioPlayer from '@/components/AudioPlayer';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { useLanguage } from '@/context/LanguageContext';
+import { useLanguage } from '@/hooks/use-language';
 
 import BookCoverActions from '@/components/book-details/BookCoverActions';
 import BookMetadata from '@/components/book-details/BookMetadata';

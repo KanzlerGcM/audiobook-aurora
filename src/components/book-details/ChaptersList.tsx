@@ -1,8 +1,7 @@
-
 import { Play, Pause, Music, Clock, Check, ChevronDown, ChevronRight } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { useState } from 'react';
-import { useLanguage } from "@/context/LanguageContext";
+import { useLanguage } from "@/hooks/use-language";
 
 interface Chapter {
   id: string;

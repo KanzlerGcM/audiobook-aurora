@@ -1,7 +1,7 @@
 
 import { Mail, Instagram, Twitter, Facebook } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { useLanguage } from '@/context/LanguageContext';
+import { useLanguage } from '@/hooks/use-language';
 import Logo from './Logo';
 import { useState } from 'react';
 import ContactDialog from './dialogs/ContactDialog';

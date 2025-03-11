@@ -1,120 +1,102 @@
-
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Eye, EyeOff, Mail, Lock, LogIn } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { Lock, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { useLanguage } from "@/context/LanguageContext";
+import { Label } from "@/components/ui/label";
+import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/use-auth";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { useAuth } from "@/hooks/use-auth";
-
-const formSchema = z.object({
-  email: z.string().email({
-    message: "Please enter a valid email address.",
-  }),
-  password: z.string().min(1, {
-    message: "Password is required.",
-  }),
-});
+import { useLanguage } from "@/hooks/use-language";
 
 const Login = () => {
-  const { t } = useLanguage();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const { login } = useAuth();
-  const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
+  const { toast } = useToast();
+  const { t } = useLanguage();
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-  });
-
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    login(values.email, values.password);
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await login(email, password);
+      toast({
+        title: "Login successful!",
+        description: "You are now logged in.",
+      });
+      navigate("/");
+    } catch (error: any) {
+      toast({
+        variant: "destructive",
+        title: "Login failed.",
+        description: error.message || "Invalid credentials.",
+      });
+    }
   };
 
   return (
     <>
       <Navbar />
-      <div className="container mx-auto px-4 py-32 flex justify-center">
-        <div className="w-full max-w-md">
-          <div className="bg-hakim-dark/30 p-8 rounded-xl border border-hakim-medium/20 shadow-lg">
-            <h1 className="text-2xl font-semibold text-hakim-light mb-6 flex items-center gap-2">
-              <LogIn className="w-5 h-5" />
-              {t('signIn')}
-            </h1>
-            
-            <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>{t('email')}</FormLabel>
-                      <FormControl>
-                        <div className="relative">
-                          <Input placeholder="your@email.com" {...field} />
-                          <Mail className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-hakim-gray" />
-                        </div>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                
-                <FormField
-                  control={form.control}
-                  name="password"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>{t('password')}</FormLabel>
-                      <FormControl>
-                        <div className="relative">
-                          <Input 
-                            type={showPassword ? "text" : "password"} 
-                            placeholder="••••••••" 
-                            {...field} 
-                          />
-                          <button 
-                            type="button"
-                            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-hakim-gray"
-                            onClick={() => setShowPassword(!showPassword)}
-                          >
-                            {showPassword ? 
-                              <EyeOff className="h-4 w-4" /> : 
-                              <Eye className="h-4 w-4" />
-                            }
-                          </button>
-                        </div>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                
-                <div className="flex justify-end">
-                  <Link 
-                    to="/forgot-password" 
-                    className="text-sm text-hakim-light hover:underline"
-                  >
-                    {t('forgotPassword')}
-                  </Link>
-                </div>
-                
-                <Button type="submit" className="w-full">{t('signIn')}</Button>
-              </form>
-            </Form>
-            
-            <div className="mt-6 text-center text-sm">
-              <p>{t('dontHaveAccount')} <Link to="/signup" className="text-hakim-light hover:underline">{t('signUp')}</Link></p>
+      <div className="container relative h-[calc(100vh-5rem)] flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
+        <div className="relative hidden h-full flex-col p-8 text-muted-foreground antialiased lg:flex">
+          <div className="absolute inset-0 bg-hakim-dark/30 z-0 rounded-r-full" />
+          <Link to="/" className="mb-6 font-semibold">
+            Hakim
+          </Link>
+          <div className="relative z-10 mt-20">
+            <h2 className="text-3xl font-bold text-white">
+              {t('welcomeBack')}
+            </h2>
+            <p className="mt-3 text-lg text-hakim-gray">
+              {t('loginDescription')}
+            </p>
+          </div>
+        </div>
+        <div className="lg:p-8">
+          <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
+            <div className="flex flex-col space-y-2 text-center">
+              <h1 className="text-2xl font-semibold">{t('signIn')}</h1>
+              <p className="text-sm text-muted-foreground">
+                {t('enterCredentials')}
+              </p>
             </div>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  id="email"
+                  placeholder="Enter your email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="password">{t('password')}</Label>
+                <Input
+                  id="password"
+                  placeholder="Enter your password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
+              <Button className="w-full" type="submit">
+                <Lock className="mr-2 h-4 w-4" />
+                {t('signIn')}
+              </Button>
+            </form>
+            <p className="px-8 text-center text-sm text-muted-foreground">
+              {t('notAMember')}
+              <Link
+                to="/signup"
+                className="hover:text-hakim-light ml-1 underline underline-offset-4"
+              >
+                {t('signUp')}
+              </Link>
+            </p>
           </div>
         </div>
       </div>

@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { 
   Play, 
@@ -12,7 +11,7 @@ import {
   Clock
 } from 'lucide-react';
 import { Slider } from '@/components/ui/slider';
-import { useLanguage } from '@/context/LanguageContext';
+import { useLanguage } from '@/hooks/use-language';
 
 interface AudioPlayerProps {
   title: string;
@@ -52,12 +51,10 @@ const AudioPlayer = ({
     return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
   };
 
-  // Demo purposes - simulate progress
   useEffect(() => {
     let interval: NodeJS.Timeout;
     
     if (isPlaying) {
-      // For demo, we'll just increment the progress
       interval = setInterval(() => {
         setProgress(prev => {
           if (prev >= 100) {
@@ -66,8 +63,7 @@ const AudioPlayer = ({
           }
           const newProgress = prev + 0.5;
           
-          // Update current time based on progress (mock for demo)
-          const mockDurationSeconds = 360; // 6 minutes in seconds
+          const mockDurationSeconds = 360;
           const currentSeconds = (newProgress / 100) * mockDurationSeconds;
           setCurrentTime(formatTime(currentSeconds));
           
@@ -75,7 +71,6 @@ const AudioPlayer = ({
         });
       }, 1000);
       
-      // Set a mock duration
       setDuration('6:00');
     }
     

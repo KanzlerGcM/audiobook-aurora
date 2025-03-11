@@ -6,7 +6,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import BookDetails from '@/components/BookDetails';
 import { Book } from "@/types/book";
-import { useLanguage } from "@/context/LanguageContext";
+import { useLanguage } from "@/hooks/use-language";
 import AudiobookCard from '@/components/AudiobookCard';
 
 const AudiobookDetails = () => {

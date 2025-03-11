@@ -1,8 +1,7 @@
-
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Play, Clock, Star, Headphones } from 'lucide-react';
-import { useLanguage } from '@/context/LanguageContext';
+import { useLanguage } from '@/hooks/use-language';
 
 interface AudiobookCardProps {
   id: string;
@@ -29,7 +28,6 @@ const AudiobookCard = ({
   const [imageLoaded, setImageLoaded] = useState(false);
   const { t } = useLanguage();
 
-  // Convert category to lowercase for use as translation key
   const categoryKey = category.toLowerCase();
 
   return (

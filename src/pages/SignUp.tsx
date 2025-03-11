@@ -1,165 +1,135 @@
-
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Eye, EyeOff, Mail, Lock, UserPlus } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { Lock, Mail, User, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { useLanguage } from "@/context/LanguageContext";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/use-auth";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { useAuth } from "@/hooks/use-auth";
-
-const formSchema = z.object({
-  name: z.string().min(2, {
-    message: "Name must be at least 2 characters.",
-  }),
-  email: z.string().email({
-    message: "Please enter a valid email address.",
-  }),
-  password: z.string().min(8, {
-    message: "Password must be at least 8 characters.",
-  }),
-  confirmPassword: z.string(),
-}).refine((data) => data.password === data.confirmPassword, {
-  message: "Passwords don't match",
-  path: ["confirmPassword"],
-});
+import { useLanguage } from "@/hooks/use-language";
 
 const SignUp = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [terms, setTerms] = useState(false);
+  const navigate = useNavigate();
+  const { signUp } = useAuth();
+  const { toast } = useToast();
   const { t } = useLanguage();
-  const { register } = useAuth();
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-    },
-  });
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    register(values.email, values.password, values.name);
+    if (!email || !password || !name) {
+      toast({
+        title: "Missing fields",
+        description: "Please fill in all fields.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (!terms) {
+      toast({
+        title: "Terms not accepted",
+        description: "Please accept the terms and conditions.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      await signUp(email, password, name);
+      toast({
+        title: "Sign up successful",
+        description: "You have successfully signed up.",
+      });
+      navigate("/");
+    } catch (error: any) {
+      toast({
+        title: "Sign up failed",
+        description: error.message || "Something went wrong.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
     <>
       <Navbar />
-      <div className="container mx-auto px-4 py-32 flex justify-center">
-        <div className="w-full max-w-md">
-          <div className="bg-hakim-dark/30 p-8 rounded-xl border border-hakim-medium/20 shadow-lg">
-            <h1 className="text-2xl font-semibold text-hakim-light mb-6 flex items-center gap-2">
-              <UserPlus className="w-5 h-5" />
-              {t('signUp')}
-            </h1>
-            
-            <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                <FormField
-                  control={form.control}
-                  name="name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>{t('fullName')}</FormLabel>
-                      <FormControl>
-                        <Input placeholder="John Doe" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
+      <div className="flex items-center justify-center h-screen bg-background">
+        <div className="bg-hakim-dark/30 rounded-lg shadow-lg p-8 w-full max-w-md">
+          <h2 className="text-2xl font-bold text-center text-hakim-light mb-6">
+            {t('createAccount')}
+          </h2>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <Label htmlFor="name" className="text-hakim-light">
+                {t('name')}
+              </Label>
+              <div className="relative">
+                <Input
+                  id="name"
+                  type="text"
+                  placeholder={t('yourName')}
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="pl-10"
                 />
-                
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>{t('email')}</FormLabel>
-                      <FormControl>
-                        <div className="relative">
-                          <Input placeholder="your@email.com" {...field} />
-                          <Mail className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-hakim-gray" />
-                        </div>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                
-                <FormField
-                  control={form.control}
-                  name="password"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>{t('password')}</FormLabel>
-                      <FormControl>
-                        <div className="relative">
-                          <Input 
-                            type={showPassword ? "text" : "password"} 
-                            placeholder="••••••••" 
-                            {...field} 
-                          />
-                          <button 
-                            type="button"
-                            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-hakim-gray"
-                            onClick={() => setShowPassword(!showPassword)}
-                          >
-                            {showPassword ? 
-                              <EyeOff className="h-4 w-4" /> : 
-                              <Eye className="h-4 w-4" />
-                            }
-                          </button>
-                        </div>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                
-                <FormField
-                  control={form.control}
-                  name="confirmPassword"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>{t('confirmPassword')}</FormLabel>
-                      <FormControl>
-                        <div className="relative">
-                          <Input 
-                            type={showConfirmPassword ? "text" : "password"} 
-                            placeholder="••••••••" 
-                            {...field} 
-                          />
-                          <button 
-                            type="button"
-                            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-hakim-gray"
-                            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                          >
-                            {showConfirmPassword ? 
-                              <EyeOff className="h-4 w-4" /> : 
-                              <Eye className="h-4 w-4" />
-                            }
-                          </button>
-                        </div>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                
-                <Button type="submit" className="w-full">{t('createAccount')}</Button>
-              </form>
-            </Form>
-            
-            <div className="mt-6 text-center text-sm">
-              <p>{t('alreadyHaveAccount')} <Link to="/login" className="text-hakim-light hover:underline">{t('signIn')}</Link></p>
+                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-hakim-gray" />
+              </div>
             </div>
+            <div>
+              <Label htmlFor="email" className="text-hakim-light">
+                {t('email')}
+              </Label>
+              <div className="relative">
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder={t('yourEmail')}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="pl-10"
+                />
+                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-hakim-gray" />
+              </div>
+            </div>
+            <div>
+              <Label htmlFor="password" className="text-hakim-light">
+                {t('password')}
+              </Label>
+              <div className="relative">
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder={t('yourPassword')}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="pl-10"
+                />
+                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-hakim-gray" />
+              </div>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Checkbox id="terms" checked={terms} onCheckedChange={setTerms} />
+              <Label htmlFor="terms" className="text-sm text-hakim-light cursor-pointer">
+                {t('iAgreeToThe')} <Link to="/terms" className="text-primary">{t('termsOfService')}</Link>
+              </Label>
+            </div>
+            <Button className="w-full" type="submit">
+              {t('signUp')}
+            </Button>
+          </form>
+          <div className="mt-4 text-center">
+            <span className="text-sm text-hakim-gray">{t('alreadyHaveAnAccount')}?</span>
+            <Link to="/login" className="text-sm text-primary hover:underline ml-1">
+              {t('signIn')}
+            </Link>
           </div>
         </div>
       </div>

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Search, Info, Mail, BookOpen } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useLanguage } from '@/context/LanguageContext';
+import { useLanguage } from '@/hooks/use-language';
 import TranslateButton from '../TranslateButton';
 import AboutDialog from '../dialogs/AboutDialog';
 import ContactDialog from '../dialogs/ContactDialog';

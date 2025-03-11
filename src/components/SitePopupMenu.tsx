@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Info, Mail, BookOpen } from 'lucide-react';
-import { useLanguage } from '@/context/LanguageContext';
+import { useLanguage } from '@/hooks/use-language';
 import {
   DropdownMenu,
   DropdownMenuContent,

@@ -1,73 +1,16 @@
-
-import { useState } from 'react';
-import { Clock, Star, Calendar, ChevronRight } from 'lucide-react';
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
+import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { useLanguage } from "@/context/LanguageContext";
-
-// Sample data for new releases
-const newReleases = [
-  {
-    id: '1',
-    title: 'The Midnight Library',
-    author: 'Matt Haig',
-    coverImage: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=1798&auto=format&fit=crop',
-    duration: '8h 50m',
-    rating: 4.5,
-    category: 'Fiction',
-    releaseDate: '2023-09-15',
-    description: "Between life and death there is a library, and within that library, the shelves go on forever. Every book provides a chance to try another life you could have lived. See what would have happened if you had made different choices."
-  },
-  {
-    id: '2',
-    title: 'Atomic Habits',
-    author: 'James Clear',
-    coverImage: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?q=80&w=1974&auto=format&fit=crop',
-    duration: '5h 35m',
-    rating: 4.9,
-    category: 'Self-Help',
-    releaseDate: '2023-09-10',
-    description: "No matter your goals, Atomic Habits offers a proven framework for improving every day. James Clear reveals practical strategies that will teach you how to form good habits, break bad ones, and master tiny behaviors that lead to remarkable results."
-  },
-  {
-    id: '3',
-    title: 'Project Hail Mary',
-    author: 'Andy Weir',
-    coverImage: 'https://images.unsplash.com/photo-1614728263952-84ea256f9679?q=80&w=1774&auto=format&fit=crop',
-    duration: '16h 10m',
-    rating: 4.7,
-    category: 'Sci-Fi',
-    releaseDate: '2023-09-05',
-    description: "Ryland Grace is the sole survivor on a desperate, last-chance mission—and if he fails, humanity and the Earth itself will perish. The only problem is, he doesn't remember that. He can't even remember his own name, let alone the nature of his assignment."
-  },
-  {
-    id: '4',
-    title: 'The Psychology of Money',
-    author: 'Morgan Housel',
-    coverImage: 'https://images.unsplash.com/photo-1633158829585-23ba8f7c8caf?q=80&w=1740&auto=format&fit=crop',
-    duration: '5h 42m',
-    rating: 4.7,
-    category: 'Finance',
-    releaseDate: '2023-08-28',
-    description: "Doing well with money isn't necessarily about what you know. It's about how you behave. And behavior is hard to teach, even to really smart people. In The Psychology of Money, award-winning author Morgan Housel shares 19 short stories exploring the strange ways people think about money."
-  },
-  {
-    id: '5',
-    title: 'A Court of Thorns and Roses',
-    author: 'Sarah J. Maas',
-    coverImage: 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1740&auto=format&fit=crop',
-    duration: '16h 7m',
-    rating: 4.6, 
-    category: 'Fantasy',
-    releaseDate: '2023-08-22',
-    description: "When nineteen-year-old huntress Feyre kills a wolf in the woods, a terrifying creature arrives to demand retribution. Dragged to a treacherous magical land she only knows about from legends, Feyre discovers that her captor is not truly a beast, but one of the lethal, immortal faeries who once ruled her world."
-  }
-];
+import { Link } from "react-router-dom";
+import AudiobookCard from "@/components/AudiobookCard";
+import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/hooks/use-language";
+import { newReleases as newReleaseBooks } from "@/data/books";
+import { Book } from "@/types/book";
 
 const NewReleases = () => {
-  const [selectedBook, setSelectedBook] = useState(newReleases[0]);
+  const [selectedBook, setSelectedBook] = useState(newReleaseBooks[0]);
   const { t } = useLanguage();
 
   return (
@@ -84,7 +27,7 @@ const NewReleases = () => {
           {/* Left column with book list */}
           <div className="md:col-span-1">
             <div className="space-y-1">
-              {newReleases.map((book, index) => (
+              {newReleaseBooks.map((book, index) => (
                 <div key={book.id}>
                   <div 
                     className={`flex items-center p-3 rounded-lg cursor-pointer transition-all hover:bg-hakim-medium/10 ${selectedBook.id === book.id ? 'bg-hakim-medium/10' : ''}`}
@@ -105,7 +48,7 @@ const NewReleases = () => {
                     </div>
                     <ChevronRight className={`w-5 h-5 ${selectedBook.id === book.id ? 'text-hakim-light' : 'text-foreground/50'}`} />
                   </div>
-                  {index < newReleases.length - 1 && (
+                  {index < newReleaseBooks.length - 1 && (
                     <Separator className="my-1 bg-hakim-medium/10" />
                   )}
                 </div>

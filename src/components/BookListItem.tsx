@@ -2,7 +2,7 @@
 import { ChevronRight, BookPlus } from 'lucide-react';
 import { Separator } from "@/components/ui/separator";
 import { Book } from "@/types/book";
-import { useLanguage } from "@/context/LanguageContext";
+import { useLanguage } from "@/hooks/use-language";
 import { useLocation } from "react-router-dom";
 
 interface BookListItemProps {

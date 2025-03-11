@@ -4,7 +4,7 @@ import ExploreTabs from "@/components/explore/ExploreTabs";
 import BookContentSection from "@/components/explore/BookContentSection";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
-import { useLanguage } from "@/context/LanguageContext";
+import { useLanguage } from "@/hooks/use-language";
 import { getAudiobooks, newReleases, trending } from "@/data/books";
 import { Book } from "@/types/book";
 import { useInView } from "react-intersection-observer";

@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
-import { useLanguage } from '@/context/LanguageContext';
+import { useLanguage } from '@/hooks/use-language';
 import Logo from './Logo';
 import DesktopNav from './navbar/DesktopNav';
 import MobileNav from './navbar/MobileNav';

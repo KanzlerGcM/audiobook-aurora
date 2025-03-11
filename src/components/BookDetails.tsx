@@ -2,7 +2,7 @@
 import { Star, Clock, Calendar, BookOpenText, ThumbsUp, ThumbsDown, Headphones, Lock } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Book } from "@/types/book";
-import { useLanguage } from "@/context/LanguageContext";
+import { useLanguage } from "@/hooks/use-language";
 import { useState } from 'react';
 import { toast } from 'sonner';
 import AudioPlayer from '@/components/AudioPlayer';

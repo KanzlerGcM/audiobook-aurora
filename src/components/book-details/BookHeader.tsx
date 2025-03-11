@@ -1,6 +1,5 @@
-
 import { Star } from 'lucide-react';
-import { useLanguage } from "@/context/LanguageContext";
+import { useLanguage } from "@/hooks/use-language";
 
 interface BookHeaderProps {
   title: string;

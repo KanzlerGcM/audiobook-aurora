@@ -1,8 +1,7 @@
-
 import { ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import AudiobookCard from "@/components/AudiobookCard";
-import { useLanguage } from "@/context/LanguageContext";
+import { useLanguage } from "@/hooks/use-language";
 
 interface RelatedBook {
   id: string;
