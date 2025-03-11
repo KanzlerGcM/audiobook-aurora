@@ -47,6 +47,7 @@
   html {
     font-family: 'Inter', sans-serif;
     -webkit-font-smoothing: antialiased;
+    scroll-behavior: smooth;
   }
   
   body {
@@ -56,6 +57,11 @@
   
   h1, h2, h3, h4, h5, h6 {
     @apply font-medium tracking-tight;
+  }
+
+  /* Improved focus styles for accessibility */
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-hakim-light/50;
   }
 }
 
@@ -70,6 +76,14 @@
   
   .text-balance {
     text-wrap: balance;
+  }
+
+  .interactive {
+    @apply transition-all duration-200 hover:bg-hakim-medium/20 active:bg-hakim-medium/30;
+  }
+
+  .text-gradient {
+    @apply bg-gradient-to-br from-hakim-light via-hakim-light/90 to-hakim-light/70 bg-clip-text text-transparent;
   }
 }
 
@@ -89,6 +103,11 @@
   to { transform: scale(1); opacity: 1; }
 }
 
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
 .animate-fade-in {
   animation: fadeIn 0.5s ease forwards;
 }
@@ -101,6 +120,10 @@
   animation: scaleIn 0.4s ease forwards;
 }
 
+.animate-pulse-slow {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
 .transition-smooth {
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -111,4 +134,16 @@
 
 .hover-lift:hover {
   transform: translateY(-4px);
+}
+
+.delay-100 {
+  animation-delay: 100ms;
+}
+
+.delay-200 {
+  animation-delay: 200ms;
+}
+
+.delay-300 {
+  animation-delay: 300ms;
 }

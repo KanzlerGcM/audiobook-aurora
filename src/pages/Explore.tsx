@@ -1,13 +1,16 @@
 
 import { useState, useEffect } from 'react';
+import { useInView } from "react-intersection-observer";
+import { useLanguage } from "@/hooks/use-language";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import ExploreHeader from "@/components/explore/ExploreHeader";
 import ExploreTabs from "@/components/explore/ExploreTabs";
 import BookContentSection from "@/components/explore/BookContentSection";
-import Footer from "@/components/Footer";
-import Navbar from "@/components/Navbar";
-import { useLanguage } from "@/hooks/use-language";
+import EmptyState from "@/components/explore/EmptyState";
+import LoadMoreIndicator from "@/components/explore/LoadMoreIndicator";
 import { getAudiobooks, newReleases, trending } from "@/data/books";
 import { Book } from "@/types/book";
-import { useInView } from "react-intersection-observer";
 
 const ITEMS_PER_PAGE = 20;
 
@@ -21,6 +24,7 @@ const Explore = () => {
   
   const { ref, inView } = useInView({
     threshold: 0.5,
+    rootMargin: "0px 0px 200px 0px" // Load more when element is 200px from viewport
   });
 
   // Initial load
@@ -34,15 +38,19 @@ const Explore = () => {
     if (loading || !hasMore) return;
     
     setLoading(true);
-    const newBooks = getAudiobooks(page, ITEMS_PER_PAGE);
     
-    if (newBooks.length < ITEMS_PER_PAGE) {
-      setHasMore(false);
-    }
-    
-    setBooks(prev => [...prev, ...newBooks]);
-    setPage(prev => prev + 1);
-    setLoading(false);
+    // Simulate network delay for smoother loading
+    setTimeout(() => {
+      const newBooks = getAudiobooks(page, ITEMS_PER_PAGE);
+      
+      if (newBooks.length < ITEMS_PER_PAGE) {
+        setHasMore(false);
+      }
+      
+      setBooks(prev => [...prev, ...newBooks]);
+      setPage(prev => prev + 1);
+      setLoading(false);
+    }, 300);
   };
 
   useEffect(() => {
@@ -72,33 +80,21 @@ const Explore = () => {
     <div className="min-h-screen flex flex-col bg-background">
       <Navbar />
       
-      <main className="flex-1 container mx-auto px-4 md:px-6 py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold mb-2">{t('explore')}</h1>
-          <p className="text-foreground/70">{t('popularAudiobooks')}</p>
-        </div>
+      <main className="flex-1 container mx-auto px-4 md:px-6 py-8 pt-28">
+        <ExploreHeader />
         
         <ExploreTabs activeTab={activeTab} onTabChange={handleTabChange} />
         
         {books.length > 0 ? (
-          <BookContentSection books={books} />
-        ) : (
-          <div className="w-full py-10 text-center">
-            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary mx-auto"></div>
-            <p className="mt-4 text-foreground/70">{t('loading')}</p>
+          <div className="animate-fade-in">
+            <BookContentSection books={books} />
+            <LoadMoreIndicator loading={loading} hasMore={hasMore} />
           </div>
+        ) : (
+          <EmptyState />
         )}
         
-        {hasMore && (
-          <div 
-            ref={ref} 
-            className="w-full h-20 flex items-center justify-center"
-          >
-            {loading && (
-              <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary"></div>
-            )}
-          </div>
-        )}
+        <div ref={ref} aria-hidden="true" className="h-1" />
       </main>
       
       <Footer />
