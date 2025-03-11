@@ -1,17 +1,27 @@
 
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Search, LogIn, User, BookOpen } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/hooks/use-language';
 import TranslateButton from '../TranslateButton';
 import { useAuth } from '@/hooks/use-auth';
+import { toast } from 'sonner';
 
 const NavActions = () => {
   const { t } = useLanguage();
   const { isLoggedIn, userData, logout } = useAuth();
   const location = useLocation();
+  const navigate = useNavigate();
   
   const isLibraryActive = location.pathname === '/library';
+  
+  const handleLibraryClick = (e: React.MouseEvent) => {
+    if (!isLoggedIn) {
+      e.preventDefault();
+      toast.info(t('loginToAccessLibrary') || 'Please log in to access your library');
+      navigate('/login');
+    }
+  };
   
   return (
     <div className="flex items-center space-x-2">
@@ -19,18 +29,17 @@ const NavActions = () => {
         <Search className="h-5 w-5" />
       </Button>
       
-      {isLoggedIn && (
-        <Link to="/library">
-          <Button 
-            variant={isLibraryActive ? "default" : "ghost"} 
-            size="icon" 
-            className={isLibraryActive ? "text-white" : "text-hakim-gray hover:text-hakim-light"} 
-            aria-label="Library"
-          >
-            <BookOpen className="h-5 w-5" />
-          </Button>
-        </Link>
-      )}
+      <Button 
+        variant={isLibraryActive ? "default" : "ghost"} 
+        size="icon" 
+        className={isLibraryActive ? "text-white" : "text-hakim-gray hover:text-hakim-light"} 
+        aria-label="Library"
+        onClick={handleLibraryClick}
+        as={Link}
+        to={isLoggedIn ? "/library" : "#"}
+      >
+        <BookOpen className="h-5 w-5" />
+      </Button>
       
       <TranslateButton />
       
