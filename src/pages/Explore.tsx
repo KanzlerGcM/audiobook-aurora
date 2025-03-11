@@ -1,18 +1,64 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ExploreTabs from "@/components/explore/ExploreTabs";
 import BookContentSection from "@/components/explore/BookContentSection";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import { useLanguage } from "@/context/LanguageContext";
-import { audiobooks, newReleases, trending } from "@/data/books";
+import { getAudiobooks, newReleases, trending } from "@/data/books";
+import { Book } from "@/types/book";
+import { useInView } from "react-intersection-observer";
+
+const ITEMS_PER_PAGE = 20;
 
 const Explore = () => {
   const [activeTab, setActiveTab] = useState("audiobooks");
+  const [books, setBooks] = useState<Book[]>([]);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
   const { t } = useLanguage();
   
+  const { ref, inView } = useInView({
+    threshold: 0.5,
+  });
+
+  const loadMore = async () => {
+    if (loading || !hasMore) return;
+    
+    setLoading(true);
+    const newBooks = getAudiobooks(page, ITEMS_PER_PAGE);
+    
+    if (newBooks.length < ITEMS_PER_PAGE) {
+      setHasMore(false);
+    }
+    
+    setBooks(prev => [...prev, ...newBooks]);
+    setPage(prev => prev + 1);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    if (inView) {
+      loadMore();
+    }
+  }, [inView]);
+
   const handleTabChange = (value: string) => {
     setActiveTab(value);
+    setBooks([]);
+    setPage(1);
+    setHasMore(true);
+    
+    if (value === "new-releases") {
+      setBooks(newReleases);
+      setHasMore(false);
+    } else if (value === "trending") {
+      setBooks(trending);
+      setHasMore(false);
+    } else {
+      loadMore();
+    }
   };
 
   return (
@@ -27,16 +73,17 @@ const Explore = () => {
         
         <ExploreTabs activeTab={activeTab} onTabChange={handleTabChange} />
         
-        {activeTab === "audiobooks" && (
-          <BookContentSection books={audiobooks} />
-        )}
-
-        {activeTab === "new-releases" && (
-          <BookContentSection books={newReleases} />
-        )}
-          
-        {activeTab === "trending" && (
-          <BookContentSection books={trending} />
+        <BookContentSection books={books} />
+        
+        {hasMore && (
+          <div 
+            ref={ref} 
+            className="w-full h-20 flex items-center justify-center"
+          >
+            {loading && (
+              <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary"></div>
+            )}
+          </div>
         )}
       </main>
       
