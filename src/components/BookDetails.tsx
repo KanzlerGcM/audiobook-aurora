@@ -1,11 +1,13 @@
 
-import { Star, Clock, Calendar, BookOpenText, ThumbsUp, ThumbsDown, Headphones } from 'lucide-react';
+import { Star, Clock, Calendar, BookOpenText, ThumbsUp, ThumbsDown, Headphones, Lock } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Book } from "@/types/book";
 import { useLanguage } from "@/context/LanguageContext";
 import { useState } from 'react';
 import { toast } from 'sonner';
 import AudioPlayer from '@/components/AudioPlayer';
+import { useAuth } from '@/hooks/use-auth';
+import { useNavigate } from 'react-router-dom';
 
 interface BookDetailsProps {
   book: Book;
@@ -15,8 +17,15 @@ const BookDetails = ({ book }: BookDetailsProps) => {
   const { t } = useLanguage();
   const [liked, setLiked] = useState<boolean | null>(null);
   const [isPreviewPlaying, setIsPreviewPlaying] = useState(false);
+  const { isLoggedIn } = useAuth();
+  const navigate = useNavigate();
 
   const handleLike = () => {
+    if (!isLoggedIn) {
+      toast.error("Please login to like books");
+      return;
+    }
+    
     if (liked === true) {
       setLiked(null);
       toast.info(`Removed like from "${book.title}"`);
@@ -27,6 +36,11 @@ const BookDetails = ({ book }: BookDetailsProps) => {
   };
 
   const handleDislike = () => {
+    if (!isLoggedIn) {
+      toast.error("Please login to rate books");
+      return;
+    }
+    
     if (liked === false) {
       setLiked(null);
       toast.info(`Removed dislike from "${book.title}"`);
@@ -37,10 +51,19 @@ const BookDetails = ({ book }: BookDetailsProps) => {
   };
 
   const togglePreview = () => {
+    if (!isLoggedIn) {
+      toast.error("Please login to play previews");
+      return;
+    }
+    
     setIsPreviewPlaying(!isPreviewPlaying);
     if (!isPreviewPlaying) {
       toast.info(`Playing preview for "${book.title}"`);
     }
+  };
+
+  const handleLogin = () => {
+    navigate('/login');
   };
 
   return (
@@ -112,25 +135,38 @@ const BookDetails = ({ book }: BookDetailsProps) => {
           </div>
           
           <div className="mt-6 flex flex-wrap gap-3">
-            <Button variant="default" className="gap-2">
-              {t('listen')}
-            </Button>
-            <Button variant="outline" className="gap-2">
-              {t('addToLibrary')}
-            </Button>
-            <Button 
-              variant="secondary" 
-              className="gap-2"
-              onClick={togglePreview}
-            >
-              <Headphones className="h-4 w-4" />
-              {isPreviewPlaying ? t('stopPreview') : t('preview')}
-            </Button>
+            {isLoggedIn ? (
+              <>
+                <Button variant="default" className="gap-2">
+                  {t('listen')}
+                </Button>
+                <Button variant="outline" className="gap-2">
+                  {t('addToLibrary')}
+                </Button>
+                <Button 
+                  variant="secondary" 
+                  className="gap-2"
+                  onClick={togglePreview}
+                >
+                  <Headphones className="h-4 w-4" />
+                  {isPreviewPlaying ? t('stopPreview') : t('preview')}
+                </Button>
+              </>
+            ) : (
+              <Button 
+                variant="default" 
+                className="gap-2"
+                onClick={handleLogin}
+              >
+                <Lock className="h-4 w-4" />
+                Login to access
+              </Button>
+            )}
           </div>
         </div>
       </div>
       
-      {isPreviewPlaying && (
+      {isPreviewPlaying && isLoggedIn && (
         <div className="mt-6">
           <AudioPlayer 
             title={book.title}
@@ -138,6 +174,24 @@ const BookDetails = ({ book }: BookDetailsProps) => {
             coverImage={book.coverImage}
             miniPlayer={true}
           />
+        </div>
+      )}
+      
+      {!isLoggedIn && (
+        <div className="mt-6 p-4 bg-hakim-dark/20 rounded-lg border border-hakim-medium/20 text-center">
+          <Lock className="h-8 w-8 mx-auto mb-2 text-hakim-light/50" />
+          <h3 className="text-lg font-medium mb-2">Member-only content</h3>
+          <p className="text-foreground/70 mb-4">
+            Sign in to access our extensive audiobook library, including previews, ratings, and more.
+          </p>
+          <div className="flex justify-center gap-4">
+            <Button variant="default" onClick={handleLogin}>
+              Login
+            </Button>
+            <Button variant="outline" onClick={() => navigate('/signup')}>
+              Sign Up
+            </Button>
+          </div>
         </div>
       )}
     </div>
