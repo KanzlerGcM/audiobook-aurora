@@ -8,6 +8,8 @@ import BookDetails from '@/components/BookDetails';
 import { Book } from "@/types/book";
 import { useLanguage } from "@/hooks/use-language";
 import AudiobookCard from '@/components/AudiobookCard';
+import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
 
 const AudiobookDetails = () => {
   const { id } = useParams<{ id: string }>();
@@ -25,6 +27,10 @@ const AudiobookDetails = () => {
     window.scrollTo(0, 0);
   }, [book, navigate]);
 
+  const handleGoBack = () => {
+    navigate(-1); // Go back to previous page in history
+  };
+
   if (!book) {
     return null;
   }
@@ -38,6 +44,17 @@ const AudiobookDetails = () => {
     <div className="min-h-screen flex flex-col">
       <Navbar />
       <main className="flex-1 container mx-auto px-4 py-8 pt-28">
+        <div className="mb-6">
+          <Button 
+            variant="ghost" 
+            onClick={handleGoBack}
+            className="flex items-center text-hakim-light hover:text-hakim-medium"
+          >
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            {t('back') || 'Back'}
+          </Button>
+        </div>
+        
         <BookDetails book={book} />
         
         {filteredRelatedBooks.length > 0 && (
