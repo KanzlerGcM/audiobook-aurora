@@ -4,7 +4,7 @@ import { Book } from "@/types/book";
 const bookCategories = [
   "Fiction",
   "Non-Fiction",
-  "Mystery",
+  "Mystery & Thriller",
   "Sci-Fi",
   "Fantasy",
   "Romance",
@@ -13,7 +13,8 @@ const bookCategories = [
   "History",
   "Business",
   "Self-Help",
-  "Technology"
+  "Technology",
+  "Cookbooks"
 ];
 
 const sampleAuthors = [

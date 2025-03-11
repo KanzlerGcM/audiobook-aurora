@@ -8,6 +8,11 @@ import { Link } from "react-router-dom";
 const Categories = () => {
   const { t } = useLanguage();
 
+  // Function to convert category name to URL path
+  const categoryToPath = (category: string) => {
+    return category.toLowerCase().replace(/ & /g, '-');
+  };
+
   return (
     <>
       <Navbar />
@@ -17,7 +22,7 @@ const Categories = () => {
           {categories.map((category) => (
             <Link 
               key={category}
-              to={`/categories/${category.toLowerCase().replace(/-/g, '-')}`}
+              to={`/categories/${categoryToPath(category)}`}
               className="p-6 rounded-lg border border-hakim-medium/20 hover:border-hakim-medium transition-colors"
             >
               <h2 className="text-xl font-medium text-hakim-light mb-2">
