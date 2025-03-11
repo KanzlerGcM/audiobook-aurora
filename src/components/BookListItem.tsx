@@ -34,15 +34,11 @@ const BookListItem = ({
   const handleLibraryToggle = (e: React.MouseEvent) => {
     e.stopPropagation();
     
-    if (!isLoggedIn) {
-      toast.error(t('loginToAddBooks'));
-      return;
-    }
-    
     if (isBookInLibrary) {
       removeFromLibrary(book.id);
     } else {
       addToLibrary(book.id);
+      toast.success(t('bookAddedToLibrary'));
     }
   };
   

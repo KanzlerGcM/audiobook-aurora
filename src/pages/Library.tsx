@@ -1,6 +1,5 @@
 
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { BookOpenText } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -17,15 +16,9 @@ const Library = () => {
   const [libraryBooks, setLibraryBooks] = useState<Book[]>([]);
   const [loading, setLoading] = useState(true);
   const { isLoggedIn, library } = useAuth();
-  const navigate = useNavigate();
   const { t } = useLanguage();
 
   useEffect(() => {
-    if (!isLoggedIn) {
-      navigate("/login");
-      return;
-    }
-
     const fetchBooks = () => {
       const books: Book[] = [];
       library.forEach((bookId) => {
@@ -37,11 +30,7 @@ const Library = () => {
     };
 
     fetchBooks();
-  }, [isLoggedIn, library, navigate]);
-
-  if (!isLoggedIn) {
-    return null; // Will navigate to login
-  }
+  }, [library]);
 
   return (
     <div className="min-h-screen flex flex-col bg-background">

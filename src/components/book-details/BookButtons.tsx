@@ -25,11 +25,6 @@ const BookButtons = ({ bookId, isLoggedIn, isPreviewPlaying, togglePreview, hand
   };
 
   const handleLibraryToggle = () => {
-    if (!isLoggedIn) {
-      handleLogin();
-      return;
-    }
-    
     if (isBookInLibrary) {
       removeFromLibrary(bookId);
     } else {
@@ -40,13 +35,30 @@ const BookButtons = ({ bookId, isLoggedIn, isPreviewPlaying, togglePreview, hand
 
   if (!isLoggedIn) {
     return (
-      <Button 
-        variant="default" 
-        className="gap-2"
-        onClick={handleLogin}
-      >
-        Login to access
-      </Button>
+      <div className="mt-6 flex flex-wrap gap-3">
+        <Button 
+          variant="default" 
+          className="gap-2"
+          onClick={handleListenClick}
+        >
+          {t('listen')}
+        </Button>
+        <Button 
+          variant="outline" 
+          className="gap-2"
+          onClick={handleLibraryToggle}
+        >
+          {t('addToLibrary')}
+        </Button>
+        <Button 
+          variant="secondary" 
+          className="gap-2"
+          onClick={togglePreview}
+        >
+          <Headphones className="h-4 w-4" />
+          {t('preview')}
+        </Button>
+      </div>
     );
   }
 
