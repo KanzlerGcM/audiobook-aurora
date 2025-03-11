@@ -1,14 +1,14 @@
 
 import { useState, useEffect } from 'react';
 import { BookX } from 'lucide-react';
-import { useLanguage } from '@/context/LanguageContext';
+import { useLanguage } from '@/hooks/use-language';
 import { useAuth } from '@/hooks/use-auth';
 import { Book } from '@/types/book';
-import { books } from '@/data/books';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import AudiobookCard from '@/components/AudiobookCard';
 import { Button } from '@/components/ui/button';
+import { books as allBooks } from '@/data/books';
 
 const Library = () => {
   const { t } = useLanguage();
@@ -17,7 +17,7 @@ const Library = () => {
   
   useEffect(() => {
     if (isLoggedIn && library) {
-      const libraryBooks = books.filter(book => library.includes(book.id));
+      const libraryBooks = allBooks.filter(book => library.includes(book.id));
       setUserBooks(libraryBooks);
     } else {
       setUserBooks([]);
@@ -64,7 +64,13 @@ const Library = () => {
             {userBooks.map((book) => (
               <div key={book.id} className="relative group">
                 <AudiobookCard 
-                  book={book} 
+                  id={book.id}
+                  title={book.title}
+                  author={book.author}
+                  coverImage={book.coverImage}
+                  duration={book.duration || ""}
+                  rating={book.rating}
+                  category={book.category || ""}
                   className="h-full"
                 />
                 <Button

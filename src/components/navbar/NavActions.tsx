@@ -2,7 +2,7 @@
 import { Link } from 'react-router-dom';
 import { Search, LogIn, User, BookOpen } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useLanguage } from '@/context/LanguageContext';
+import { useLanguage } from '@/hooks/use-language';
 import TranslateButton from '../TranslateButton';
 import { useAuth } from '@/hooks/use-auth';
 
