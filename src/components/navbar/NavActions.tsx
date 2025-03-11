@@ -29,7 +29,7 @@ const NavActions = () => {
         <Search className="h-5 w-5" />
       </Button>
       
-      {isLoggedIn ? (
+      {isLoggedIn && (
         <Link to="/library">
           <Button 
             variant={isLibraryActive ? "default" : "ghost"} 
@@ -40,16 +40,6 @@ const NavActions = () => {
             <BookOpen className="h-5 w-5" />
           </Button>
         </Link>
-      ) : (
-        <Button 
-          variant="ghost" 
-          size="icon" 
-          className="text-hakim-gray hover:text-hakim-light" 
-          aria-label="Library"
-          onClick={handleLibraryClick}
-        >
-          <BookOpen className="h-5 w-5" />
-        </Button>
       )}
       
       <TranslateButton />

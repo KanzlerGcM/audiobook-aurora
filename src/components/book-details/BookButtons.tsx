@@ -25,10 +25,16 @@ const BookButtons = ({ bookId, isLoggedIn, isPreviewPlaying, togglePreview, hand
   };
 
   const handleLibraryToggle = () => {
+    if (!isLoggedIn) {
+      handleLogin();
+      return;
+    }
+    
     if (isBookInLibrary) {
       removeFromLibrary(bookId);
     } else {
       addToLibrary(bookId);
+      navigate('/library');
     }
   };
 

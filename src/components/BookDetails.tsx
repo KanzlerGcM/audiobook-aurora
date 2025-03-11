@@ -18,7 +18,7 @@ interface BookDetailsProps {
 const BookDetails = ({ book }: BookDetailsProps) => {
   const { t } = useLanguage();
   const [isPreviewPlaying, setIsPreviewPlaying] = useState(false);
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, addToLibrary } = useAuth();
   const navigate = useNavigate();
   
   const togglePreview = () => {
@@ -35,6 +35,18 @@ const BookDetails = ({ book }: BookDetailsProps) => {
 
   const handleLogin = () => {
     navigate('/login');
+  };
+
+  const handleAddToLibrary = () => {
+    if (!isLoggedIn) {
+      toast.error("Please login to add books to your library");
+      navigate('/login');
+      return;
+    }
+    
+    addToLibrary(book.id);
+    toast.success(`"${book.title}" added to your library`);
+    navigate('/library');
   };
 
   return (
