@@ -29,17 +29,28 @@ const NavActions = () => {
         <Search className="h-5 w-5" />
       </Button>
       
-      <Button 
-        variant={isLibraryActive ? "default" : "ghost"} 
-        size="icon" 
-        className={isLibraryActive ? "text-white" : "text-hakim-gray hover:text-hakim-light"} 
-        aria-label="Library"
-        onClick={handleLibraryClick}
-        as={Link}
-        to={isLoggedIn ? "/library" : "#"}
-      >
-        <BookOpen className="h-5 w-5" />
-      </Button>
+      {isLoggedIn ? (
+        <Link to="/library">
+          <Button 
+            variant={isLibraryActive ? "default" : "ghost"} 
+            size="icon" 
+            className={isLibraryActive ? "text-white" : "text-hakim-gray hover:text-hakim-light"} 
+            aria-label="Library"
+          >
+            <BookOpen className="h-5 w-5" />
+          </Button>
+        </Link>
+      ) : (
+        <Button 
+          variant="ghost" 
+          size="icon" 
+          className="text-hakim-gray hover:text-hakim-light" 
+          aria-label="Library"
+          onClick={handleLibraryClick}
+        >
+          <BookOpen className="h-5 w-5" />
+        </Button>
+      )}
       
       <TranslateButton />
       
