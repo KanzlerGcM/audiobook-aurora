@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
@@ -7,16 +6,22 @@ import { useNavigate } from 'react-router-dom';
 export const useAuth = () => {
   const [userData, setUserData] = useState<{ name: string; email: string; userId: string } | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [library, setLibrary] = useState<string[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     // Check local storage on initial load
     const storedUserData = localStorage.getItem('userData');
     const storedIsLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    const storedLibrary = localStorage.getItem('userLibrary');
     
     if (storedUserData && storedIsLoggedIn) {
       setUserData(JSON.parse(storedUserData));
       setIsLoggedIn(true);
+    }
+    
+    if (storedLibrary) {
+      setLibrary(JSON.parse(storedLibrary));
     }
   }, []);
 
@@ -44,6 +49,12 @@ export const useAuth = () => {
     setUserData(user);
     setIsLoggedIn(true);
     
+    // Load library if exists
+    const storedLibrary = localStorage.getItem('userLibrary');
+    if (storedLibrary) {
+      setLibrary(JSON.parse(storedLibrary));
+    }
+    
     toast.success('Login successful!');
     navigate('/explore');
     return true;
@@ -63,6 +74,10 @@ export const useAuth = () => {
     const user = { email, name, userId: `user-${Date.now()}` };
     localStorage.setItem('userData', JSON.stringify(user));
     
+    // Initialize empty library
+    localStorage.setItem('userLibrary', JSON.stringify([]));
+    setLibrary([]);
+    
     // Auto-login after registration
     localStorage.setItem('isLoggedIn', 'true');
     setUserData(user);
@@ -78,15 +93,55 @@ export const useAuth = () => {
     localStorage.removeItem('userData');
     setIsLoggedIn(false);
     setUserData(null);
+    setLibrary([]);
     toast.info('You have been logged out');
     navigate('/');
+  };
+
+  const addToLibrary = (bookId: string) => {
+    if (!isLoggedIn) {
+      toast.error('Please login to add books to your library');
+      navigate('/login');
+      return false;
+    }
+    
+    if (library.includes(bookId)) {
+      toast.info('This book is already in your library');
+      return false;
+    }
+    
+    const updatedLibrary = [...library, bookId];
+    localStorage.setItem('userLibrary', JSON.stringify(updatedLibrary));
+    setLibrary(updatedLibrary);
+    toast.success('Book added to your library');
+    return true;
+  };
+
+  const removeFromLibrary = (bookId: string) => {
+    if (!isLoggedIn) {
+      return false;
+    }
+    
+    const updatedLibrary = library.filter(id => id !== bookId);
+    localStorage.setItem('userLibrary', JSON.stringify(updatedLibrary));
+    setLibrary(updatedLibrary);
+    toast.success('Book removed from your library');
+    return true;
+  };
+
+  const isInLibrary = (bookId: string) => {
+    return library.includes(bookId);
   };
 
   return {
     isLoggedIn,
     userData,
+    library,
     login,
     register,
-    logout
+    logout,
+    addToLibrary,
+    removeFromLibrary,
+    isInLibrary
   };
 };

@@ -138,6 +138,17 @@ export const translations: TranslationMap = {
   'bestsellers': { en: 'Bestsellers', pt: 'Mais Vendidos', es: 'Más Vendidos' },
   'company': { en: 'Company', pt: 'Empresa', es: 'Empresa' },
   'help': { en: 'Help', pt: 'Ajuda', es: 'Ayuda' },
+  
+  // Library
+  'myLibrary': { en: 'My Library', pt: 'Minha Biblioteca', es: 'Mi Biblioteca' },
+  'yourAudiobooks': { en: 'Your audiobooks collection', pt: 'Sua coleção de audiolivros', es: 'Tu colección de audiolibros' },
+  'emptyLibrary': { en: 'Your library is empty', pt: 'Sua biblioteca está vazia', es: 'Tu biblioteca está vacía' },
+  'pleaseLoginToViewLibrary': { en: 'Please login to view your library', pt: 'Por favor, faça login para ver sua biblioteca', es: 'Por favor, inicia sesión para ver tu biblioteca' },
+  'noBooks': { en: 'No books in your library yet', pt: 'Ainda não há livros em sua biblioteca', es: 'Aún no hay libros en tu biblioteca' },
+  'exploreBooks': { en: 'Explore Books', pt: 'Explorar Livros', es: 'Explorar Libros' },
+  'remove': { en: 'Remove', pt: 'Remover', es: 'Eliminar' },
+  'library': { en: 'Library', pt: 'Biblioteca', es: 'Biblioteca' },
+  'signOut': { en: 'Sign Out', pt: 'Sair', es: 'Cerrar Sesión' },
 };
 
 interface LanguageContextType {
