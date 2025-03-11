@@ -1,3 +1,4 @@
+
 import { Mail, Instagram, Twitter, Facebook } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/context/LanguageContext';
@@ -42,18 +43,18 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/trending" className="text-hakim-gray hover:text-hakim-light transition-colors">
+                <Link to="/explore" className="text-hakim-gray hover:text-hakim-light transition-colors">
                   {t('trendingNow')}
                 </Link>
               </li>
               <li>
-                <Link to="/new-releases" className="text-hakim-gray hover:text-hakim-light transition-colors">
+                <Link to="/explore" className="text-hakim-gray hover:text-hakim-light transition-colors">
                   {t('newReleases')}
                 </Link>
               </li>
               <li>
                 <Link to="/bestsellers" className="text-hakim-gray hover:text-hakim-light transition-colors">
-                  Bestsellers
+                  {t('bestsellers')}
                 </Link>
               </li>
             </ul>

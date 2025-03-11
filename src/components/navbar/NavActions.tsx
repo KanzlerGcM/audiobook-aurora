@@ -1,6 +1,6 @@
 
 import { Link } from 'react-router-dom';
-import { Search, Headphones, LogIn } from 'lucide-react';
+import { Search, LogIn } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/context/LanguageContext';
 import TranslateButton from '../TranslateButton';
@@ -13,12 +13,6 @@ const NavActions = () => {
       <Button variant="ghost" size="icon" className="text-hakim-gray hover:text-hakim-light">
         <Search className="h-5 w-5" />
       </Button>
-      
-      <Link to="/audiobooks">
-        <Button variant="ghost" size="icon" className="text-hakim-gray hover:text-hakim-light">
-          <Headphones className="h-5 w-5" />
-        </Button>
-      </Link>
       
       <TranslateButton />
       
