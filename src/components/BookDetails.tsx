@@ -13,9 +13,10 @@ import LoginPrompt from './book-details/LoginPrompt';
 
 interface BookDetailsProps {
   book: Book;
+  onLibraryUpdate?: () => void;
 }
 
-const BookDetails = ({ book }: BookDetailsProps) => {
+const BookDetails = ({ book, onLibraryUpdate }: BookDetailsProps) => {
   const { t } = useLanguage();
   const [isPreviewPlaying, setIsPreviewPlaying] = useState(false);
   const { isLoggedIn, addToLibrary } = useAuth();
@@ -46,6 +47,10 @@ const BookDetails = ({ book }: BookDetailsProps) => {
     
     addToLibrary(book.id);
     toast.success(t('addToLibrarySuccess') || `"${book.title}" added to your library`);
+    
+    if (onLibraryUpdate) {
+      onLibraryUpdate();
+    }
   };
 
   return (
@@ -86,6 +91,7 @@ const BookDetails = ({ book }: BookDetailsProps) => {
             isPreviewPlaying={isPreviewPlaying}
             togglePreview={togglePreview}
             handleLogin={handleLogin}
+            onLibraryUpdate={onLibraryUpdate}
           />
         </div>
       </div>

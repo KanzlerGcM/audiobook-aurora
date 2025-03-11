@@ -11,9 +11,10 @@ interface BookListProps {
   books: Book[];
   selectedBook: Book | undefined;
   onSelectBook: (book: Book) => void;
+  onLibraryUpdate?: () => void;
 }
 
-const BookList = ({ books, selectedBook, onSelectBook }: BookListProps) => {
+const BookList = ({ books, selectedBook, onSelectBook, onLibraryUpdate }: BookListProps) => {
   const { isLoggedIn } = useAuth();
   const navigate = useNavigate();
   
@@ -39,6 +40,7 @@ const BookList = ({ books, selectedBook, onSelectBook }: BookListProps) => {
               isSelected={selectedBook ? selectedBook.id === book.id : false}
               isLast={index === displayBooks.length - 1}
               onSelect={onSelectBook}
+              onLibraryUpdate={onLibraryUpdate}
             />
           ))}
         </div>

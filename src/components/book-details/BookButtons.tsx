@@ -12,9 +12,17 @@ interface BookButtonsProps {
   isPreviewPlaying: boolean;
   togglePreview: () => void;
   handleLogin: () => void;
+  onLibraryUpdate?: () => void;
 }
 
-const BookButtons = ({ bookId, isLoggedIn, isPreviewPlaying, togglePreview, handleLogin }: BookButtonsProps) => {
+const BookButtons = ({ 
+  bookId, 
+  isLoggedIn, 
+  isPreviewPlaying, 
+  togglePreview, 
+  handleLogin,
+  onLibraryUpdate
+}: BookButtonsProps) => {
   const { t } = useLanguage();
   const navigate = useNavigate();
   const { isInLibrary, addToLibrary, removeFromLibrary } = useAuth();
@@ -32,6 +40,10 @@ const BookButtons = ({ bookId, isLoggedIn, isPreviewPlaying, togglePreview, hand
     } else {
       addToLibrary(bookId);
       toast.success(t('addToLibrarySuccess') || "Book added to library");
+    }
+    
+    if (onLibraryUpdate) {
+      onLibraryUpdate();
     }
   };
 

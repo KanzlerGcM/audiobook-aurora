@@ -12,13 +12,15 @@ interface BookListItemProps {
   isSelected: boolean;
   isLast: boolean;
   onSelect: (book: Book) => void;
+  onLibraryUpdate?: () => void;
 }
 
 const BookListItem = ({ 
   book, 
   isSelected, 
   isLast, 
-  onSelect 
+  onSelect,
+  onLibraryUpdate 
 }: BookListItemProps) => {
   const { t } = useLanguage();
   const location = useLocation();
@@ -40,6 +42,11 @@ const BookListItem = ({
     } else {
       addToLibrary(book.id);
       toast.success(t('addToLibrarySuccess') || "Book added to library");
+    }
+    
+    // Trigger re-render in parent components
+    if (onLibraryUpdate) {
+      onLibraryUpdate();
     }
   };
   

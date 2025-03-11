@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import BookList from "@/components/BookList";
 import BookDetails from "@/components/BookDetails";
 import { Book } from "@/types/book";
@@ -23,6 +23,10 @@ const BookContentSection = ({ books, initialBook }: BookContentSectionProps) => 
   const [selectedBook, setSelectedBook] = useState<Book | undefined>(
     initialBook || (books && books.length > 0 ? books[0] : undefined)
   );
+  
+  // Force re-render when library status changes
+  const [, setForceUpdate] = useState({});
+  const forceRerender = () => setForceUpdate({});
 
   // If no books are available, show a placeholder
   if (!books || books.length === 0) {
@@ -41,6 +45,7 @@ const BookContentSection = ({ books, initialBook }: BookContentSectionProps) => 
             books={books} 
             selectedBook={selectedBook} 
             onSelectBook={setSelectedBook} 
+            onLibraryUpdate={forceRerender}
           />
         </div>
         <div className="md:col-span-2 bg-hakim-dark/10 p-8 rounded-xl flex flex-col items-center justify-center">
@@ -68,12 +73,16 @@ const BookContentSection = ({ books, initialBook }: BookContentSectionProps) => 
         <BookList 
           books={books} 
           selectedBook={selectedBook} 
-          onSelectBook={setSelectedBook} 
+          onSelectBook={setSelectedBook}
+          onLibraryUpdate={forceRerender}
         />
       </div>
       {!isMobile && selectedBook && (
         <div className="md:col-span-2">
-          <BookDetails book={selectedBook} />
+          <BookDetails 
+            book={selectedBook} 
+            onLibraryUpdate={forceRerender}
+          />
         </div>
       )}
     </div>
