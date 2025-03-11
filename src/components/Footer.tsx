@@ -16,7 +16,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           <div>
             <div className="mb-4">
-              <Logo size="md" />
+              <Logo size="lg" />
             </div>
             <p className="text-hakim-gray mb-6 max-w-md">
               Immerse yourself in stories with Hakim, where every audiobook brings a new world to your ears.
