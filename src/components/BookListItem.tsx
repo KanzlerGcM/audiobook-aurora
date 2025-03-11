@@ -3,7 +3,7 @@ import { ChevronRight, BookPlus } from 'lucide-react';
 import { Separator } from "@/components/ui/separator";
 import { Book } from "@/types/book";
 import { useLanguage } from "@/context/LanguageContext";
-import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 interface BookListItemProps {
   book: Book;
@@ -19,11 +19,11 @@ const BookListItem = ({
   onSelect 
 }: BookListItemProps) => {
   const { t } = useLanguage();
-  const navigate = useNavigate();
+  const location = useLocation();
   
   const handleClick = () => {
     onSelect(book);
-    navigate(`/book/${book.id}`);
+    // No navigation, just selecting the book
   };
   
   return (
