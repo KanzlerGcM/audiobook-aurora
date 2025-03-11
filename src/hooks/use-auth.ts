@@ -1,32 +1,51 @@
 
+import { useState, useEffect } from 'react';
+import { toast } from 'sonner';
+import { useNavigate } from 'react-router-dom';
+
 // Auth hook designed for easy backend integration
 export const useAuth = () => {
-  // This structure can be easily adapted to use a real authentication system
-  // Just replace these localStorage functions with actual API calls when ready
-  
-  const getUserData = () => {
-    const userData = localStorage.getItem('userData');
-    return userData ? JSON.parse(userData) : null;
-  };
+  const [userData, setUserData] = useState<{ name: string; email: string; userId: string } | null>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
 
-  const isLoggedIn = () => {
-    return localStorage.getItem('isLoggedIn') === 'true';
-  };
+  useEffect(() => {
+    // Check local storage on initial load
+    const storedUserData = localStorage.getItem('userData');
+    const storedIsLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    
+    if (storedUserData && storedIsLoggedIn) {
+      setUserData(JSON.parse(storedUserData));
+      setIsLoggedIn(true);
+    }
+  }, []);
 
   const login = (email: string, password: string) => {
     // In a real implementation, this would be an API call
     // For now, we'll simulate with localStorage
     console.log('Login attempt:', { email, password });
     
+    // Basic validation
+    if (!email || !password) {
+      toast.error('Please fill in all fields');
+      return false;
+    }
+    
     // Simulating successful login
-    localStorage.setItem('isLoggedIn', 'true');
-    localStorage.setItem('userData', JSON.stringify({ 
+    const user = { 
       email,
       name: email.split('@')[0], // Simple demo data
       userId: `user-${Date.now()}` // Generate a pretend user ID
-    }));
+    };
     
-    window.location.reload();
+    localStorage.setItem('isLoggedIn', 'true');
+    localStorage.setItem('userData', JSON.stringify(user));
+    
+    setUserData(user);
+    setIsLoggedIn(true);
+    
+    toast.success('Login successful!');
+    navigate('/explore');
     return true;
   };
 
@@ -34,23 +53,38 @@ export const useAuth = () => {
     // In a real implementation, this would be an API call
     console.log('Register attempt:', { email, password, name });
     
+    // Basic validation
+    if (!email || !password || !name) {
+      toast.error('Please fill in all fields');
+      return false;
+    }
+    
     // Simply simulate registration success
-    localStorage.setItem('userData', JSON.stringify({ email, name, userId: `user-${Date.now()}` }));
+    const user = { email, name, userId: `user-${Date.now()}` };
+    localStorage.setItem('userData', JSON.stringify(user));
     
     // Auto-login after registration
-    login(email, password);
+    localStorage.setItem('isLoggedIn', 'true');
+    setUserData(user);
+    setIsLoggedIn(true);
+    
+    toast.success('Registration successful!');
+    navigate('/explore');
     return true;
   };
 
   const logout = () => {
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('userData');
-    window.location.reload();
+    setIsLoggedIn(false);
+    setUserData(null);
+    toast.info('You have been logged out');
+    navigate('/');
   };
 
   return {
-    isLoggedIn: isLoggedIn(),
-    userData: getUserData(),
+    isLoggedIn,
+    userData,
     login,
     register,
     logout

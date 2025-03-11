@@ -1,18 +1,17 @@
 
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { toast } from "sonner";
 import { Eye, EyeOff, Mail, Lock, UserPlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useLanguage } from "@/context/LanguageContext";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { useAuth } from "@/hooks/use-auth";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -32,7 +31,7 @@ const formSchema = z.object({
 
 const SignUp = () => {
   const { t } = useLanguage();
-  const navigate = useNavigate();
+  const { register } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -47,12 +46,7 @@ const SignUp = () => {
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    // Here you would typically handle the signup API request
-    console.log(values);
-    
-    // For now, show a success message and redirect
-    toast.success("Account created successfully!");
-    navigate('/login');
+    register(values.email, values.password, values.name);
   };
 
   return (

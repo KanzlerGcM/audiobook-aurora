@@ -1,10 +1,9 @@
 
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { toast } from "sonner";
 import { Eye, EyeOff, Mail, Lock, LogIn } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,6 +11,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { useLanguage } from "@/context/LanguageContext";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { useAuth } from "@/hooks/use-auth";
 
 const formSchema = z.object({
   email: z.string().email({
@@ -24,7 +24,7 @@ const formSchema = z.object({
 
 const Login = () => {
   const { t } = useLanguage();
-  const navigate = useNavigate();
+  const { login } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -36,12 +36,7 @@ const Login = () => {
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    // Here you would typically handle the login API request
-    console.log(values);
-    
-    // For now, show a success message and redirect
-    toast.success("Logged in successfully!");
-    navigate('/');
+    login(values.email, values.password);
   };
 
   return (
