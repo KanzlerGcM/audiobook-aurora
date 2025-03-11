@@ -4,14 +4,14 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useLanguage } from "@/context/LanguageContext";
 import BookList from "@/components/BookList";
-import { audiobooks } from "@/data/books";
+import { getAudiobooks, bestsellers } from "@/data/books";
 import { Book } from "@/types/book";
 
 const Bestsellers = () => {
   const { t } = useLanguage();
   
-  // Filter bestseller books (in a real app, this would come from an API)
-  const bestsellerBooks = audiobooks.slice(0, 6);
+  // Use the bestsellers export which is already available in the books.ts file
+  const bestsellerBooks = bestsellers;
   
   // Add state to track the selected book
   const [selectedBook, setSelectedBook] = useState<Book>(bestsellerBooks[0]);

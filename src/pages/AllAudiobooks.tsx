@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Search } from 'lucide-react';
 import { Input } from "@/components/ui/input";
-import { audiobooks } from "@/data/books";
+import { getAudiobooks } from "@/data/books";
 import AudiobookCard from "@/components/AudiobookCard";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
@@ -12,7 +12,10 @@ const AllAudiobooks = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const { t } = useLanguage();
   
-  const filteredBooks = audiobooks.filter(book => 
+  // Get the first page of audiobooks
+  const books = getAudiobooks(1, 100);
+  
+  const filteredBooks = books.filter(book => 
     book.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
     book.author.toLowerCase().includes(searchQuery.toLowerCase())
   );
