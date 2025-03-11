@@ -1,8 +1,9 @@
+
 import { Book } from "@/types/book";
 import { generateRandomBooks } from "@/utils/bookGenerator";
 
-// Generate 90 random books - do this only once
-const allBooks = generateRandomBooks(90);
+// Generate 10 random books - do this only once
+const allBooks = generateRandomBooks(10);
 
 // Create a map to cache books by category for faster lookup
 const booksByCategory: Record<string, Book[]> = {};
@@ -50,7 +51,8 @@ export const getBookById = (id: string): Book | undefined => {
   return booksById[id];
 };
 
-// Filter books for different sections with pagination
-export const newReleases = allBooks.slice(0, 10);
-export const trending = allBooks.slice(10, 20);
-export const bestsellers = allBooks.slice(20, 30);
+// Since we only have 10 books total now, let's adjust these sections
+// We'll divide them roughly into 3-4 books per section
+export const newReleases = allBooks.slice(0, 3); 
+export const trending = allBooks.slice(3, 6);
+export const bestsellers = allBooks.slice(6, 10);
