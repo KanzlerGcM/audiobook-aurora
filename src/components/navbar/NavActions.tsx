@@ -1,5 +1,5 @@
 
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Search, LogIn, User, BookOpen } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/hooks/use-language';
@@ -9,6 +9,9 @@ import { useAuth } from '@/hooks/use-auth';
 const NavActions = () => {
   const { t } = useLanguage();
   const { isLoggedIn, userData, logout } = useAuth();
+  const location = useLocation();
+  
+  const isLibraryActive = location.pathname === '/library';
   
   return (
     <div className="flex items-center space-x-2">
@@ -18,7 +21,12 @@ const NavActions = () => {
       
       {isLoggedIn && (
         <Link to="/library">
-          <Button variant="ghost" size="icon" className="text-hakim-gray hover:text-hakim-light" aria-label="Library">
+          <Button 
+            variant={isLibraryActive ? "default" : "ghost"} 
+            size="icon" 
+            className={isLibraryActive ? "text-white" : "text-hakim-gray hover:text-hakim-light"} 
+            aria-label="Library"
+          >
             <BookOpen className="h-5 w-5" />
           </Button>
         </Link>

@@ -4,6 +4,8 @@ import { Separator } from "@/components/ui/separator";
 import { Book } from "@/types/book";
 import { useLanguage } from "@/hooks/use-language";
 import { useLocation } from "react-router-dom";
+import { useAuth } from "@/hooks/use-auth";
+import { toast } from "sonner";
 
 interface BookListItemProps {
   book: Book;
@@ -20,10 +22,28 @@ const BookListItem = ({
 }: BookListItemProps) => {
   const { t } = useLanguage();
   const location = useLocation();
+  const { isLoggedIn, addToLibrary, isInLibrary, removeFromLibrary } = useAuth();
   
   const handleClick = () => {
     onSelect(book);
     // No navigation, just selecting the book
+  };
+  
+  const isBookInLibrary = isLoggedIn && isInLibrary(book.id);
+  
+  const handleLibraryToggle = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    
+    if (!isLoggedIn) {
+      toast.error(t('loginToAddBooks'));
+      return;
+    }
+    
+    if (isBookInLibrary) {
+      removeFromLibrary(book.id);
+    } else {
+      addToLibrary(book.id);
+    }
   };
   
   return (
@@ -45,15 +65,16 @@ const BookListItem = ({
             {book.author}
           </p>
           <button 
-            className="flex items-center text-xs text-hakim-light bg-hakim-medium/10 px-2 py-1 rounded hover:bg-hakim-medium/20"
-            onClick={(e) => {
-              e.stopPropagation();
-              // Add to library functionality would go here
-              console.log(`Added "${book.title}" to library`);
-            }}
+            className={`flex items-center text-xs px-2 py-1 rounded hover:bg-hakim-medium/20 ${
+              isBookInLibrary 
+                ? 'bg-hakim-medium text-white' 
+                : 'bg-hakim-medium/10 text-hakim-light'
+            }`}
+            onClick={handleLibraryToggle}
+            aria-label={isBookInLibrary ? t('removeFromLibrary') : t('addToLibrary')}
           >
             <BookPlus className="w-3 h-3 mr-1" />
-            {t('addToLibrary')}
+            {isBookInLibrary ? t('removeFromLibrary') : t('addToLibrary')}
           </button>
         </div>
         <ChevronRight className={`w-5 h-5 ${isSelected ? 'text-hakim-light' : 'text-foreground/50'}`} />

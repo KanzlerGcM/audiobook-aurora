@@ -10,6 +10,8 @@ import { Book } from "@/types/book";
 import { useAuth } from "@/hooks/use-auth";
 import AudiobookCard from "@/components/AudiobookCard";
 import { Button } from "@/components/ui/button";
+import LibraryEmptyState from "@/components/library/LibraryEmptyState";
+import LibraryHeader from "@/components/library/LibraryHeader";
 
 const Library = () => {
   const [libraryBooks, setLibraryBooks] = useState<Book[]>([]);
@@ -46,10 +48,7 @@ const Library = () => {
       <Navbar />
       
       <main className="flex-1 container mx-auto px-4 md:px-6 py-8 pt-28">
-        <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold mb-2">{t('library')}</h1>
-          <p className="text-foreground/70">{t('yourSavedAudiobooks')}</p>
-        </div>
+        <LibraryHeader />
         
         {loading ? (
           <div className="w-full py-10 text-center">
@@ -73,19 +72,7 @@ const Library = () => {
             ))}
           </div>
         ) : (
-          <div className="text-center py-16 bg-hakim-dark/10 rounded-xl">
-            <BookOpenText className="h-16 w-16 mx-auto mb-4 text-hakim-light/50" />
-            <h2 className="text-xl font-semibold mb-2">{t('yourLibraryIsEmpty')}</h2>
-            <p className="max-w-md mx-auto mb-6 text-foreground/70">
-              {t('browseAudiobooksToAddToLibrary')}
-            </p>
-            <Button 
-              onClick={() => navigate('/explore')}
-              variant="default"
-            >
-              {t('exploreAudiobooks')}
-            </Button>
-          </div>
+          <LibraryEmptyState />
         )}
       </main>
       

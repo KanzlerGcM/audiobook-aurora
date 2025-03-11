@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -22,6 +23,7 @@ import Privacy from "./pages/Privacy";
 import Support from "./pages/Support";
 import Bestsellers from "./pages/Bestsellers";
 import AudiobookDetails from "./pages/AudiobookDetails";
+import Library from "./pages/Library";
 
 // Category Pages
 import Fiction from "./pages/categories/Fiction";
@@ -64,6 +66,7 @@ const App = () => (
             <Route path="/support" element={<Support />} />
             <Route path="/bestsellers" element={<Bestsellers />} />
             <Route path="/audiobook/:id" element={<AudiobookDetails />} />
+            <Route path="/library" element={<Library />} />
             
             <Route path="/categories/fiction" element={<Fiction />} />
             <Route path="/categories/non-fiction" element={<NonFiction />} />
