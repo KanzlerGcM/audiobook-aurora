@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from "@/hooks/use-language";
 import { useAuth } from '@/hooks/use-auth';
+import { toast } from "sonner";
 
 interface BookButtonsProps {
   bookId: string;
@@ -27,9 +28,10 @@ const BookButtons = ({ bookId, isLoggedIn, isPreviewPlaying, togglePreview, hand
   const handleLibraryToggle = () => {
     if (isBookInLibrary) {
       removeFromLibrary(bookId);
+      toast.success(t('bookRemovedFromLibrary'));
     } else {
       addToLibrary(bookId);
-      navigate('/library');
+      toast.success(t('bookAddedToLibrary'));
     }
   };
 

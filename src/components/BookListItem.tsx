@@ -36,6 +36,7 @@ const BookListItem = ({
     
     if (isBookInLibrary) {
       removeFromLibrary(book.id);
+      toast.success(t('bookRemovedFromLibrary'));
     } else {
       addToLibrary(book.id);
       toast.success(t('bookAddedToLibrary'));
