@@ -8,7 +8,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import AudiobookCard from '@/components/AudiobookCard';
 import { Button } from '@/components/ui/button';
-import { books as allBooks } from '@/data/books';
+import { getAudiobooks, getBookById } from '@/data/books';
 
 const Library = () => {
   const { t } = useLanguage();
@@ -17,7 +17,12 @@ const Library = () => {
   
   useEffect(() => {
     if (isLoggedIn && library) {
-      const libraryBooks = allBooks.filter(book => library.includes(book.id));
+      // Fetch books that are in user's library
+      const libraryBooks: Book[] = [];
+      library.forEach(bookId => {
+        const book = getBookById(bookId);
+        if (book) libraryBooks.push(book);
+      });
       setUserBooks(libraryBooks);
     } else {
       setUserBooks([]);
@@ -71,7 +76,7 @@ const Library = () => {
                   duration={book.duration || ""}
                   rating={book.rating}
                   category={book.category || ""}
-                  className="h-full"
+                  index={0}
                 />
                 <Button
                   variant="destructive"
