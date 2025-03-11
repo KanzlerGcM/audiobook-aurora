@@ -34,7 +34,7 @@ const AudiobookCard = ({
 
   return (
     <Link 
-      to={`/book/${id}`} 
+      to={`/audiobook/${id}`} 
       className={`group block animate-fade-in`} 
       style={{ animationDelay: `${0.1 + index * 0.1}s` }}
       onMouseEnter={() => setIsHovered(true)}
