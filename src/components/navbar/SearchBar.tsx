@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { useLanguage } from '@/hooks/use-language';
 import { Button } from '@/components/ui/button';
 import type { Book } from '@/types/book';
-import { books } from '@/data/books';
+import { getAudiobooks } from '@/data/books';
 
 const SearchBar = () => {
   const { t } = useLanguage();
@@ -35,7 +35,8 @@ const SearchBar = () => {
     }
 
     const query = searchQuery.toLowerCase();
-    const filteredBooks = books.filter(
+    const allBooks = getAudiobooks();
+    const filteredBooks = allBooks.filter(
       book => book.title.toLowerCase().includes(query) || 
               book.author.toLowerCase().includes(query)
     );

@@ -15,7 +15,7 @@ import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/hooks/use-language';
 import { useAuth } from '@/hooks/use-auth';
 import { Input } from '@/components/ui/input';
-import { books } from '@/data/books';
+import { getAudiobooks } from '@/data/books';
 
 interface MobileNavProps {
   open: boolean;
@@ -54,7 +54,8 @@ const MobileNav = ({ open, setOpen, navLinks = [], onClose }: MobileNavProps) =>
       return;
     }
     
-    const filtered = books
+    const allBooks = getAudiobooks();
+    const filtered = allBooks
       .filter(book => 
         book.title.toLowerCase().includes(query.toLowerCase()) || 
         book.author.toLowerCase().includes(query.toLowerCase())
