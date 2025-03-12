@@ -1,4 +1,3 @@
-
 export type Language = 'en' | 'es' | 'fr' | 'de' | 'pt';
 
 export interface Translations {
@@ -57,6 +56,13 @@ export const translations: Translations = {
     de: 'von',
     pt: 'por'
   },
+  goToPage: {
+    en: 'Go to page',
+    es: 'Ir a la página',
+    fr: 'Aller à la page',
+    de: 'Zur Seite gehen',
+    pt: 'Ir para página'
+  },
   login: {
     en: 'Login',
     es: 'Iniciar sesión',
@@ -106,7 +112,6 @@ export const translations: Translations = {
     de: 'Einstellungen',
     pt: 'Configurações'
   },
-  // Add missing translations from console logs
   reviews: {
     en: 'Reviews',
     es: 'Reseñas',
@@ -163,7 +168,6 @@ export const translations: Translations = {
     de: 'Alle Kapitel anzeigen',
     pt: 'Mostrar Todos os Capítulos'
   },
-  // Settings page related translations
   account: {
     en: 'Account',
     es: 'Cuenta',
@@ -206,7 +210,6 @@ export const translations: Translations = {
     de: 'Sprache',
     pt: 'Idioma'
   },
-  // Additional settings-related translations
   profileInfo: {
     en: 'Profile Information',
     es: 'Información de Perfil',
@@ -375,5 +378,4 @@ export const translations: Translations = {
     de: 'Zur Anmeldung',
     pt: 'Ir para Login'
   }
-  // Add more translations here as needed
 };

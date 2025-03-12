@@ -8,6 +8,7 @@ import { useAuth } from '@/hooks/use-auth';
 import { Button } from '@/components/ui/button';
 import { Lock } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useLanguage } from '@/hooks/use-language';
 
 interface BookContentSectionProps {
   books: Book[];
@@ -18,6 +19,7 @@ const BookContentSection = ({ books, initialBook }: BookContentSectionProps) => 
   const isMobile = useIsMobile();
   const { isLoggedIn, library } = useAuth();
   const navigate = useNavigate();
+  const { t } = useLanguage();
   
   const [selectedBook, setSelectedBook] = useState<Book | undefined>(
     initialBook || (books && books.length > 0 ? books[0] : undefined)
@@ -57,10 +59,10 @@ const BookContentSection = ({ books, initialBook }: BookContentSectionProps) => 
           </p>
           <div className="flex gap-4">
             <Button variant="default" onClick={() => navigate('/login')}>
-              Login
+              {t('login')}
             </Button>
             <Button variant="outline" onClick={() => navigate('/signup')}>
-              Sign Up
+              {t('signUp')}
             </Button>
           </div>
         </div>
