@@ -12,7 +12,7 @@ const Login = () => {
 
   // Fetch more books for the carousel to have enough for the new design
   useEffect(() => {
-    const fetchedBooks = getAudiobooks(1, 15);
+    const fetchedBooks = getAudiobooks(1, 12);
     setBooks(fetchedBooks);
   }, []);
 
