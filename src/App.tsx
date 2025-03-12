@@ -2,9 +2,10 @@
 import { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from "@/components/theme-provider";
-import { LanguageContext } from './context/LanguageContext';
+import { LanguageProvider } from './context/LanguageContext';
 import { useTheme } from 'next-themes';
 import { Toaster } from 'sonner';
+import { Language } from '@/translations/types';
 
 import Index from './pages/Index';
 import Support from './pages/Support';
@@ -44,18 +45,11 @@ import AudiobookDetails from './pages/AudiobookDetails';
 import RatedBooks from './pages/RatedBooks';
 
 function App() {
-  const [defaultLanguage, setDefaultLanguage] = useState('en');
-  const { theme: defaultTheme } = useTheme();
   const [blurEnabled, setBlurEnabled] = useState(false);
+  const { theme: defaultTheme } = useTheme();
 
   return (
-    <LanguageContext.Provider value={{ 
-      language: defaultLanguage, 
-      setLanguage: setDefaultLanguage, 
-      t: (key) => key, 
-      translateText: async (text) => text,
-      isTranslating: false
-    }}>
+    <LanguageProvider>
       <BrowserRouter>
         <ThemeProvider defaultTheme={defaultTheme}>
           <AnimatedCursor />
@@ -101,7 +95,7 @@ function App() {
           <Toaster richColors />
         </ThemeProvider>
       </BrowserRouter>
-    </LanguageContext.Provider>
+    </LanguageProvider>
   );
 }
 

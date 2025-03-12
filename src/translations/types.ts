@@ -1,5 +1,5 @@
 
-export type Language = 'en' | 'es' | 'fr' | 'de';
+export type Language = 'en' | 'es' | 'fr' | 'de' | 'pt';
 
 export interface Translations {
   [key: string]: {
@@ -12,7 +12,8 @@ export const translations: Translations = {
     en: 'Loading...',
     es: 'Cargando...',
     fr: 'Chargement...',
-    de: 'Laden...'
+    de: 'Laden...',
+    pt: 'Carregando...'
   },
   // Add more translations here as needed
 };

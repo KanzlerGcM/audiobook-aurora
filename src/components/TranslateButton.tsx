@@ -2,6 +2,7 @@
 import { Globe } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/hooks/use-language';
+import { Language } from '@/translations/types';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,12 +15,14 @@ import { cn } from '@/lib/utils';
 const TranslateButton = () => {
   const { language, setLanguage, isTranslating } = useLanguage();
   
-  const handleLanguageChange = (newLanguage: 'en' | 'pt' | 'es') => {
+  const handleLanguageChange = (newLanguage: Language) => {
     setLanguage(newLanguage);
     const languageNames = {
       en: 'English',
-      pt: 'Portuguese',
-      es: 'Spanish'
+      es: 'Spanish',
+      fr: 'French',
+      de: 'German',
+      pt: 'Portuguese'
     };
     toast(`Language changed to ${languageNames[newLanguage]}`);
   };
@@ -59,6 +62,18 @@ const TranslateButton = () => {
           className={`${language === 'es' ? 'bg-hakim-medium/30' : ''} text-hakim-light hover:bg-hakim-dark`}
         >
           Español
+        </DropdownMenuItem>
+        <DropdownMenuItem 
+          onClick={() => handleLanguageChange('fr')}
+          className={`${language === 'fr' ? 'bg-hakim-medium/30' : ''} text-hakim-light hover:bg-hakim-dark`}
+        >
+          Français
+        </DropdownMenuItem>
+        <DropdownMenuItem 
+          onClick={() => handleLanguageChange('de')}
+          className={`${language === 'de' ? 'bg-hakim-medium/30' : ''} text-hakim-light hover:bg-hakim-dark`}
+        >
+          Deutsch
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
