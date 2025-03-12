@@ -10,6 +10,7 @@ import BookActions from './book-details/BookActions';
 import BookButtons from './book-details/BookButtons';
 import BookPreview from './book-details/BookPreview';
 import LoginPrompt from './book-details/LoginPrompt';
+import BookDescription from './book-details/BookDescription';
 
 interface BookDetailsProps {
   book: Book;
@@ -54,18 +55,18 @@ const BookDetails = ({ book, onLibraryUpdate }: BookDetailsProps) => {
   };
 
   return (
-    <div className="h-full bg-hakim-dark/10 p-6 rounded-xl">
+    <div className="h-full bg-black/20 backdrop-blur-sm p-6 rounded-xl">
       <div className="flex flex-col md:flex-row gap-6">
         <div className="flex-shrink-0">
           <img 
             src={book.coverImage} 
             alt={book.title} 
-            className="w-40 h-60 object-cover rounded-xl shadow-lg" 
+            className="w-40 h-60 object-cover rounded-xl shadow-lg border border-white/10" 
           />
         </div>
         
         <div className="flex-1">
-          <h2 className="text-2xl font-bold mb-2">{book.title}</h2>
+          <h2 className="text-2xl font-bold mb-2 text-white">{book.title}</h2>
           <p className="text-hakim-light mb-3">{t('by')} {book.author}</p>
           
           <BookTags 
@@ -75,9 +76,12 @@ const BookDetails = ({ book, onLibraryUpdate }: BookDetailsProps) => {
             releaseDate={book.releaseDate}
           />
           
-          <p className="text-foreground/80 leading-relaxed my-4">
-            {book.description}
-          </p>
+          <div className="my-4 bg-white/10 p-4 rounded-lg backdrop-blur-md">
+            <BookDescription 
+              description={book.description}
+              additionalText={book.additionalText}
+            />
+          </div>
           
           <BookActions 
             bookId={book.id}

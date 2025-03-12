@@ -72,7 +72,7 @@ const BookContentSection = ({ books, initialBook }: BookContentSectionProps) => 
           const middleColor = getColorFromCanvas(context, Math.floor(img.width/2), Math.floor(img.height/2));
           const bottomColor = getColorFromCanvas(context, Math.floor(img.width/2), img.height - 1);
           
-          // Create radial gradient
+          // Create radial gradient with improved colors
           overlay.style.background = `radial-gradient(circle at top left, ${topColor} 0%, ${middleColor} 50%, ${bottomColor} 100%)`;
           container.insertBefore(overlay, container.firstChild);
         }
@@ -148,7 +148,7 @@ const BookContentSection = ({ books, initialBook }: BookContentSectionProps) => 
           key={`booklist-${forceUpdateCounter}`}
         />
       </div>
-      <div className="md:col-span-2 rounded-xl overflow-hidden relative w-full h-full" ref={detailsContainerRef}>
+      <div className="md:col-span-2 rounded-xl overflow-hidden backdrop-blur-sm border border-white/10 shadow-xl relative w-full h-full" ref={detailsContainerRef}>
         <div className="relative z-10">
           <BookDetails 
             book={selectedBook} 
