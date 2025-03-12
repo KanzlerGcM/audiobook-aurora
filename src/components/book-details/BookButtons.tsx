@@ -60,7 +60,7 @@ const BookButtons = ({
         <Button 
           variant="outline" 
           className="gap-2"
-          onClick={handleLibraryToggle}
+          onClick={handleLogin}
         >
           {t('addToLibrary')}
         </Button>

@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Headphones } from 'lucide-react';
@@ -7,6 +6,7 @@ import Footer from '@/components/Footer';
 import AudioPlayer from '@/components/AudioPlayer';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useLanguage } from '@/hooks/use-language';
+import { useAuth } from '@/hooks/use-auth';
 
 import BookCoverActions from '@/components/book-details/BookCoverActions';
 import BookMetadata from '@/components/book-details/BookMetadata';
@@ -42,6 +42,13 @@ const bookDetails = {
     { id: 'ch8', title: 'Chapter 8: Collaboration', duration: '37m', isFree: false },
   ]
 };
+
+interface ChapterType {
+  id: string;
+  title: string;
+  duration: string;
+  isFree: boolean;
+}
 
 const relatedBooks = [
   {
@@ -82,18 +89,15 @@ const relatedBooks = [
   }
 ];
 
-interface ChapterType {
-  id: string;
-  title: string;
-  duration: string;
-  isFree: boolean;
-}
-
 const BookDetails = () => {
   const { id } = useParams<{ id: string }>();
   const [activeChapter, setActiveChapter] = useState<ChapterType | null>(null);
   const [showMiniPlayer, setShowMiniPlayer] = useState(false);
   const { t } = useLanguage();
+  const { isLoggedIn } = useAuth();
+  const [libraryUpdated, setLibraryUpdated] = useState(false);
+  
+  const forceLibraryUpdate = () => setLibraryUpdated(prev => !prev);
   
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -154,7 +158,9 @@ const BookDetails = () => {
             <div className="lg:col-span-1">
               <BookCoverActions 
                 coverImage={bookDetails.coverImage} 
-                title={bookDetails.title} 
+                title={bookDetails.title}
+                bookId={bookDetails.id}
+                onLibraryUpdate={forceLibraryUpdate}
               />
               
               <BookMetadata 
