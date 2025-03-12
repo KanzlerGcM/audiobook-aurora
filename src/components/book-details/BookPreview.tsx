@@ -36,8 +36,8 @@ const BookPreview = ({ isPreviewPlaying, title, author, coverImage }: BookPrevie
   // Check localStorage for global preview state
   const storedPreview = getStoredPreview();
   
-  // Use either the props-based preview or the stored preview
-  const shouldShowPreview = isPreviewPlaying || storedPreview !== null;
+  // Always show the preview if there's data in localStorage
+  const shouldShowPreview = isPreviewPlaying || (storedPreview !== null);
   const playerTitle = previewData?.title || storedPreview?.title || '';
   const playerAuthor = previewData?.author || storedPreview?.author || '';
   const playerCoverImage = previewData?.coverImage || storedPreview?.coverImage || '';

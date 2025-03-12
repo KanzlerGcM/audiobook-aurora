@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from "@/components/theme-provider";
@@ -75,12 +76,18 @@ function App() {
       }
     };
 
+    // Check on component mount
     checkForActivePreview();
 
+    // Add event listener for localStorage changes
     window.addEventListener('storage', checkForActivePreview);
+    
+    // Also check periodically to ensure we catch changes
+    const interval = setInterval(checkForActivePreview, 1000);
     
     return () => {
       window.removeEventListener('storage', checkForActivePreview);
+      clearInterval(interval);
     };
   }, []);
 
