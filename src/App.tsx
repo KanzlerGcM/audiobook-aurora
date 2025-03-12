@@ -1,7 +1,8 @@
+
 import { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { ThemeProvider } from "@/components/theme-provider"
-import { LanguageProvider } from './hooks/use-language';
+import { ThemeProvider } from "@/components/theme-provider";
+import { LanguageContext } from './context/LanguageContext';
 import { useTheme } from 'next-themes';
 import { Toaster } from 'sonner';
 
@@ -48,7 +49,13 @@ function App() {
   const [blurEnabled, setBlurEnabled] = useState(false);
 
   return (
-    <LanguageProvider defaultLanguage={defaultLanguage}>
+    <LanguageContext.Provider value={{ 
+      language: defaultLanguage, 
+      setLanguage: setDefaultLanguage, 
+      t: (key) => key, 
+      translateText: async (text) => text,
+      isTranslating: false
+    }}>
       <BrowserRouter>
         <ThemeProvider defaultTheme={defaultTheme}>
           <AnimatedCursor />
@@ -94,7 +101,7 @@ function App() {
           <Toaster richColors />
         </ThemeProvider>
       </BrowserRouter>
-    </LanguageProvider>
+    </LanguageContext.Provider>
   );
 }
 

@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
@@ -17,22 +18,27 @@ import { useAuth } from '@/hooks/use-auth';
 interface MobileNavProps {
   open: boolean;
   setOpen: (open: boolean) => void;
+  navLinks?: { name: string; path: string }[];
+  categories?: { name: string; path: string }[];
+  onClose?: () => void;
 }
 
 // The mobile navigation component implementation
-const MobileNav = ({ open, setOpen }: MobileNavProps) => {
+const MobileNav = ({ open, setOpen, navLinks = [], categories = [], onClose }: MobileNavProps) => {
   const { t } = useLanguage();
   const { isLoggedIn, logout } = useAuth();
   const navigate = useNavigate();
   
   const handleNavItemClick = (path: string) => {
     setOpen(false);
+    if (onClose) onClose();
     navigate(path);
   };
 
   const handleLogout = () => {
     logout();
     setOpen(false);
+    if (onClose) onClose();
     navigate('/');
   };
   
@@ -59,6 +65,21 @@ const MobileNav = ({ open, setOpen }: MobileNavProps) => {
             <div className="px-4 py-2">
               <div className="space-y-1">
                 {/* Main Navigation Items */}
+                {navLinks.map((link) => (
+                  <Button
+                    key={link.path}
+                    variant="ghost"
+                    className="w-full justify-start"
+                    onClick={() => handleNavItemClick(link.path)}
+                  >
+                    {link.name === t('explore') && <Search className="mr-2 h-5 w-5" />}
+                    {link.name === t('home') && <Home className="mr-2 h-5 w-5" />}
+                    {link.name === t('about') && <Info className="mr-2 h-5 w-5" />}
+                    {link.name === t('blog') && <BookOpen className="mr-2 h-5 w-5" />}
+                    {link.name}
+                  </Button>
+                ))}
+                
                 <Button
                   variant="ghost"
                   className="w-full justify-start"
@@ -125,41 +146,16 @@ const MobileNav = ({ open, setOpen }: MobileNavProps) => {
                   {t('categories')}
                 </div>
                 <div className="space-y-1">
-                  <Button
-                    variant="ghost"
-                    className="w-full justify-start"
-                    onClick={() => handleNavItemClick('/categories/fiction')}
-                  >
-                    {t('fiction')}
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    className="w-full justify-start"
-                    onClick={() => handleNavItemClick('/categories/non-fiction')}
-                  >
-                    {t('nonFiction')}
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    className="w-full justify-start"
-                    onClick={() => handleNavItemClick('/categories/mystery-thriller')}
-                  >
-                    {t('mysteryThriller')}
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    className="w-full justify-start"
-                    onClick={() => handleNavItemClick('/categories/science-fiction')}
-                  >
-                    {t('scienceFiction')}
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    className="w-full justify-start"
-                    onClick={() => handleNavItemClick('/categories/fantasy')}
-                  >
-                    {t('fantasy')}
-                  </Button>
+                  {categories.map((category) => (
+                    <Button
+                      key={category.path}
+                      variant="ghost"
+                      className="w-full justify-start"
+                      onClick={() => handleNavItemClick(category.path)}
+                    >
+                      {category.name}
+                    </Button>
+                  ))}
                 </div>
               </div>
             </div>

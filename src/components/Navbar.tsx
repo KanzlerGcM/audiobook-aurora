@@ -83,7 +83,8 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       <MobileNav 
-        isOpen={mobileMenuOpen}
+        open={mobileMenuOpen}
+        setOpen={setMobileMenuOpen}
         navLinks={navLinks}
         categories={categories}
         onClose={closeMobileMenu}

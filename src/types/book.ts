@@ -9,4 +9,7 @@ export interface Book {
   category?: string;
   description: string;
   releaseDate?: string;
+  narrator?: string;
+  additionalText?: string;
+  reviews?: number;
 }

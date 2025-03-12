@@ -1,7 +1,7 @@
 
 import { toast } from 'sonner';
 import { translateWithDeepL } from './deeplTranslator';
-import { Language, translations } from '@/translations';
+import { Language, translations } from '@/translations/types';
 
 // Translation function using predefined translations
 export const getTranslation = (key: string, language: Language): string => {
