@@ -57,5 +57,47 @@ export const translations: Translations = {
     de: 'von',
     pt: 'por'
   },
+  login: {
+    en: 'Login',
+    es: 'Iniciar sesión',
+    fr: 'Connexion',
+    de: 'Anmelden',
+    pt: 'Entrar'
+  },
+  signUp: {
+    en: 'Sign up',
+    es: 'Registrarse',
+    fr: 'S\'inscrire',
+    de: 'Registrieren',
+    pt: 'Cadastrar'
+  },
+  myAccount: {
+    en: 'My Account',
+    es: 'Mi Cuenta',
+    fr: 'Mon Compte',
+    de: 'Mein Konto',
+    pt: 'Minha Conta'
+  },
+  myLibrary: {
+    en: 'My Library',
+    es: 'Mi Biblioteca',
+    fr: 'Ma Bibliothèque',
+    de: 'Meine Bibliothek',
+    pt: 'Minha Biblioteca'
+  },
+  ratedBooks: {
+    en: 'Rated Books',
+    es: 'Libros Calificados',
+    fr: 'Livres Évalués',
+    de: 'Bewertete Bücher',
+    pt: 'Livros Avaliados'
+  },
+  logout: {
+    en: 'Logout',
+    es: 'Cerrar sesión',
+    fr: 'Déconnexion',
+    de: 'Abmelden',
+    pt: 'Sair'
+  },
   // Add more translations here as needed
 };

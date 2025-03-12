@@ -49,32 +49,30 @@ const NavActions = () => {
     navigate('/');
   };
 
-  if (isMobile) {
-    return null;
-  }
-
   // User is not logged in
   if (!isLoggedIn) {
     return (
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2">
         <SearchBar />
-        <Button variant="default" onClick={loginClickHandler}>
-          {t('login')}
-        </Button>
-        <Button variant="outline" onClick={signupClickHandler}>
-          {t('signUp')}
-        </Button>
+        <div className="hidden md:flex items-center gap-2">
+          <Button variant="default" size="sm" onClick={loginClickHandler}>
+            {t('login')}
+          </Button>
+          <Button variant="outline" size="sm" onClick={signupClickHandler}>
+            {t('signUp')}
+          </Button>
+        </div>
       </div>
     );
   }
 
   // User is logged in
   return (
-    <div className="flex items-center gap-3">
+    <div className="flex items-center gap-2">
       <SearchBar />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="relative h-10 w-10 rounded-full">
+          <Button variant="ghost" className="relative h-8 w-8 rounded-full">
             <Avatar>
               <AvatarImage src="" />
               <AvatarFallback className="bg-accent/10 text-accent">

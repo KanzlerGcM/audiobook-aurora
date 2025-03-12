@@ -6,7 +6,7 @@ import Logo from './Logo';
 import DesktopNav from './navbar/DesktopNav';
 import NavActions from './navbar/NavActions';
 import { Link } from 'react-router-dom';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, Menu } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,11 +14,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { categories } from '@/utils/bookGenerator';
+import { Button } from './ui/button';
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
   const { t } = useLanguage();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,6 +41,10 @@ const Navbar = () => {
     { name: t('explore'), path: '/explore' }
   ];
 
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
     <nav 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -47,50 +53,62 @@ const Navbar = () => {
     >
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between">
-          <div>
+          <div className="flex items-center gap-4">
             <Logo size={scrolled ? 'md' : 'lg'} />
           </div>
 
           {/* Desktop Navigation */}
-          <DesktopNav 
-            navLinks={navLinks}
-          />
+          <div className="flex items-center gap-2">
+            <DesktopNav 
+              navLinks={navLinks}
+            />
 
-          {/* Categories Dropdown */}
-          <div className="hidden md:flex items-center mx-4">
-            <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center px-3 py-2 text-foreground hover:text-accent transition-colors">
-                {t('categories')}
-                <ChevronDown className="ml-1 h-4 w-4" />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent 
-                align="center" 
-                className="w-56 bg-background/95 backdrop-blur-sm border border-border"
-              >
-                {categories.slice(0, 8).map((category) => (
-                  <DropdownMenuItem key={category} asChild>
+            {/* Categories Dropdown */}
+            <div className="hidden md:flex items-center">
+              <DropdownMenu>
+                <DropdownMenuTrigger className="flex items-center px-3 py-2 text-foreground hover:text-accent transition-colors">
+                  {t('categories')}
+                  <ChevronDown className="ml-1 h-4 w-4" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent 
+                  align="center" 
+                  className="w-56 bg-background/95 backdrop-blur-sm border border-border"
+                >
+                  {categories.slice(0, 8).map((category) => (
+                    <DropdownMenuItem key={category} asChild>
+                      <Link 
+                        to={`/categories/${categoryToPath(category)}`}
+                        className="cursor-pointer"
+                      >
+                        {category}
+                      </Link>
+                    </DropdownMenuItem>
+                  ))}
+                  <DropdownMenuItem asChild>
                     <Link 
-                      to={`/categories/${categoryToPath(category)}`}
-                      className="cursor-pointer"
+                      to="/categories"
+                      className="text-accent font-medium cursor-pointer"
                     >
-                      {category}
+                      {t('viewAll')}
                     </Link>
                   </DropdownMenuItem>
-                ))}
-                <DropdownMenuItem asChild>
-                  <Link 
-                    to="/categories"
-                    className="text-accent font-medium cursor-pointer"
-                  >
-                    {t('viewAll')}
-                  </Link>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
 
-          {/* Search, and Account */}
-          <NavActions />
+            {/* Search, and Account */}
+            <NavActions />
+          
+            {/* Menu Icon */}
+            <Button 
+              variant="ghost" 
+              size="icon"
+              className="md:hidden flex items-center justify-center"
+              onClick={toggleMenu}
+            >
+              <Menu className="h-5 w-5" />
+            </Button>
+          </div>
         </div>
       </div>
     </nav>
