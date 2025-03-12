@@ -14,20 +14,23 @@ import {
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/hooks/use-language';
 import { useAuth } from '@/hooks/use-auth';
+import { Input } from '@/components/ui/input';
+import { books } from '@/data/books';
 
 interface MobileNavProps {
   open: boolean;
   setOpen: (open: boolean) => void;
   navLinks?: { name: string; path: string }[];
-  categories?: { name: string; path: string }[];
   onClose?: () => void;
 }
 
 // The mobile navigation component implementation
-const MobileNav = ({ open, setOpen, navLinks = [], categories = [], onClose }: MobileNavProps) => {
+const MobileNav = ({ open, setOpen, navLinks = [], onClose }: MobileNavProps) => {
   const { t } = useLanguage();
   const { isLoggedIn, logout } = useAuth();
   const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState([]); 
   
   const handleNavItemClick = (path: string) => {
     setOpen(false);
@@ -40,6 +43,31 @@ const MobileNav = ({ open, setOpen, navLinks = [], categories = [], onClose }: M
     setOpen(false);
     if (onClose) onClose();
     navigate('/');
+  };
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+    
+    if (query.trim() === '') {
+      setSearchResults([]);
+      return;
+    }
+    
+    const filtered = books
+      .filter(book => 
+        book.title.toLowerCase().includes(query.toLowerCase()) || 
+        book.author.toLowerCase().includes(query.toLowerCase())
+      )
+      .slice(0, 5);
+      
+    setSearchResults(filtered);
+  };
+
+  const handleBookClick = (bookId: string) => {
+    handleNavItemClick(`/audiobook/${bookId}`);
+    setSearchQuery('');
+    setSearchResults([]);
   };
   
   return (
@@ -59,6 +87,38 @@ const MobileNav = ({ open, setOpen, navLinks = [], categories = [], onClose }: M
             <Button variant="ghost" size="icon" onClick={() => setOpen(false)} aria-label="Close">
               <X className="h-5 w-5" />
             </Button>
+          </div>
+          
+          <div className="p-4 border-b">
+            <div className="relative">
+              <Input
+                value={searchQuery}
+                onChange={handleSearch}
+                placeholder={t('searchBooks')}
+                className="w-full"
+              />
+              {searchResults.length > 0 && (
+                <div className="absolute left-0 right-0 mt-2 bg-background border border-border rounded-md shadow-lg z-50">
+                  {searchResults.map((book: any) => (
+                    <div 
+                      key={book.id}
+                      onClick={() => handleBookClick(book.id)}
+                      className="flex items-center gap-3 p-2 hover:bg-accent/10 cursor-pointer"
+                    >
+                      <img 
+                        src={book.coverImage} 
+                        alt={book.title} 
+                        className="h-12 w-8 object-cover rounded"
+                      />
+                      <div>
+                        <p className="text-sm font-medium">{book.title}</p>
+                        <p className="text-xs text-muted-foreground">{book.author}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
           
           <div className="flex-1 overflow-auto py-2">
@@ -96,22 +156,6 @@ const MobileNav = ({ open, setOpen, navLinks = [], categories = [], onClose }: M
                   <Info className="mr-2 h-5 w-5" />
                   {t('about')}
                 </Button>
-                <Button
-                  variant="ghost"
-                  className="w-full justify-start"
-                  onClick={() => handleNavItemClick('/blog')}
-                >
-                  <BookOpen className="mr-2 h-5 w-5" />
-                  {t('blog')}
-                </Button>
-                <Button
-                  variant="ghost"
-                  className="w-full justify-start"
-                  onClick={() => handleNavItemClick('/')}
-                >
-                  <Home className="mr-2 h-5 w-5" />
-                  {t('home')}
-                </Button>
               </div>
               
               {isLoggedIn && (
@@ -139,25 +183,6 @@ const MobileNav = ({ open, setOpen, navLinks = [], categories = [], onClose }: M
                   </div>
                 </div>
               )}
-              
-              {/* Categories Section */}
-              <div className="mt-6 pt-6 border-t border-border">
-                <div className="text-sm font-medium text-foreground/70 px-2 mb-2">
-                  {t('categories')}
-                </div>
-                <div className="space-y-1">
-                  {categories.map((category) => (
-                    <Button
-                      key={category.path}
-                      variant="ghost"
-                      className="w-full justify-start"
-                      onClick={() => handleNavItemClick(category.path)}
-                    >
-                      {category.name}
-                    </Button>
-                  ))}
-                </div>
-              </div>
             </div>
           </div>
           

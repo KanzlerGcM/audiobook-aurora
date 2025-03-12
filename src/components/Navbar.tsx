@@ -31,19 +31,6 @@ const Navbar = () => {
     setMobileMenuOpen(false);
   };
 
-  const categories = [
-    { name: t('fiction'), path: '/categories/fiction' },
-    { name: t('nonFiction'), path: '/categories/non-fiction' },
-    { name: t('mysteryThriller'), path: '/categories/mystery-thriller' },
-    { name: t('scienceFiction'), path: '/categories/sci-fi' },
-    { name: t('fantasy'), path: '/categories/fantasy' },
-    { name: t('biography'), path: '/categories/biography' },
-    { name: t('history'), path: '/categories/history' },
-    { name: t('selfHelp'), path: '/categories/self-help' },
-    { name: t('business'), path: '/categories/business' },
-    { name: t('cookbooks'), path: '/categories/cookbooks' },
-  ];
-
   const navLinks = [
     { name: t('home'), path: '/' },
     { name: t('explore'), path: '/explore' }
@@ -63,11 +50,10 @@ const Navbar = () => {
 
           {/* Desktop Navigation */}
           <DesktopNav 
-            navLinks={navLinks} 
-            categories={categories} 
+            navLinks={navLinks}
           />
 
-          {/* Search, Site Menu and Account */}
+          {/* Search, and Account */}
           <NavActions />
 
           {/* Mobile Menu Button */}
@@ -86,7 +72,6 @@ const Navbar = () => {
         open={mobileMenuOpen}
         setOpen={setMobileMenuOpen}
         navLinks={navLinks}
-        categories={categories}
         onClose={closeMobileMenu}
       />
     </nav>

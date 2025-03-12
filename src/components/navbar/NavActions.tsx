@@ -5,7 +5,6 @@ import {
   User, 
   LogOut, 
   BookMarked, 
-  Search,
   ThumbsUp
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -13,6 +12,7 @@ import { toast } from 'sonner';
 import { useLanguage } from '@/hooks/use-language';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useAuth } from '@/hooks/use-auth';
+import SearchBar from './SearchBar';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -29,7 +29,6 @@ const NavActions = () => {
   const { isLoggedIn, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const [showCategories, setShowCategories] = useState(false);
   
   const renderToast = () => {
     toast("Soon...", {
@@ -58,6 +57,7 @@ const NavActions = () => {
   if (!isLoggedIn) {
     return (
       <div className="flex items-center gap-3">
+        <SearchBar />
         <Button variant="default" onClick={loginClickHandler}>
           {t('login')}
         </Button>
@@ -70,39 +70,38 @@ const NavActions = () => {
 
   // User is logged in
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative h-10 w-10 rounded-full">
-          <Avatar>
-            <AvatarImage src="" />
-            <AvatarFallback className="bg-accent/10 text-accent">
-              <User className="h-4 w-4" />
-            </AvatarFallback>
-          </Avatar>
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-56">
-        <DropdownMenuLabel>{t('myAccount')}</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => navigate('/library')}>
-          <BookMarked className="mr-2 h-4 w-4" />
-          <span>{t('myLibrary')}</span>
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => navigate('/rated-books')}>
-          <ThumbsUp className="mr-2 h-4 w-4" />
-          <span>{t('ratedBooks')}</span>
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => navigate('/explore')}>
-          <Search className="mr-2 h-4 w-4" />
-          <span>{t('exploreBooks')}</span>
-        </DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={handleLogout}>
-          <LogOut className="mr-2 h-4 w-4" />
-          <span>{t('logout')}</span>
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <div className="flex items-center gap-3">
+      <SearchBar />
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" className="relative h-10 w-10 rounded-full">
+            <Avatar>
+              <AvatarImage src="" />
+              <AvatarFallback className="bg-accent/10 text-accent">
+                <User className="h-4 w-4" />
+              </AvatarFallback>
+            </Avatar>
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" className="w-56">
+          <DropdownMenuLabel>{t('myAccount')}</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem onClick={() => navigate('/library')}>
+            <BookMarked className="mr-2 h-4 w-4" />
+            <span>{t('myLibrary')}</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => navigate('/rated-books')}>
+            <ThumbsUp className="mr-2 h-4 w-4" />
+            <span>{t('ratedBooks')}</span>
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem onClick={handleLogout}>
+            <LogOut className="mr-2 h-4 w-4" />
+            <span>{t('logout')}</span>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </div>
   );
 };
 

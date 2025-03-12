@@ -1,7 +1,6 @@
 
 import { Link, useLocation } from 'react-router-dom';
 import { useLanguage } from '@/hooks/use-language';
-import CategoriesDropdown from './CategoriesDropdown';
 
 interface NavLinkProps {
   path: string;
@@ -24,10 +23,9 @@ const NavLink = ({ path, name, isActive }: NavLinkProps) => (
 
 interface DesktopNavProps {
   navLinks: { name: string; path: string }[];
-  categories: { name: string; path: string }[];
 }
 
-const DesktopNav = ({ navLinks, categories }: DesktopNavProps) => {
+const DesktopNav = ({ navLinks }: DesktopNavProps) => {
   const location = useLocation();
   
   return (
@@ -40,8 +38,6 @@ const DesktopNav = ({ navLinks, categories }: DesktopNavProps) => {
           isActive={location.pathname === link.path}
         />
       ))}
-      
-      <CategoriesDropdown categories={categories} />
     </div>
   );
 };

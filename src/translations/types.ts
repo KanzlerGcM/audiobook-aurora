@@ -15,5 +15,12 @@ export const translations: Translations = {
     de: 'Laden...',
     pt: 'Carregando...'
   },
+  searchBooks: {
+    en: 'Search books...',
+    es: 'Buscar libros...',
+    fr: 'Rechercher des livres...',
+    de: 'Bücher suchen...',
+    pt: 'Buscar livros...'
+  },
   // Add more translations here as needed
 };
