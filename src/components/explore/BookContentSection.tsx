@@ -1,5 +1,4 @@
-
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import BookList from "@/components/BookList";
 import BookDetails from "@/components/BookDetails";
 import { Book } from "@/types/book";
@@ -18,6 +17,7 @@ const BookContentSection = ({ books, initialBook }: BookContentSectionProps) => 
   const isMobile = useIsMobile();
   const { isLoggedIn, library } = useAuth();
   const navigate = useNavigate();
+  const detailsContainerRef = useRef<HTMLDivElement>(null);
   
   // Safely handle empty books array
   const [selectedBook, setSelectedBook] = useState<Book | undefined>(
@@ -27,6 +27,63 @@ const BookContentSection = ({ books, initialBook }: BookContentSectionProps) => 
   // Force re-render when library status changes
   const [forceUpdateCounter, setForceUpdateCounter] = useState(0);
   const forceRerender = () => setForceUpdateCounter(prev => prev + 1);
+  
+  // Create background blur effect based on selected book
+  useEffect(() => {
+    if (selectedBook && detailsContainerRef.current) {
+      const container = detailsContainerRef.current;
+      container.style.position = 'relative';
+      container.style.overflow = 'hidden';
+      
+      // Remove any existing overlay
+      const existingOverlay = container.querySelector('.book-color-overlay');
+      if (existingOverlay) {
+        existingOverlay.remove();
+      }
+      
+      // Create new overlay
+      const overlay = document.createElement('div');
+      overlay.className = 'book-color-overlay';
+      overlay.style.position = 'absolute';
+      overlay.style.top = '0';
+      overlay.style.left = '0';
+      overlay.style.right = '0';
+      overlay.style.bottom = '0';
+      overlay.style.opacity = '0.45';
+      overlay.style.filter = 'blur(120px)';
+      overlay.style.transform = 'translateZ(0)';
+      overlay.style.zIndex = '0';
+      
+      // Create and use image to extract colors
+      const img = new Image();
+      img.crossOrigin = 'Anonymous';
+      img.src = selectedBook.coverImage;
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+        if (context) {
+          canvas.width = img.width;
+          canvas.height = img.height;
+          context.drawImage(img, 0, 0);
+          
+          // Extract colors from different parts of the image
+          const topColor = getColorFromCanvas(context, 0, 0);
+          const middleColor = getColorFromCanvas(context, Math.floor(img.width/2), Math.floor(img.height/2));
+          const bottomColor = getColorFromCanvas(context, Math.floor(img.width/2), img.height - 1);
+          
+          // Create radial gradient
+          overlay.style.background = `radial-gradient(circle at top left, ${topColor} 0%, ${middleColor} 50%, ${bottomColor} 100%)`;
+          container.insertBefore(overlay, container.firstChild);
+        }
+      };
+    }
+  }, [selectedBook]);
+  
+  // Helper function to extract colors from canvas
+  const getColorFromCanvas = (context: CanvasRenderingContext2D, x: number, y: number): string => {
+    const pixel = context.getImageData(x, y, 1, 1).data;
+    return `rgba(${pixel[0]}, ${pixel[1]}, ${pixel[2]}, 1)`;
+  };
   
   // Also listen to the library state from useAuth to force updates
   useEffect(() => {
@@ -85,12 +142,14 @@ const BookContentSection = ({ books, initialBook }: BookContentSectionProps) => 
         />
       </div>
       {!isMobile && selectedBook && (
-        <div className="md:col-span-2">
-          <BookDetails 
-            book={selectedBook} 
-            onLibraryUpdate={forceRerender}
-            key={`bookdetails-${forceUpdateCounter}`}
-          />
+        <div className="md:col-span-2 rounded-xl overflow-hidden relative" ref={detailsContainerRef}>
+          <div className="relative z-10">
+            <BookDetails 
+              book={selectedBook} 
+              onLibraryUpdate={forceRerender}
+              key={`bookdetails-${forceUpdateCounter}`}
+            />
+          </div>
         </div>
       )}
     </div>
