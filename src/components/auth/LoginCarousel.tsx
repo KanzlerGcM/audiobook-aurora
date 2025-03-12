@@ -87,8 +87,16 @@ const LoginCarousel = ({ books }: LoginCarouselProps) => {
 
   return (
     <div className="relative hidden h-full flex-col p-8 text-muted-foreground antialiased lg:flex">
-      <div className="absolute inset-0 bg-hakim-dark/30 z-0 rounded-r-full" />
-      <Link to="/" className="mb-6 font-semibold">
+      {/* Blurred background overlay */}
+      <div className="absolute inset-0 backdrop-blur-md bg-hakim-dark/20 z-0" />
+      <div className="absolute inset-0 bg-gradient-to-br from-hakim-darkest/50 to-hakim-dark/30 z-0 rounded-r-full" />
+      
+      {/* Colored blurred orbs in the background */}
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-indigo-500/10 blur-3xl -z-10"></div>
+      <div className="absolute bottom-1/4 right-1/3 w-80 h-80 rounded-full bg-purple-500/10 blur-3xl -z-10"></div>
+      <div className="absolute top-2/3 left-1/3 w-72 h-72 rounded-full bg-blue-500/10 blur-3xl -z-10"></div>
+      
+      <Link to="/" className="mb-6 font-semibold relative z-10">
         Hakim
       </Link>
       <div className="relative z-10 mt-10">
