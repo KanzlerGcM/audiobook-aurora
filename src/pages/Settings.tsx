@@ -22,15 +22,6 @@ import {
   CardContent 
 } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { 
-  Form, 
-  FormControl, 
-  FormDescription, 
-  FormField, 
-  FormItem, 
-  FormLabel, 
-  FormMessage 
-} from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Switch } from '@/components/ui/switch';
 import { 
@@ -41,6 +32,7 @@ import {
   SelectValue 
 } from '@/components/ui/select';
 import { Language } from '@/translations/types';
+import { Label } from '@/components/ui/label';
 
 const Settings = () => {
   const { t, language, setLanguage } = useLanguage();
@@ -135,12 +127,12 @@ const Settings = () => {
                 <CardContent className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <FormLabel>{t('fullName')}</FormLabel>
-                      <Input defaultValue={userData.name} />
+                      <Label htmlFor="fullName">{t('fullName')}</Label>
+                      <Input id="fullName" defaultValue={userData.name} />
                     </div>
                     <div className="space-y-2">
-                      <FormLabel>{t('email')}</FormLabel>
-                      <Input defaultValue={userData.email} type="email" />
+                      <Label htmlFor="email">{t('email')}</Label>
+                      <Input id="email" defaultValue={userData.email} type="email" />
                     </div>
                   </div>
                   <Button onClick={handleSaveSettings}>{t('saveChanges')}</Button>
@@ -178,16 +170,16 @@ const Settings = () => {
                 <CardContent className="space-y-4">
                   <div className="space-y-4">
                     <div className="space-y-2">
-                      <FormLabel>{t('currentPassword')}</FormLabel>
-                      <Input type="password" />
+                      <Label htmlFor="currentPassword">{t('currentPassword')}</Label>
+                      <Input id="currentPassword" type="password" />
                     </div>
                     <div className="space-y-2">
-                      <FormLabel>{t('newPassword')}</FormLabel>
-                      <Input type="password" />
+                      <Label htmlFor="newPassword">{t('newPassword')}</Label>
+                      <Input id="newPassword" type="password" />
                     </div>
                     <div className="space-y-2">
-                      <FormLabel>{t('confirmPassword')}</FormLabel>
-                      <Input type="password" />
+                      <Label htmlFor="confirmPassword">{t('confirmPassword')}</Label>
+                      <Input id="confirmPassword" type="password" />
                     </div>
                   </div>
                   <Button onClick={handleSaveSettings}>{t('updatePassword')}</Button>
@@ -206,21 +198,21 @@ const Settings = () => {
                 <CardContent className="space-y-6">
                   <div className="flex items-center justify-between">
                     <div className="space-y-0.5">
-                      <FormLabel>{t('emailNotifications')}</FormLabel>
-                      <FormDescription>
+                      <Label htmlFor="emailNotifications">{t('emailNotifications')}</Label>
+                      <p className="text-sm text-muted-foreground">
                         {t('receiveNotifications')}
-                      </FormDescription>
+                      </p>
                     </div>
-                    <Switch defaultChecked />
+                    <Switch id="emailNotifications" defaultChecked />
                   </div>
                   <div className="flex items-center justify-between">
                     <div className="space-y-0.5">
-                      <FormLabel>{t('marketingEmails')}</FormLabel>
-                      <FormDescription>
+                      <Label htmlFor="marketingEmails">{t('marketingEmails')}</Label>
+                      <p className="text-sm text-muted-foreground">
                         {t('receivePromotions')}
-                      </FormDescription>
+                      </p>
                     </div>
-                    <Switch defaultChecked />
+                    <Switch id="marketingEmails" defaultChecked />
                   </div>
                   <Button onClick={handleSaveSettings}>{t('savePreferences')}</Button>
                 </CardContent>
@@ -237,12 +229,12 @@ const Settings = () => {
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div className="space-y-2">
-                    <FormLabel>{t('language')}</FormLabel>
+                    <Label htmlFor="language">{t('language')}</Label>
                     <Select 
                       value={language}
                       onValueChange={(value) => setLanguage(value as Language)}
                     >
-                      <SelectTrigger>
+                      <SelectTrigger id="language">
                         <SelectValue placeholder="Select language" />
                       </SelectTrigger>
                       <SelectContent>
