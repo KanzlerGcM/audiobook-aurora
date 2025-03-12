@@ -148,17 +148,15 @@ const BookContentSection = ({ books, initialBook }: BookContentSectionProps) => 
           key={`booklist-${forceUpdateCounter}`}
         />
       </div>
-      {!isMobile && selectedBook && (
-        <div className="md:col-span-2 rounded-xl overflow-hidden relative" ref={detailsContainerRef}>
-          <div className="relative z-10">
-            <BookDetails 
-              book={selectedBook} 
-              onLibraryUpdate={forceRerender}
-              key={`bookdetails-${forceUpdateCounter}`}
-            />
-          </div>
+      <div className="md:col-span-2 rounded-xl overflow-hidden relative w-full h-full" ref={detailsContainerRef}>
+        <div className="relative z-10">
+          <BookDetails 
+            book={selectedBook} 
+            onLibraryUpdate={forceRerender}
+            key={`bookdetails-${forceUpdateCounter}`}
+          />
         </div>
-      )}
+      </div>
     </div>
   );
 };
