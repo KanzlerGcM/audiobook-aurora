@@ -1,11 +1,10 @@
-
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from "@/components/theme-provider";
 import { LanguageProvider } from './context/LanguageContext';
 import { useTheme } from 'next-themes';
 import { Toaster } from 'sonner';
-import { Language } from '@/translations/types';
+import BookPreview from './components/book-details/BookPreview';
 
 import Index from './pages/Index';
 import Support from './pages/Support';
@@ -48,6 +47,42 @@ import Settings from './pages/Settings';
 function App() {
   const [blurEnabled, setBlurEnabled] = useState(false);
   const { theme: defaultTheme } = useTheme();
+  const [globalPreviewState, setGlobalPreviewState] = useState({
+    isPlaying: false,
+    title: '',
+    author: '',
+    coverImage: ''
+  });
+
+  useEffect(() => {
+    const checkForActivePreview = () => {
+      const storedPreview = localStorage.getItem('previewPlaying');
+      if (storedPreview) {
+        const previewData = JSON.parse(storedPreview);
+        setGlobalPreviewState({
+          isPlaying: true,
+          title: previewData.title,
+          author: previewData.author,
+          coverImage: previewData.coverImage
+        });
+      } else {
+        setGlobalPreviewState({
+          isPlaying: false,
+          title: '',
+          author: '',
+          coverImage: ''
+        });
+      }
+    };
+
+    checkForActivePreview();
+
+    window.addEventListener('storage', checkForActivePreview);
+    
+    return () => {
+      window.removeEventListener('storage', checkForActivePreview);
+    };
+  }, []);
 
   return (
     <LanguageProvider>
@@ -94,6 +129,12 @@ function App() {
               <Route path="*" element={<NotFound />} />
             </Routes>
           </div>
+          <BookPreview 
+            isPreviewPlaying={globalPreviewState.isPlaying}
+            title={globalPreviewState.title}
+            author={globalPreviewState.author}
+            coverImage={globalPreviewState.coverImage}
+          />
           <Toaster richColors />
         </ThemeProvider>
       </BrowserRouter>

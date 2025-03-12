@@ -1,6 +1,7 @@
 
 import AudioPlayer from '@/components/AudioPlayer';
 import { motion, AnimatePresence } from "framer-motion";
+import { useEffect } from 'react';
 
 interface BookPreviewProps {
   isPreviewPlaying: boolean;
@@ -9,22 +10,54 @@ interface BookPreviewProps {
   coverImage: string;
 }
 
+interface StoredPreviewData {
+  isPlaying: boolean;
+  bookId: string;
+  title: string;
+  author: string;
+  coverImage: string;
+}
+
+// Check for active preview in localStorage
+const getStoredPreview = (): StoredPreviewData | null => {
+  const storedPreview = localStorage.getItem('previewPlaying');
+  if (storedPreview) {
+    return JSON.parse(storedPreview);
+  }
+  return null;
+};
+
 const BookPreview = ({ isPreviewPlaying, title, author, coverImage }: BookPreviewProps) => {
+  // If preview props were passed but we're not on the book details page,
+  // we still want to display the player using props
+  const previewData = isPreviewPlaying 
+    ? { title, author, coverImage } 
+    : null;
+  
+  // Check localStorage for global preview state
+  const storedPreview = getStoredPreview();
+  
+  // Use either the props-based preview or the stored preview
+  const shouldShowPreview = isPreviewPlaying || storedPreview !== null;
+  const playerTitle = previewData?.title || storedPreview?.title || '';
+  const playerAuthor = previewData?.author || storedPreview?.author || '';
+  const playerCoverImage = previewData?.coverImage || storedPreview?.coverImage || '';
+  
   return (
     <AnimatePresence>
-      {isPreviewPlaying && (
+      {shouldShowPreview && (
         <motion.div 
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 50 }}
-          transition={{ duration: 0.5, ease: "easeInOut" }}
-          className="fixed bottom-0 left-0 right-0 z-50 shadow-lg"
+          transition={{ duration: 0.4, ease: "easeInOut" }}
+          className="fixed bottom-0 left-0 right-0 z-50 shadow-2xl"
         >
-          <div className="glass-effect">
+          <div className="glass-effect border-t border-white/10">
             <AudioPlayer 
-              title={title}
-              author={author}
-              coverImage={coverImage}
+              title={playerTitle}
+              author={playerAuthor}
+              coverImage={playerCoverImage}
               miniPlayer={true}
             />
           </div>
