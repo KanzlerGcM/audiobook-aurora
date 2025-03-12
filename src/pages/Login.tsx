@@ -10,9 +10,9 @@ import { Book } from "@/types/book";
 const Login = () => {
   const [books, setBooks] = useState<Book[]>([]);
 
-  // Fetch books for the carousel
+  // Fetch more books for the carousel to have enough for the new design
   useEffect(() => {
-    const fetchedBooks = getAudiobooks(1, 6);
+    const fetchedBooks = getAudiobooks(1, 9);
     setBooks(fetchedBooks);
   }, []);
 

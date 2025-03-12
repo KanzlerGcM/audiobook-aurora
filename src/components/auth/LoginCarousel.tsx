@@ -33,7 +33,9 @@ const LoginCarousel = ({ books }: LoginCarouselProps) => {
     setCurrentBookIndex((prevIndex) => (prevIndex - 1 + books.length) % books.length);
   };
 
-  const currentBook = books[currentBookIndex];
+  // Calculate previous and next book indices
+  const prevIndex = (currentBookIndex - 1 + books.length) % books.length;
+  const nextIndex = (currentBookIndex + 1) % books.length;
 
   // Function to get login description based on language
   const getLoginDescription = () => {
@@ -47,41 +49,6 @@ const LoginCarousel = ({ books }: LoginCarouselProps) => {
       return "Tauchen Sie ein in Tausende von Hörbüchern von Bestsellerautoren und aufstrebenden Talenten. Machen Sie auf jedem Gerät dort weiter, wo Sie aufgehört haben.";
     } else {
       return "Mergulhe em milhares de audiolivros de autores best-sellers e talentos emergentes. Continue de onde parou em qualquer dispositivo.";
-    }
-  };
-
-  // Get background colors based on book categories
-  const getCategoryColor = (category?: string) => {
-    switch (category?.toLowerCase()) {
-      case 'fiction':
-        return 'from-blue-500/30 to-indigo-500/30';
-      case 'mystery':
-      case 'mysterythriller':
-        return 'from-purple-500/30 to-pink-500/30';
-      case 'romance':
-        return 'from-pink-500/30 to-red-400/30';
-      case 'scifi':
-        return 'from-teal-500/30 to-emerald-400/30';
-      case 'fantasy':
-        return 'from-amber-500/30 to-orange-400/30';
-      case 'biography':
-        return 'from-green-500/30 to-teal-400/30';
-      case 'history':
-        return 'from-gray-500/30 to-slate-400/30';
-      case 'selfhelp':
-        return 'from-yellow-400/30 to-amber-300/30';
-      case 'business':
-        return 'from-blue-600/30 to-sky-400/30';
-      case 'cookbooks':
-        return 'from-orange-400/30 to-amber-300/30';
-      case 'horror':
-        return 'from-red-800/30 to-red-600/30';
-      case 'nonfiction':
-        return 'from-indigo-400/30 to-violet-300/30';
-      case 'technology':
-        return 'from-cyan-500/30 to-blue-400/30';
-      default:
-        return 'from-hakim-gray/30 to-hakim-medium/30';
     }
   };
 
@@ -99,42 +66,54 @@ const LoginCarousel = ({ books }: LoginCarouselProps) => {
           {getLoginDescription()}
         </p>
         
-        {/* Audiobook Carousel with Animation */}
-        {books.length > 0 && currentBook && (
+        {/* New Carousel Design */}
+        {books.length > 0 && (
           <div className="mt-6 w-full max-w-md mx-auto">
-            <div className="bg-hakim-dark p-6 rounded-xl relative overflow-hidden transition-all duration-500">
-              {/* Dynamic color background blur circle */}
-              <div className={`absolute w-64 h-64 rounded-full bg-gradient-to-br ${getCategoryColor(currentBook.category)} blur-3xl opacity-60 -top-20 -left-20 z-0`}></div>
-              <div className={`absolute w-40 h-40 rounded-full bg-gradient-to-tr ${getCategoryColor(currentBook.category)} blur-2xl opacity-50 -bottom-10 -right-10 z-0`}></div>
-              
-              <div className="flex gap-6 items-center relative z-10">
-                <div className="flex-shrink-0 transform transition-all duration-500 hover:scale-105">
-                  <div className="h-48 w-32 overflow-hidden rounded-lg shadow-lg relative group">
+            <div className="relative h-80 mt-8 mb-10">
+              {/* Left (Previous) Book */}
+              {books[prevIndex] && (
+                <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/4 z-10 transition-all duration-500 opacity-70 scale-75 hover:opacity-90 hover:scale-80">
+                  <div className="transform transition-all duration-300">
                     <img 
-                      src={currentBook.coverImage} 
-                      alt={currentBook.title} 
-                      className="h-full w-full object-cover transition-all duration-500 group-hover:brightness-110"
+                      src={books[prevIndex].coverImage} 
+                      alt={books[prevIndex].title} 
+                      className="h-44 w-32 rounded-lg shadow-lg object-cover"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-2">
-                      <Link 
-                        to={`/audiobook/${currentBook.id}`} 
-                        className="text-white text-xs font-medium px-2 py-1 bg-hakim-primary/80 rounded-full"
-                      >
-                        {t('preview')}
-                      </Link>
-                    </div>
                   </div>
                 </div>
-                <div className="flex-grow animate-fade-in">
-                  <h3 className="text-white font-bold text-xl line-clamp-2 mb-2">{currentBook.title}</h3>
-                  <p className="text-hakim-light">{t('by')} {currentBook.author}</p>
-                  <div className="mt-3 text-hakim-light">
-                    <p>⭐ {currentBook.rating}/5</p>
-                    <p className="text-sm mt-1">{currentBook.duration}</p>
+              )}
+              
+              {/* Center (Current) Book */}
+              {books[currentBookIndex] && (
+                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 transition-all duration-500">
+                  <div className="transform transition-all duration-300 scale-110 hover:scale-115">
+                    <img 
+                      src={books[currentBookIndex].coverImage} 
+                      alt={books[currentBookIndex].title} 
+                      className="h-64 w-44 rounded-lg shadow-xl object-cover"
+                    />
+                    <p className="text-center text-white font-medium mt-3">
+                      {books[currentBookIndex].title}
+                    </p>
                   </div>
                 </div>
-              </div>
-              <div className="absolute bottom-4 right-4 flex space-x-2">
+              )}
+              
+              {/* Right (Next) Book */}
+              {books[nextIndex] && (
+                <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/4 z-10 transition-all duration-500 opacity-70 scale-75 hover:opacity-90 hover:scale-80">
+                  <div className="transform transition-all duration-300">
+                    <img 
+                      src={books[nextIndex].coverImage} 
+                      alt={books[nextIndex].title} 
+                      className="h-44 w-32 rounded-lg shadow-lg object-cover"
+                    />
+                  </div>
+                </div>
+              )}
+              
+              {/* Carousel Navigation */}
+              <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 flex space-x-2">
                 <Button 
                   onClick={prevBook} 
                   variant="ghost" 
@@ -153,6 +132,8 @@ const LoginCarousel = ({ books }: LoginCarouselProps) => {
                 </Button>
               </div>
             </div>
+            
+            {/* Indicator Dots */}
             <div className="mt-4 flex justify-center">
               {books.map((_, index) => (
                 <button
