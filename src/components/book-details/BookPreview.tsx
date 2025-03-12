@@ -37,6 +37,7 @@ const BookPreview = ({ isPreviewPlaying, title, author, coverImage }: BookPrevie
   const storedPreview = getStoredPreview();
   
   // Always show the preview if there's data in localStorage
+  // This ensures the preview persists regardless of login state
   const shouldShowPreview = isPreviewPlaying || (storedPreview !== null);
   const playerTitle = previewData?.title || storedPreview?.title || '';
   const playerAuthor = previewData?.author || storedPreview?.author || '';

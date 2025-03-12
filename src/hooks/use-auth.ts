@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
@@ -89,6 +90,7 @@ export const useAuth = () => {
   };
 
   const logout = () => {
+    // Remove auth data but preserve the preview playing state
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('userData');
     setIsLoggedIn(false);
