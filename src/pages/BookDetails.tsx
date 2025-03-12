@@ -1,20 +1,17 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Headphones } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import AudioPlayer from '@/components/AudioPlayer';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useLanguage } from '@/hooks/use-language';
 import { useAuth } from '@/hooks/use-auth';
 
 import BookCoverActions from '@/components/book-details/BookCoverActions';
 import BookMetadata from '@/components/book-details/BookMetadata';
 import BookHeader from '@/components/book-details/BookHeader';
-import ChaptersList from '@/components/book-details/ChaptersList';
-import BookDescription from '@/components/book-details/BookDescription';
-import BookReviews from '@/components/book-details/BookReviews';
 import RelatedBooks from '@/components/book-details/RelatedBooks';
+import AudioBookPlayer from '@/components/book-detail-page/AudioBookPlayer';
+import BookDetailTabs from '@/components/book-detail-page/BookDetailTabs';
+import MiniPlayer from '@/components/book-detail-page/MiniPlayer';
 
 const bookDetails = {
   id: '1',
@@ -42,13 +39,6 @@ const bookDetails = {
     { id: 'ch8', title: 'Chapter 8: Collaboration', duration: '37m', isFree: false },
   ]
 };
-
-interface ChapterType {
-  id: string;
-  title: string;
-  duration: string;
-  isFree: boolean;
-}
 
 const relatedBooks = [
   {
@@ -88,6 +78,13 @@ const relatedBooks = [
     category: 'Sci-Fi'
   }
 ];
+
+interface ChapterType {
+  id: string;
+  title: string;
+  duration: string;
+  isFree: boolean;
+}
 
 const BookDetails = () => {
   const { id } = useParams<{ id: string }>();
@@ -143,12 +140,12 @@ const BookDetails = () => {
     <div className="min-h-screen flex flex-col">
       <Navbar />
       
-      {showMiniPlayer && activeChapter && (
-        <AudioPlayer 
-          title={activeChapter.title}
-          author={bookDetails.author}
+      {activeChapter && (
+        <MiniPlayer 
+          show={showMiniPlayer}
+          chapterTitle={activeChapter.title}
+          bookAuthor={bookDetails.author}
           coverImage={bookDetails.coverImage}
-          miniPlayer
         />
       )}
       
@@ -184,49 +181,23 @@ const BookDetails = () => {
               
               <p className="text-lg mb-6">{bookDetails.blurb}</p>
               
-              {activeChapter ? (
-                <AudioPlayer 
-                  title={activeChapter.title}
-                  author={bookDetails.author}
-                  coverImage={bookDetails.coverImage}
-                />
-              ) : (
-                <div className="glass rounded-xl p-8 text-center animate-pulse">
-                  <Headphones className="w-12 h-12 mx-auto mb-4 text-accent/70" />
-                  <p className="text-lg font-medium">{t('selectChapter')}</p>
-                </div>
-              )}
+              <AudioBookPlayer 
+                activeChapter={activeChapter}
+                bookTitle={bookDetails.title}
+                bookAuthor={bookDetails.author}
+                coverImage={bookDetails.coverImage}
+              />
               
-              <Tabs defaultValue="chapters" className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
-                <TabsList className="grid w-full grid-cols-3 mb-6">
-                  <TabsTrigger value="chapters">{t('chapters')}</TabsTrigger>
-                  <TabsTrigger value="description">{t('description')}</TabsTrigger>
-                  <TabsTrigger value="reviews">{t('reviews')}</TabsTrigger>
-                </TabsList>
-                
-                <TabsContent value="chapters">
-                  <ChaptersList 
-                    chapters={bookDetails.chapters}
-                    activeChapter={activeChapter}
-                    onPlayChapter={handlePlayChapter}
-                  />
-                </TabsContent>
-                
-                <TabsContent value="description">
-                  <BookDescription 
-                    description={bookDetails.fullDescription}
-                    additionalText="From the author of The Martian, a thrilling tale of survival, discovery, and the indomitable human spirit. Perfect for fans of speculative fiction that combines scientific accuracy with heart-pounding adventure."
-                  />
-                </TabsContent>
-                
-                <TabsContent value="reviews">
-                  <BookReviews 
-                    totalReviews={bookDetails.reviews}
-                    rating={bookDetails.rating}
-                    reviews={reviews}
-                  />
-                </TabsContent>
-              </Tabs>
+              <BookDetailTabs 
+                chapters={bookDetails.chapters}
+                activeChapter={activeChapter}
+                onPlayChapter={handlePlayChapter}
+                fullDescription={bookDetails.fullDescription}
+                additionalText="From the author of The Martian, a thrilling tale of survival, discovery, and the indomitable human spirit. Perfect for fans of speculative fiction that combines scientific accuracy with heart-pounding adventure."
+                totalReviews={bookDetails.reviews}
+                rating={bookDetails.rating}
+                reviews={reviews}
+              />
             </div>
           </div>
           
