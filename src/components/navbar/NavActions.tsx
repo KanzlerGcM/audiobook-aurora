@@ -5,7 +5,8 @@ import {
   User, 
   LogOut, 
   BookMarked, 
-  ThumbsUp
+  ThumbsUp,
+  Settings
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
@@ -82,6 +83,10 @@ const NavActions = () => {
           <DropdownMenuItem onClick={() => navigate('/rated-books')}>
             <ThumbsUp className="mr-2 h-4 w-4" />
             <span>{t('ratedBooks')}</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => navigate('/settings')}>
+            <Settings className="mr-2 h-4 w-4" />
+            <span>{t('settings')}</span>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={handleLogout}>

@@ -43,6 +43,7 @@ import AnimatedCursor from './components/AnimatedCursor';
 import ChatHelp from './components/ChatHelp';
 import AudiobookDetails from './pages/AudiobookDetails';
 import RatedBooks from './pages/RatedBooks';
+import Settings from './pages/Settings';
 
 function App() {
   const [blurEnabled, setBlurEnabled] = useState(false);
@@ -70,6 +71,7 @@ function App() {
               <Route path="/faq" element={<FAQ />} />
               <Route path="/library" element={<Library />} />
               <Route path="/rated-books" element={<RatedBooks />} />
+              <Route path="/settings" element={<Settings />} />
               <Route path="/audiobook/:id" element={<AudiobookDetails />} />
               <Route path="/book-details/:id" element={<BookDetails />} />
               <Route path="/new-releases" element={<NewReleases />} />

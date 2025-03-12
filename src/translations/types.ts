@@ -99,5 +99,12 @@ export const translations: Translations = {
     de: 'Abmelden',
     pt: 'Sair'
   },
+  settings: {
+    en: 'Settings',
+    es: 'Configuración',
+    fr: 'Paramètres',
+    de: 'Einstellungen',
+    pt: 'Configurações'
+  }
   // Add more translations here as needed
 };
