@@ -80,11 +80,11 @@ const AudiobookDetails = () => {
     
     loadBook();
     
-    const storedPreview = localStorage.getItem('previewPlaying');
-    if (storedPreview) {
-      const previewData = JSON.parse(storedPreview);
-      setIsPreviewPlaying(true);
-    }
+    localStorage.setItem('onBookPage', 'true');
+    
+    return () => {
+      localStorage.removeItem('onBookPage');
+    };
   }, [id, isLoggedIn, isInLibrary]);
 
   useEffect(() => {
@@ -182,15 +182,6 @@ const AudiobookDetails = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      
-      {isPreviewPlaying && book && (
-        <MiniPlayer 
-          show={isPreviewPlaying}
-          chapterTitle={activeChapter ? activeChapter.title : book.title}
-          bookAuthor={book.author}
-          coverImage={book.coverImage}
-        />
-      )}
       
       <main className="flex-1 container mx-auto px-4 md:px-6 py-8 pt-28">
         <Button 

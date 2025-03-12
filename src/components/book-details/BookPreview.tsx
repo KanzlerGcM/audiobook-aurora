@@ -36,9 +36,11 @@ const BookPreview = ({ isPreviewPlaying, title, author, coverImage }: BookPrevie
   // Check localStorage for global preview state
   const storedPreview = getStoredPreview();
   
-  // Always show the preview if there's data in localStorage
-  // This ensures the preview persists regardless of login state
-  const shouldShowPreview = isPreviewPlaying || (storedPreview !== null);
+  // Check if we're currently on a book details page
+  const onBookPage = localStorage.getItem('onBookPage') === 'true';
+  
+  // Only show the preview if there's data in localStorage AND we're not on a book page
+  const shouldShowPreview = !onBookPage && (isPreviewPlaying || (storedPreview !== null));
   const playerTitle = previewData?.title || storedPreview?.title || '';
   const playerAuthor = previewData?.author || storedPreview?.author || '';
   const playerCoverImage = previewData?.coverImage || storedPreview?.coverImage || '';
