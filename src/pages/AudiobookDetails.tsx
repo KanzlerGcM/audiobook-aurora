@@ -116,6 +116,16 @@ const AudiobookDetails = () => {
 
   const handlePlayChapter = (chapter: ChapterType) => {
     setActiveChapter(chapter);
+    
+    // Add book to preview bar when playing chapters
+    localStorage.setItem('previewPlaying', JSON.stringify({
+      isPlaying: true,
+      bookId: book.id,
+      title: book.title,
+      author: book.author,
+      coverImage: book.coverImage
+    }));
+    
     toast.info(`Playing ${chapter.title}`);
   };
 
