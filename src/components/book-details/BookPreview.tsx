@@ -53,7 +53,7 @@ const BookPreview = ({ isPreviewPlaying, title, author, coverImage }: BookPrevie
           transition={{ duration: 0.4, ease: "easeInOut" }}
           className="fixed bottom-0 left-0 right-0 z-50 shadow-2xl"
         >
-          <div className="glass-effect border-t border-white/10">
+          <div className="glass-effect border-t border-white/10 flex items-center justify-center">
             <AudioPlayer 
               title={playerTitle}
               author={playerAuthor}
