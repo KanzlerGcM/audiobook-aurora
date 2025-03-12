@@ -23,6 +23,7 @@ const BookDetails = ({ book, onLibraryUpdate }: BookDetailsProps) => {
   const navigate = useNavigate();
   
   const togglePreview = () => {
+    // Immediately update the state for faster UI response
     setIsPreviewPlaying(!isPreviewPlaying);
     
     // Store the state in localStorage to persist across page navigation
@@ -35,6 +36,7 @@ const BookDetails = ({ book, onLibraryUpdate }: BookDetailsProps) => {
         coverImage: book.coverImage
       }));
     } else {
+      // Remove from localStorage immediately
       localStorage.removeItem('previewPlaying');
     }
   };

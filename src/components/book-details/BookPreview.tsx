@@ -49,8 +49,11 @@ const BookPreview = ({ isPreviewPlaying, title, author, coverImage }: BookPrevie
         <motion.div 
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 0 }}
-          transition={{ duration: 0 }} 
+          exit={{ opacity: 0, y: 20 }}
+          transition={{ 
+            duration: 0.4, 
+            ease: [0.4, 0.0, 0.2, 1] // Custom easing for smooth motion
+          }} 
           className="fixed bottom-0 left-0 right-0 z-50 shadow-2xl"
         >
           <div className="glass-effect border-t border-white/10">
