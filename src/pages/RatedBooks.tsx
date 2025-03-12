@@ -6,11 +6,10 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { useLanguage } from '@/hooks/use-language';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import AudiobookCard from '@/components/AudiobookCard';
 import { Book } from '@/types/book';
 import { toast } from 'sonner';
+import RemovableAudiobookCard from '@/components/RemovableAudiobookCard';
 
-// This is a mock implementation - in a real app, this would be backed by a database
 const RatedBooks = () => {
   const { t } = useLanguage();
   const [likedBooks, setLikedBooks] = useState<Book[]>([]);
@@ -83,6 +82,20 @@ const RatedBooks = () => {
     }
   };
 
+  const handleRemoveLiked = (bookId: string) => {
+    const book = likedBooks.find(b => b.id === bookId);
+    if (book) {
+      removeRating(book, true);
+    }
+  };
+
+  const handleRemoveDisliked = (bookId: string) => {
+    const book = dislikedBooks.find(b => b.id === bookId);
+    if (book) {
+      removeRating(book, false);
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
@@ -114,25 +127,19 @@ const RatedBooks = () => {
               <div>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
                   {likedBooks.map((book, index) => (
-                    <div key={book.id} className="relative group">
-                      <AudiobookCard 
-                        id={book.id}
-                        title={book.title}
-                        author={book.author}
-                        coverImage={book.coverImage}
-                        duration={book.duration}
-                        rating={book.rating}
-                        category={book.category}
-                        index={index}
-                      />
-                      <button 
-                        className="absolute top-2 right-2 bg-white/90 dark:bg-black/80 p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                        onClick={() => removeRating(book, true)}
-                        title={t('removeRating') || "Remove rating"}
-                      >
-                        <BookX className="h-4 w-4 text-red-500" />
-                      </button>
-                    </div>
+                    <RemovableAudiobookCard
+                      key={book.id}
+                      id={book.id}
+                      title={book.title}
+                      author={book.author}
+                      coverImage={book.coverImage}
+                      duration={book.duration}
+                      rating={book.rating}
+                      category={book.category}
+                      index={index}
+                      onRemove={handleRemoveLiked}
+                      removeLabel={t('removeFromLiked') || "Remove from Liked"}
+                    />
                   ))}
                 </div>
               </div>
@@ -160,25 +167,19 @@ const RatedBooks = () => {
               <div>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
                   {dislikedBooks.map((book, index) => (
-                    <div key={book.id} className="relative group">
-                      <AudiobookCard 
-                        id={book.id}
-                        title={book.title}
-                        author={book.author}
-                        coverImage={book.coverImage}
-                        duration={book.duration}
-                        rating={book.rating}
-                        category={book.category}
-                        index={index}
-                      />
-                      <button 
-                        className="absolute top-2 right-2 bg-white/90 dark:bg-black/80 p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                        onClick={() => removeRating(book, false)}
-                        title={t('removeRating') || "Remove rating"}
-                      >
-                        <BookX className="h-4 w-4 text-red-500" />
-                      </button>
-                    </div>
+                    <RemovableAudiobookCard
+                      key={book.id}
+                      id={book.id}
+                      title={book.title}
+                      author={book.author}
+                      coverImage={book.coverImage}
+                      duration={book.duration}
+                      rating={book.rating}
+                      category={book.category}
+                      index={index}
+                      onRemove={handleRemoveDisliked}
+                      removeLabel={t('removeFromDisliked') || "Remove from Disliked"}
+                    />
                   ))}
                 </div>
               </div>

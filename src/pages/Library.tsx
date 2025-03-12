@@ -7,15 +7,16 @@ import { useLanguage } from "@/hooks/use-language";
 import { getBookById } from "@/data/books";
 import { Book } from "@/types/book";
 import { useAuth } from "@/hooks/use-auth";
-import AudiobookCard from "@/components/AudiobookCard";
 import { Button } from "@/components/ui/button";
 import LibraryEmptyState from "@/components/library/LibraryEmptyState";
 import LibraryHeader from "@/components/library/LibraryHeader";
+import RemovableAudiobookCard from "@/components/RemovableAudiobookCard";
+import { toast } from "sonner";
 
 const Library = () => {
   const [libraryBooks, setLibraryBooks] = useState<Book[]>([]);
   const [loading, setLoading] = useState(true);
-  const { isLoggedIn, library } = useAuth();
+  const { isLoggedIn, library, removeFromLibrary } = useAuth();
   const { t } = useLanguage();
 
   useEffect(() => {
@@ -32,6 +33,11 @@ const Library = () => {
     fetchBooks();
   }, [library]);
 
+  const handleRemoveFromLibrary = (bookId: string) => {
+    removeFromLibrary(bookId);
+    toast.success(t('removeFromLibrarySuccess') || "Book removed from your library");
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Navbar />
@@ -47,7 +53,7 @@ const Library = () => {
         ) : libraryBooks.length > 0 ? (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
             {libraryBooks.map((book, index) => (
-              <AudiobookCard 
+              <RemovableAudiobookCard 
                 key={book.id}
                 id={book.id}
                 title={book.title}
@@ -57,6 +63,8 @@ const Library = () => {
                 rating={book.rating}
                 category={book.category || "Unknown"}
                 index={index}
+                onRemove={handleRemoveFromLibrary}
+                removeLabel={t('removeFromLibrary') || "Remove from Library"}
               />
             ))}
           </div>
