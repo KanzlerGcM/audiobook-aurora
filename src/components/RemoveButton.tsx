@@ -17,7 +17,7 @@ const RemoveButton = ({ onClick, label, className = "" }: RemoveButtonProps) => 
       variant="ghost"
       size="icon"
       className={`absolute top-2 right-2 bg-black/70 hover:bg-black/90 rounded-full p-1.5 
-                 opacity-100 group-hover:opacity-100 transition-opacity z-10 ${className}`}
+                 opacity-0 group-hover:opacity-100 transition-opacity z-10 ${className}`}
       onClick={(e) => {
         e.stopPropagation();
         e.preventDefault();

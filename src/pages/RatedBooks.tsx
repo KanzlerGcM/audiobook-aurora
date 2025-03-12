@@ -17,67 +17,97 @@ const RatedBooks = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  // In a real implementation, this would fetch from an API or local storage
+  // Load liked/disliked books from localStorage
   useEffect(() => {
-    // Simulate API call
-    setTimeout(() => {
-      // Mock liked books - in a real app, fetch this from user preferences
-      const mockLikedBooks: Book[] = [
-        {
-          id: '1',
-          title: 'The Martian',
-          author: 'Andy Weir',
-          coverImage: 'https://images.unsplash.com/photo-1560115246-30778a6578bf?q=80&w=1974&auto=format&fit=crop',
-          description: 'An astronaut becomes stranded on Mars and must find a way to survive.',
-          duration: '10h 53m',
-          rating: 4.8,
-          category: 'Sci-Fi',
-          releaseDate: '2014',
-          reviews: 10345
-        },
-        {
-          id: '2',
-          title: 'Project Hail Mary',
-          author: 'Andy Weir',
-          coverImage: 'https://images.unsplash.com/photo-1633988354540-d3218bf96403?q=80&w=1974&auto=format&fit=crop',
-          description: 'A lone astronaut must save humanity from an extinction-level threat.',
-          duration: '16h 10m',
-          rating: 4.9,
-          category: 'Sci-Fi',
-          releaseDate: '2021',
-          reviews: 8267
-        }
-      ];
-      
-      // Mock disliked books
-      const mockDislikedBooks: Book[] = [
-        {
-          id: '3',
-          title: 'Bad Book Example',
-          author: 'Unknown Author',
-          coverImage: 'https://images.unsplash.com/photo-1505904267569-f02eaeb45a4c?q=80&w=1908&auto=format&fit=crop',
-          description: 'This is an example of a book the user disliked.',
-          duration: '6h 20m',
-          rating: 2.1,
-          category: 'Fiction',
-          releaseDate: '2020',
-          reviews: 524
-        }
-      ];
-      
-      setLikedBooks(mockLikedBooks);
-      setDislikedBooks(mockDislikedBooks);
-      setLoading(false);
-    }, 1000);
+    // Check if we have stored preferences
+    const storedLikedBooks = localStorage.getItem('likedBooks');
+    const storedDislikedBooks = localStorage.getItem('dislikedBooks');
+    
+    // Mock books data to simulate storage
+    const mockBooks: Record<string, Book> = {
+      '1': {
+        id: '1',
+        title: 'The Martian',
+        author: 'Andy Weir',
+        coverImage: 'https://images.unsplash.com/photo-1560115246-30778a6578bf?q=80&w=1974&auto=format&fit=crop',
+        description: 'An astronaut becomes stranded on Mars and must find a way to survive.',
+        duration: '10h 53m',
+        rating: 4.8,
+        category: 'Sci-Fi',
+        releaseDate: '2014',
+        reviews: 10345
+      },
+      '2': {
+        id: '2',
+        title: 'Project Hail Mary',
+        author: 'Andy Weir',
+        coverImage: 'https://images.unsplash.com/photo-1633988354540-d3218bf96403?q=80&w=1974&auto=format&fit=crop',
+        description: 'A lone astronaut must save humanity from an extinction-level threat.',
+        duration: '16h 10m',
+        rating: 4.9,
+        category: 'Sci-Fi',
+        releaseDate: '2021',
+        reviews: 8267
+      },
+      '3': {
+        id: '3',
+        title: 'Bad Book Example',
+        author: 'Unknown Author',
+        coverImage: 'https://images.unsplash.com/photo-1505904267569-f02eaeb45a4c?q=80&w=1908&auto=format&fit=crop',
+        description: 'This is an example of a book the user disliked.',
+        duration: '6h 20m',
+        rating: 2.1,
+        category: 'Fiction',
+        releaseDate: '2020',
+        reviews: 524
+      }
+    };
+    
+    // Set initial data or load from storage
+    if (storedLikedBooks) {
+      try {
+        const likedIds = JSON.parse(storedLikedBooks) as string[];
+        setLikedBooks(likedIds.map(id => mockBooks[id]).filter(Boolean));
+      } catch (e) {
+        console.error("Error parsing liked books:", e);
+        setLikedBooks([mockBooks['1'], mockBooks['2']]);
+      }
+    } else {
+      // Default initial state
+      setLikedBooks([mockBooks['1'], mockBooks['2']]);
+      // Save to localStorage
+      localStorage.setItem('likedBooks', JSON.stringify(['1', '2']));
+    }
+    
+    if (storedDislikedBooks) {
+      try {
+        const dislikedIds = JSON.parse(storedDislikedBooks) as string[];
+        setDislikedBooks(dislikedIds.map(id => mockBooks[id]).filter(Boolean));
+      } catch (e) {
+        console.error("Error parsing disliked books:", e);
+        setDislikedBooks([mockBooks['3']]);
+      }
+    } else {
+      // Default initial state
+      setDislikedBooks([mockBooks['3']]);
+      // Save to localStorage
+      localStorage.setItem('dislikedBooks', JSON.stringify(['3']));
+    }
+    
+    setLoading(false);
   }, []);
 
-  // In a real app, this would update the user's preferences
+  // Update localStorage when ratings change
   const removeRating = (book: Book, isLiked: boolean) => {
     if (isLiked) {
-      setLikedBooks(prevBooks => prevBooks.filter(b => b.id !== book.id));
+      const updatedBooks = likedBooks.filter(b => b.id !== book.id);
+      setLikedBooks(updatedBooks);
+      localStorage.setItem('likedBooks', JSON.stringify(updatedBooks.map(b => b.id)));
       toast.success(`Removed "${book.title}" from liked books`);
     } else {
-      setDislikedBooks(prevBooks => prevBooks.filter(b => b.id !== book.id));
+      const updatedBooks = dislikedBooks.filter(b => b.id !== book.id);
+      setDislikedBooks(updatedBooks);
+      localStorage.setItem('dislikedBooks', JSON.stringify(updatedBooks.map(b => b.id)));
       toast.success(`Removed "${book.title}" from disliked books`);
     }
   };
