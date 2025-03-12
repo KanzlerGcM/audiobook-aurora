@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { 
@@ -19,6 +18,7 @@ import { toast } from 'sonner';
 import AudioBookPlayer from '@/components/book-detail-page/AudioBookPlayer';
 import BookDetailTabs from '@/components/book-detail-page/BookDetailTabs';
 import { Button } from '@/components/ui/button';
+import BookPreview from '@/components/book-details/BookPreview';
 
 interface ChapterType {
   id: string;
@@ -37,8 +37,8 @@ const AudiobookDetails = () => {
   const [loading, setLoading] = useState(true);
   const [activeChapter, setActiveChapter] = useState<ChapterType | null>(null);
   const [liked, setLiked] = useState<boolean | null>(null);
+  const [isPreviewPlaying, setIsPreviewPlaying] = useState(false);
 
-  // Generate some mock chapters if we don't have them
   const mockChapters: ChapterType[] = [
     { id: 'ch1', title: 'Chapter 1: Introduction', duration: '12m', isFree: true },
     { id: 'ch2', title: 'Chapter 2: The Beginning', duration: '24m', isFree: true },
@@ -78,10 +78,15 @@ const AudiobookDetails = () => {
     };
     
     loadBook();
+    
+    const storedPreview = localStorage.getItem('previewPlaying');
+    if (storedPreview) {
+      const previewData = JSON.parse(storedPreview);
+      setIsPreviewPlaying(true);
+    }
   }, [id, isLoggedIn, isInLibrary]);
 
   useEffect(() => {
-    // Set the first chapter as active on load
     if (book && mockChapters.length > 0) {
       setActiveChapter(mockChapters[0]);
     }
@@ -117,7 +122,6 @@ const AudiobookDetails = () => {
   const handlePlayChapter = (chapter: ChapterType) => {
     setActiveChapter(chapter);
     
-    // Add book to preview bar when playing chapters
     localStorage.setItem('previewPlaying', JSON.stringify({
       isPlaying: true,
       bookId: book.id,
@@ -126,6 +130,7 @@ const AudiobookDetails = () => {
       coverImage: book.coverImage
     }));
     
+    setIsPreviewPlaying(true);
     toast.info(`Playing ${chapter.title}`);
   };
 
@@ -176,6 +181,15 @@ const AudiobookDetails = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
+      
+      {isPreviewPlaying && book && (
+        <BookPreview 
+          isPreviewPlaying={isPreviewPlaying}
+          title={book.title}
+          author={book.author}
+          coverImage={book.coverImage}
+        />
+      )}
       
       <main className="flex-1 container mx-auto px-4 md:px-6 py-8 pt-28">
         <Button 
