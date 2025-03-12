@@ -44,13 +44,13 @@ const BookPreview = ({ isPreviewPlaying, title, author, coverImage }: BookPrevie
   const playerCoverImage = previewData?.coverImage || storedPreview?.coverImage || '';
   
   return (
-    <AnimatePresence>
+    <AnimatePresence mode="wait">
       {shouldShowPreview && (
         <motion.div 
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 50 }}
-          transition={{ duration: 0.4, ease: "easeInOut" }}
+          transition={{ duration: 0.2, ease: "easeOut" }} 
           className="fixed bottom-0 left-0 right-0 z-50 shadow-2xl"
         >
           <div className="glass-effect border-t border-white/10">
