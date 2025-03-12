@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
@@ -54,7 +55,7 @@ const BookDetails = ({ book, onLibraryUpdate }: BookDetailsProps) => {
   };
 
   return (
-    <div className="h-full bg-gradient-to-br from-black/40 to-hakim-dark/30 backdrop-blur-sm p-6 rounded-xl">
+    <div className="h-full p-6 rounded-xl bg-white/5 backdrop-blur-sm">
       <div className="flex flex-col md:flex-row gap-6">
         <div className="flex-shrink-0">
           <img 
