@@ -14,41 +14,41 @@ interface LoginCarouselProps {
 const LoginCarousel = ({ books }: LoginCarouselProps) => {
   const [currentBookIndex, setCurrentBookIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const [slideDirection, setSlideDirection] = useState<"left" | "right" | null>(null);
+  const [direction, setDirection] = useState<"left" | "right">("left");
   const { t, language } = useLanguage();
   const welcomeMessage = useWelcomeMessage();
 
   // Auto switching books in carousel
   useEffect(() => {
     const interval = setInterval(() => {
-      changeBook((prevIndex) => (prevIndex + 1) % books.length, "left");
+      handleNextBook();
     }, 5000); // Switch books every 5 seconds
     
     return () => clearInterval(interval);
   }, [books.length]);
 
-  const changeBook = (indexFunction: (prevIndex: number) => number, direction: "left" | "right") => {
-    // Start transition
-    setIsTransitioning(true);
-    setSlideDirection(direction);
+  const handleNextBook = () => {
+    if (isTransitioning || books.length <= 1) return;
     
-    // Delay the actual change to allow animation to complete
+    setDirection("left");
+    setIsTransitioning(true);
+    
     setTimeout(() => {
-      setCurrentBookIndex(indexFunction);
-      
-      // End transition after a short delay to trigger fade-in
-      setTimeout(() => {
-        setIsTransitioning(false);
-      }, 50);
-    }, 300);
+      setCurrentBookIndex((prevIndex) => (prevIndex + 1) % books.length);
+      setIsTransitioning(false);
+    }, 500); // Match animation duration
   };
 
-  const nextBook = () => {
-    changeBook((prevIndex) => (prevIndex + 1) % books.length, "left");
-  };
-
-  const prevBook = () => {
-    changeBook((prevIndex) => (prevIndex - 1 + books.length) % books.length, "right");
+  const handlePrevBook = () => {
+    if (isTransitioning || books.length <= 1) return;
+    
+    setDirection("right");
+    setIsTransitioning(true);
+    
+    setTimeout(() => {
+      setCurrentBookIndex((prevIndex) => (prevIndex - 1 + books.length) % books.length);
+      setIsTransitioning(false);
+    }, 500); // Match animation duration
   };
 
   // Calculate previous and next book indices
@@ -84,58 +84,43 @@ const LoginCarousel = ({ books }: LoginCarouselProps) => {
           {getLoginDescription()}
         </p>
         
-        {/* Updated Carousel Design with Horizontal Transitions */}
+        {/* Updated Carousel with Horizontal Soft Transitions */}
         {books.length > 0 && (
           <div className="mt-6 w-full max-w-md mx-auto">
             <div className="relative h-80 mt-8 mb-10 overflow-hidden">
-              {/* Left (Previous) Book */}
-              {books[prevIndex] && (
+              {/* Carousel Container */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                {/* Current Book (Center) */}
                 <div 
-                  className={`absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/4 z-10 transition-all duration-500 
-                    opacity-70 scale-75 hover:opacity-90 hover:scale-80 
-                    ${isTransitioning && slideDirection === 'right' ? 'animate-slide-out-right' : ''}
-                    ${isTransitioning && slideDirection === 'left' ? 'animate-slide-in-left' : ''}`}
-                >
-                  <div className="transform transition-all duration-300">
-                    <img 
-                      src={books[prevIndex].coverImage} 
-                      alt={books[prevIndex].title} 
-                      className="h-44 w-32 rounded-lg shadow-lg object-cover"
-                    />
-                  </div>
-                </div>
-              )}
-              
-              {/* Center (Current) Book */}
-              {books[currentBookIndex] && (
-                <div 
-                  className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 transition-all duration-500
-                    ${isTransitioning && slideDirection === 'left' ? 'translate-x-[-150%] opacity-0' : ''}
-                    ${isTransitioning && slideDirection === 'right' ? 'translate-x-[50%] opacity-0' : ''}
-                    ${!isTransitioning ? 'opacity-100 scale-110' : 'opacity-0'}`}
+                  className={`absolute z-30 transition-all duration-500 ${
+                    isTransitioning && direction === "left" 
+                      ? "animate-move-to-left" 
+                      : !isTransitioning 
+                        ? "transform-none" 
+                        : ""
+                  }`}
                 >
                   <div className="transform transition-all duration-300 hover:scale-105">
                     <img 
                       src={books[currentBookIndex].coverImage} 
                       alt={books[currentBookIndex].title} 
-                      className="h-64 w-44 rounded-lg shadow-xl object-cover transition-smooth"
+                      className="h-64 w-44 rounded-lg shadow-xl object-cover"
                     />
-                    <p className={`text-center text-white font-medium mt-3 transition-all duration-500 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
+                    <p className="text-center text-white font-medium mt-3">
                       {books[currentBookIndex].title}
                     </p>
                   </div>
                 </div>
-              )}
-              
-              {/* Right (Next) Book */}
-              {books[nextIndex] && (
+                
+                {/* Next Book (Right Side) */}
                 <div 
-                  className={`absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/4 z-10 transition-all duration-500 
-                    opacity-70 scale-75 hover:opacity-90 hover:scale-80
-                    ${isTransitioning && slideDirection === 'left' ? 'animate-slide-out-left' : ''}
-                    ${isTransitioning && slideDirection === 'right' ? 'animate-slide-in-right' : ''}`}
+                  className={`absolute right-0 z-20 transform translate-x-3/4 scale-75 opacity-70 transition-all duration-500 ${
+                    isTransitioning && direction === "left" 
+                      ? "animate-move-to-center" 
+                      : ""
+                  }`}
                 >
-                  <div className="transform transition-all duration-300">
+                  <div className="transform transition-all duration-300 hover:scale-105">
                     <img 
                       src={books[nextIndex].coverImage} 
                       alt={books[nextIndex].title} 
@@ -143,30 +128,66 @@ const LoginCarousel = ({ books }: LoginCarouselProps) => {
                     />
                   </div>
                 </div>
-              )}
+                
+                {/* Incoming Book (from Right) */}
+                {isTransitioning && direction === "left" && (
+                  <div className="absolute right-0 z-10 animate-move-in-from-right">
+                    <div className="transform transition-all duration-300">
+                      <img 
+                        src={books[(nextIndex + 1) % books.length].coverImage} 
+                        alt={books[(nextIndex + 1) % books.length].title} 
+                        className="h-44 w-32 rounded-lg shadow-lg object-cover"
+                      />
+                    </div>
+                  </div>
+                )}
+                
+                {/* Previous Book (Left Side - only visible when not transitioning left) */}
+                {(!isTransitioning || direction === "right") && (
+                  <div 
+                    className={`absolute left-0 z-20 transform -translate-x-3/4 scale-75 opacity-70 transition-all duration-500 ${
+                      isTransitioning && direction === "right" 
+                        ? "animate-move-to-center" 
+                        : isTransitioning 
+                          ? "animate-move-out-to-left" 
+                          : ""
+                    }`}
+                  >
+                    <div className="transform transition-all duration-300 hover:scale-105">
+                      <img 
+                        src={books[prevIndex].coverImage} 
+                        alt={books[prevIndex].title} 
+                        className="h-44 w-32 rounded-lg shadow-lg object-cover"
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
               
               {/* Carousel Navigation */}
               <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 flex space-x-2">
                 <Button 
-                  onClick={prevBook} 
+                  onClick={handlePrevBook} 
                   variant="ghost" 
                   size="icon" 
                   className="h-8 w-8 rounded-full bg-black/20 hover:bg-black/40 text-white transition-all duration-300"
+                  disabled={isTransitioning}
                 >
                   <ChevronLeft className="h-4 w-4" />
                 </Button>
                 <Button 
-                  onClick={nextBook} 
+                  onClick={handleNextBook} 
                   variant="ghost" 
                   size="icon" 
                   className="h-8 w-8 rounded-full bg-black/20 hover:bg-black/40 text-white transition-all duration-300"
+                  disabled={isTransitioning}
                 >
                   <ChevronRight className="h-4 w-4" />
                 </Button>
               </div>
             </div>
             
-            {/* Indicator Dots with Animation */}
+            {/* Indicator Dots */}
             <div className="mt-4 flex justify-center">
               {books.map((_, index) => (
                 <button
@@ -177,10 +198,16 @@ const LoginCarousel = ({ books }: LoginCarouselProps) => {
                       : "bg-white/30 w-2 hover:bg-white/50"
                   }`}
                   onClick={() => {
-                    if (index !== currentBookIndex) {
-                      changeBook(() => index, index > currentBookIndex ? "left" : "right");
+                    if (index !== currentBookIndex && !isTransitioning) {
+                      setDirection(index > currentBookIndex ? "left" : "right");
+                      setIsTransitioning(true);
+                      setTimeout(() => {
+                        setCurrentBookIndex(index);
+                        setIsTransitioning(false);
+                      }, 500);
                     }
                   }}
+                  disabled={isTransitioning}
                 />
               ))}
             </div>
