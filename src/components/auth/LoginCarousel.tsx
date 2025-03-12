@@ -14,21 +14,23 @@ interface LoginCarouselProps {
 const LoginCarousel = ({ books }: LoginCarouselProps) => {
   const [currentBookIndex, setCurrentBookIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [slideDirection, setSlideDirection] = useState<"left" | "right" | null>(null);
   const { t, language } = useLanguage();
   const welcomeMessage = useWelcomeMessage();
 
   // Auto switching books in carousel
   useEffect(() => {
     const interval = setInterval(() => {
-      changeBook((prevIndex) => (prevIndex + 1) % books.length);
+      changeBook((prevIndex) => (prevIndex + 1) % books.length, "left");
     }, 5000); // Switch books every 5 seconds
     
     return () => clearInterval(interval);
   }, [books.length]);
 
-  const changeBook = (indexFunction: (prevIndex: number) => number) => {
+  const changeBook = (indexFunction: (prevIndex: number) => number, direction: "left" | "right") => {
     // Start transition
     setIsTransitioning(true);
+    setSlideDirection(direction);
     
     // Delay the actual change to allow animation to complete
     setTimeout(() => {
@@ -42,11 +44,11 @@ const LoginCarousel = ({ books }: LoginCarouselProps) => {
   };
 
   const nextBook = () => {
-    changeBook((prevIndex) => (prevIndex + 1) % books.length);
+    changeBook((prevIndex) => (prevIndex + 1) % books.length, "left");
   };
 
   const prevBook = () => {
-    changeBook((prevIndex) => (prevIndex - 1 + books.length) % books.length);
+    changeBook((prevIndex) => (prevIndex - 1 + books.length) % books.length, "right");
   };
 
   // Calculate previous and next book indices
@@ -82,13 +84,18 @@ const LoginCarousel = ({ books }: LoginCarouselProps) => {
           {getLoginDescription()}
         </p>
         
-        {/* Updated Carousel Design with Smooth Transitions */}
+        {/* Updated Carousel Design with Horizontal Transitions */}
         {books.length > 0 && (
           <div className="mt-6 w-full max-w-md mx-auto">
-            <div className="relative h-80 mt-8 mb-10">
+            <div className="relative h-80 mt-8 mb-10 overflow-hidden">
               {/* Left (Previous) Book */}
               {books[prevIndex] && (
-                <div className={`absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/4 z-10 transition-all duration-500 opacity-70 scale-75 hover:opacity-90 hover:scale-80 ${isTransitioning ? 'animate-fade-out' : 'animate-fade-in'}`}>
+                <div 
+                  className={`absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/4 z-10 transition-all duration-500 
+                    opacity-70 scale-75 hover:opacity-90 hover:scale-80 
+                    ${isTransitioning && slideDirection === 'right' ? 'animate-slide-out-right' : ''}
+                    ${isTransitioning && slideDirection === 'left' ? 'animate-slide-in-left' : ''}`}
+                >
                   <div className="transform transition-all duration-300">
                     <img 
                       src={books[prevIndex].coverImage} 
@@ -101,14 +108,19 @@ const LoginCarousel = ({ books }: LoginCarouselProps) => {
               
               {/* Center (Current) Book */}
               {books[currentBookIndex] && (
-                <div className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 transition-all duration-500 ${isTransitioning ? 'opacity-0 scale-90' : 'opacity-100 scale-110'}`}>
-                  <div className="transform transition-all duration-300 hover:scale-115">
+                <div 
+                  className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 transition-all duration-500
+                    ${isTransitioning && slideDirection === 'left' ? 'translate-x-[-150%] opacity-0' : ''}
+                    ${isTransitioning && slideDirection === 'right' ? 'translate-x-[50%] opacity-0' : ''}
+                    ${!isTransitioning ? 'opacity-100 scale-110' : 'opacity-0'}`}
+                >
+                  <div className="transform transition-all duration-300 hover:scale-105">
                     <img 
                       src={books[currentBookIndex].coverImage} 
                       alt={books[currentBookIndex].title} 
                       className="h-64 w-44 rounded-lg shadow-xl object-cover transition-smooth"
                     />
-                    <p className={`text-center text-white font-medium mt-3 transition-all duration-500 ${isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}>
+                    <p className={`text-center text-white font-medium mt-3 transition-all duration-500 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
                       {books[currentBookIndex].title}
                     </p>
                   </div>
@@ -117,7 +129,12 @@ const LoginCarousel = ({ books }: LoginCarouselProps) => {
               
               {/* Right (Next) Book */}
               {books[nextIndex] && (
-                <div className={`absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/4 z-10 transition-all duration-500 opacity-70 scale-75 hover:opacity-90 hover:scale-80 ${isTransitioning ? 'animate-fade-out' : 'animate-fade-in'}`}>
+                <div 
+                  className={`absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/4 z-10 transition-all duration-500 
+                    opacity-70 scale-75 hover:opacity-90 hover:scale-80
+                    ${isTransitioning && slideDirection === 'left' ? 'animate-slide-out-left' : ''}
+                    ${isTransitioning && slideDirection === 'right' ? 'animate-slide-in-right' : ''}`}
+                >
                   <div className="transform transition-all duration-300">
                     <img 
                       src={books[nextIndex].coverImage} 
@@ -161,7 +178,7 @@ const LoginCarousel = ({ books }: LoginCarouselProps) => {
                   }`}
                   onClick={() => {
                     if (index !== currentBookIndex) {
-                      changeBook(() => index);
+                      changeBook(() => index, index > currentBookIndex ? "left" : "right");
                     }
                   }}
                 />
