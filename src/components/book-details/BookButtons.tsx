@@ -4,8 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from "@/hooks/use-language";
 import { useAuth } from '@/hooks/use-auth';
-import { toast } from "sonner";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 
 interface BookButtonsProps {
   bookId: string;
@@ -43,10 +42,8 @@ const BookButtons = ({
   const handleLibraryToggle = () => {
     if (isBookInLibrary) {
       removeFromLibrary(bookId);
-      toast.success(t('removeFromLibrarySuccess') || "Book removed from library");
     } else {
       addToLibrary(bookId);
-      toast.success(t('addToLibrarySuccess') || "Book added to library");
     }
     
     // Update local state immediately for responsive UI

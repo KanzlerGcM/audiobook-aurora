@@ -1,7 +1,6 @@
 
 import AudioPlayer from '@/components/AudioPlayer';
 import { motion, AnimatePresence } from "framer-motion";
-import { useEffect } from 'react';
 
 interface BookPreviewProps {
   isPreviewPlaying: boolean;

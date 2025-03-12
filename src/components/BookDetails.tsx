@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
@@ -7,7 +8,6 @@ import { Book } from "@/types/book";
 import BookTags from './book-details/BookTags';
 import BookActions from './book-details/BookActions';
 import BookButtons from './book-details/BookButtons';
-import BookPreview from './book-details/BookPreview';
 import LoginPrompt from './book-details/LoginPrompt';
 import BookDescription from './book-details/BookDescription';
 
@@ -34,7 +34,6 @@ const BookDetails = ({ book, onLibraryUpdate }: BookDetailsProps) => {
         author: book.author,
         coverImage: book.coverImage
       }));
-      toast.info(`Playing preview for "${book.title}"`);
     } else {
       localStorage.removeItem('previewPlaying');
     }
@@ -57,13 +56,11 @@ const BookDetails = ({ book, onLibraryUpdate }: BookDetailsProps) => {
 
   const handleAddToLibrary = () => {
     if (!isLoggedIn) {
-      toast.error("Please login to add books to your library");
       navigate('/login');
       return;
     }
     
     addToLibrary(book.id);
-    toast.success(t('addToLibrarySuccess') || `"${book.title}" added to your library`);
     
     if (onLibraryUpdate) {
       onLibraryUpdate();
@@ -119,13 +116,6 @@ const BookDetails = ({ book, onLibraryUpdate }: BookDetailsProps) => {
           </div>
         </div>
       </div>
-      
-      <BookPreview 
-        isPreviewPlaying={isPreviewPlaying}
-        title={book.title}
-        author={book.author}
-        coverImage={book.coverImage}
-      />
       
       {!isLoggedIn && <LoginPrompt />}
     </div>
