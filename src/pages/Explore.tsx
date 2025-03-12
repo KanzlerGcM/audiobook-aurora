@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useInView } from "react-intersection-observer";
 import { useLanguage } from "@/hooks/use-language";
+import { useAuth } from "@/hooks/use-auth";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ExploreHeader from "@/components/explore/ExploreHeader";
@@ -21,6 +22,7 @@ const Explore = () => {
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const { t } = useLanguage();
+  const { library } = useAuth();
   
   const { ref, inView } = useInView({
     threshold: 0.5,
@@ -33,6 +35,14 @@ const Explore = () => {
       loadMore();
     }
   }, [activeTab]);
+  
+  // Force a re-render when library changes
+  const [libraryUpdateKey, setLibraryUpdateKey] = useState(0);
+  
+  useEffect(() => {
+    // This forces the BookContentSection to re-render when the library changes
+    setLibraryUpdateKey(prev => prev + 1);
+  }, [library]);
 
   const loadMore = async () => {
     if (loading || !hasMore) return;
@@ -87,7 +97,10 @@ const Explore = () => {
         
         {books.length > 0 ? (
           <div className="animate-fade-in">
-            <BookContentSection books={books} />
+            <BookContentSection 
+              books={books} 
+              key={`content-section-${libraryUpdateKey}`}
+            />
             <LoadMoreIndicator loading={loading} hasMore={hasMore} />
           </div>
         ) : (

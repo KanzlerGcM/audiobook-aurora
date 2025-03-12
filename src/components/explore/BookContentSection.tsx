@@ -16,7 +16,7 @@ interface BookContentSectionProps {
 
 const BookContentSection = ({ books, initialBook }: BookContentSectionProps) => {
   const isMobile = useIsMobile();
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, library } = useAuth();
   const navigate = useNavigate();
   
   // Safely handle empty books array
@@ -25,8 +25,14 @@ const BookContentSection = ({ books, initialBook }: BookContentSectionProps) => 
   );
   
   // Force re-render when library status changes
-  const [, setForceUpdate] = useState({});
-  const forceRerender = () => setForceUpdate({});
+  const [forceUpdateCounter, setForceUpdateCounter] = useState(0);
+  const forceRerender = () => setForceUpdateCounter(prev => prev + 1);
+  
+  // Also listen to the library state from useAuth to force updates
+  useEffect(() => {
+    // This will trigger re-renders when the library changes
+    forceRerender();
+  }, [library]);
 
   // If no books are available, show a placeholder
   if (!books || books.length === 0) {
@@ -75,6 +81,7 @@ const BookContentSection = ({ books, initialBook }: BookContentSectionProps) => 
           selectedBook={selectedBook} 
           onSelectBook={setSelectedBook}
           onLibraryUpdate={forceRerender}
+          key={`booklist-${forceUpdateCounter}`}
         />
       </div>
       {!isMobile && selectedBook && (
@@ -82,6 +89,7 @@ const BookContentSection = ({ books, initialBook }: BookContentSectionProps) => 
           <BookDetails 
             book={selectedBook} 
             onLibraryUpdate={forceRerender}
+            key={`bookdetails-${forceUpdateCounter}`}
           />
         </div>
       )}
