@@ -55,7 +55,7 @@ const BookDetails = ({ book, onLibraryUpdate }: BookDetailsProps) => {
   };
 
   return (
-    <div className="h-full p-6 rounded-xl bg-white/5 backdrop-blur-sm">
+    <div className="md:col-span-2 h-full p-6 rounded-xl bg-white/5 backdrop-blur-sm border border-white/5 shadow-2xl">
       <div className="flex flex-col md:flex-row gap-6">
         <div className="flex-shrink-0">
           <img 

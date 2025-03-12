@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useRef } from 'react';
 import BookList from "@/components/BookList";
 import BookDetails from "@/components/BookDetails";
@@ -17,7 +18,6 @@ const BookContentSection = ({ books, initialBook }: BookContentSectionProps) => 
   const isMobile = useIsMobile();
   const { isLoggedIn, library } = useAuth();
   const navigate = useNavigate();
-  const detailsContainerRef = useRef<HTMLDivElement>(null);
   
   const [selectedBook, setSelectedBook] = useState<Book | undefined>(
     initialBook || (books && books.length > 0 ? books[0] : undefined)
@@ -25,19 +25,6 @@ const BookContentSection = ({ books, initialBook }: BookContentSectionProps) => 
   
   const [forceUpdateCounter, setForceUpdateCounter] = useState(0);
   const forceRerender = () => setForceUpdateCounter(prev => prev + 1);
-  
-  useEffect(() => {
-    if (selectedBook && detailsContainerRef.current) {
-      const container = detailsContainerRef.current;
-      container.style.position = 'relative';
-      container.style.overflow = 'hidden';
-      
-      const existingOverlay = container.querySelector('.book-color-overlay');
-      if (existingOverlay) {
-        existingOverlay.remove();
-      }
-    }
-  }, [selectedBook]);
   
   useEffect(() => {
     forceRerender();
@@ -92,15 +79,11 @@ const BookContentSection = ({ books, initialBook }: BookContentSectionProps) => 
           key={`booklist-${forceUpdateCounter}`}
         />
       </div>
-      <div className="md:col-span-2 rounded-xl overflow-hidden backdrop-blur-md border border-white/5 shadow-2xl relative w-full h-full transition-all duration-300 bg-transparent" ref={detailsContainerRef}>
-        <div className="relative z-10">
-          <BookDetails 
-            book={selectedBook} 
-            onLibraryUpdate={forceRerender}
-            key={`bookdetails-${forceUpdateCounter}`}
-          />
-        </div>
-      </div>
+      <BookDetails 
+        book={selectedBook} 
+        onLibraryUpdate={forceRerender}
+        key={`bookdetails-${forceUpdateCounter}`}
+      />
     </div>
   );
 };
