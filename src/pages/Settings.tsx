@@ -79,12 +79,12 @@ const Settings = () => {
             <CardHeader>
               <CardTitle>{t('login')}</CardTitle>
               <CardDescription>
-                You need to be logged in to access settings.
+                {t('loginRequired')}
               </CardDescription>
             </CardHeader>
             <CardContent>
               <Button onClick={() => window.location.href = '/login'} className="w-full">
-                Go to Login
+                {t('goToLogin')}
               </Button>
             </CardContent>
           </Card>
@@ -101,57 +101,57 @@ const Settings = () => {
         <div className="max-w-5xl mx-auto">
           <div className="mb-8">
             <h1 className="text-3xl font-bold">{t('settings')}</h1>
-            <p className="text-muted-foreground">Manage your account settings and preferences</p>
+            <p className="text-muted-foreground">{t('manageSettings')}</p>
           </div>
 
           <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
             <TabsList className="grid grid-cols-3 md:grid-cols-4 gap-2">
               <TabsTrigger value="account" className="flex items-center gap-2">
                 <User className="h-4 w-4" /> 
-                <span className="hidden md:inline">Account</span>
+                <span className="hidden md:inline">{t('account')}</span>
               </TabsTrigger>
               <TabsTrigger value="security" className="flex items-center gap-2">
                 <Lock className="h-4 w-4" /> 
-                <span className="hidden md:inline">Security</span>
+                <span className="hidden md:inline">{t('security')}</span>
               </TabsTrigger>
               <TabsTrigger value="notifications" className="flex items-center gap-2">
                 <Bell className="h-4 w-4" /> 
-                <span className="hidden md:inline">Notifications</span>
+                <span className="hidden md:inline">{t('notifications')}</span>
               </TabsTrigger>
               <TabsTrigger value="preferences" className="flex items-center gap-2">
                 <Globe className="h-4 w-4" /> 
-                <span className="hidden md:inline">Preferences</span>
+                <span className="hidden md:inline">{t('preferences')}</span>
               </TabsTrigger>
             </TabsList>
 
             <TabsContent value="account" className="space-y-6">
               <Card>
                 <CardHeader>
-                  <CardTitle>Profile Information</CardTitle>
+                  <CardTitle>{t('profileInfo')}</CardTitle>
                   <CardDescription>
-                    Update your profile details and information
+                    {t('updateProfile')}
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <FormLabel>Full Name</FormLabel>
+                      <FormLabel>{t('fullName')}</FormLabel>
                       <Input defaultValue={userData.name} />
                     </div>
                     <div className="space-y-2">
-                      <FormLabel>Email</FormLabel>
+                      <FormLabel>{t('email')}</FormLabel>
                       <Input defaultValue={userData.email} type="email" />
                     </div>
                   </div>
-                  <Button onClick={handleSaveSettings}>Save Changes</Button>
+                  <Button onClick={handleSaveSettings}>{t('saveChanges')}</Button>
                 </CardContent>
               </Card>
 
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-destructive">Danger Zone</CardTitle>
+                  <CardTitle className="text-destructive">{t('dangerZone')}</CardTitle>
                   <CardDescription>
-                    Permanently delete your account and all of your data
+                    {t('deleteAccount')}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -161,7 +161,7 @@ const Settings = () => {
                     className="flex items-center gap-2"
                   >
                     <Trash2 className="h-4 w-4" />
-                    Delete Account
+                    {t('deleteAccount')}
                   </Button>
                 </CardContent>
               </Card>
@@ -170,27 +170,27 @@ const Settings = () => {
             <TabsContent value="security" className="space-y-6">
               <Card>
                 <CardHeader>
-                  <CardTitle>Password</CardTitle>
+                  <CardTitle>{t('password')}</CardTitle>
                   <CardDescription>
-                    Change your password
+                    {t('changePassword')}
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="space-y-4">
                     <div className="space-y-2">
-                      <FormLabel>Current Password</FormLabel>
+                      <FormLabel>{t('currentPassword')}</FormLabel>
                       <Input type="password" />
                     </div>
                     <div className="space-y-2">
-                      <FormLabel>New Password</FormLabel>
+                      <FormLabel>{t('newPassword')}</FormLabel>
                       <Input type="password" />
                     </div>
                     <div className="space-y-2">
-                      <FormLabel>Confirm New Password</FormLabel>
+                      <FormLabel>{t('confirmPassword')}</FormLabel>
                       <Input type="password" />
                     </div>
                   </div>
-                  <Button onClick={handleSaveSettings}>Update Password</Button>
+                  <Button onClick={handleSaveSettings}>{t('updatePassword')}</Button>
                 </CardContent>
               </Card>
             </TabsContent>
@@ -198,31 +198,31 @@ const Settings = () => {
             <TabsContent value="notifications" className="space-y-6">
               <Card>
                 <CardHeader>
-                  <CardTitle>Notification Settings</CardTitle>
+                  <CardTitle>{t('notificationSettings')}</CardTitle>
                   <CardDescription>
-                    Choose what notifications you'd like to receive
+                    {t('chooseNotifications')}
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div className="flex items-center justify-between">
                     <div className="space-y-0.5">
-                      <FormLabel>Email Notifications</FormLabel>
+                      <FormLabel>{t('emailNotifications')}</FormLabel>
                       <FormDescription>
-                        Receive notifications about new books and updates
+                        {t('receiveNotifications')}
                       </FormDescription>
                     </div>
                     <Switch defaultChecked />
                   </div>
                   <div className="flex items-center justify-between">
                     <div className="space-y-0.5">
-                      <FormLabel>Marketing Emails</FormLabel>
+                      <FormLabel>{t('marketingEmails')}</FormLabel>
                       <FormDescription>
-                        Receive emails about promotions and special offers
+                        {t('receivePromotions')}
                       </FormDescription>
                     </div>
                     <Switch defaultChecked />
                   </div>
-                  <Button onClick={handleSaveSettings}>Save Preferences</Button>
+                  <Button onClick={handleSaveSettings}>{t('savePreferences')}</Button>
                 </CardContent>
               </Card>
             </TabsContent>
@@ -230,14 +230,14 @@ const Settings = () => {
             <TabsContent value="preferences" className="space-y-6">
               <Card>
                 <CardHeader>
-                  <CardTitle>Language & Region</CardTitle>
+                  <CardTitle>{t('languageRegion')}</CardTitle>
                   <CardDescription>
-                    Set your preferred language and region settings
+                    {t('setLanguage')}
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div className="space-y-2">
-                    <FormLabel>Language</FormLabel>
+                    <FormLabel>{t('language')}</FormLabel>
                     <Select 
                       value={language}
                       onValueChange={(value) => setLanguage(value as Language)}
@@ -254,7 +254,7 @@ const Settings = () => {
                       </SelectContent>
                     </Select>
                   </div>
-                  <Button onClick={handleSaveSettings}>Save Preferences</Button>
+                  <Button onClick={handleSaveSettings}>{t('savePreferences')}</Button>
                 </CardContent>
               </Card>
             </TabsContent>

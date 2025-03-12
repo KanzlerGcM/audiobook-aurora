@@ -105,6 +105,275 @@ export const translations: Translations = {
     fr: 'Paramètres',
     de: 'Einstellungen',
     pt: 'Configurações'
+  },
+  // Add missing translations from console logs
+  reviews: {
+    en: 'Reviews',
+    es: 'Reseñas',
+    fr: 'Avis',
+    de: 'Bewertungen',
+    pt: 'Avaliações'
+  },
+  outOf5: {
+    en: 'out of 5',
+    es: 'de 5',
+    fr: 'sur 5',
+    de: 'von 5',
+    pt: 'de 5'
+  },
+  writeReview: {
+    en: 'Write a Review',
+    es: 'Escribir una Reseña',
+    fr: 'Écrire un Avis',
+    de: 'Bewertung schreiben',
+    pt: 'Escrever uma Avaliação'
+  },
+  loadMoreReviews: {
+    en: 'Load More Reviews',
+    es: 'Cargar más Reseñas',
+    fr: 'Charger plus d\'Avis',
+    de: 'Mehr Bewertungen laden',
+    pt: 'Carregar mais Avaliações'
+  },
+  allChapters: {
+    en: 'All Chapters',
+    es: 'Todos los Capítulos',
+    fr: 'Tous les Chapitres',
+    de: 'Alle Kapitel',
+    pt: 'Todos os Capítulos'
+  },
+  expand: {
+    en: 'Expand',
+    es: 'Expandir',
+    fr: 'Développer',
+    de: 'Erweitern',
+    pt: 'Expandir'
+  },
+  freePreview: {
+    en: 'Free Preview',
+    es: 'Vista Previa Gratuita',
+    fr: 'Aperçu Gratuit',
+    de: 'Kostenlose Vorschau',
+    pt: 'Prévia Gratuita'
+  },
+  showAllChapters: {
+    en: 'Show All Chapters',
+    es: 'Mostrar Todos los Capítulos',
+    fr: 'Afficher Tous les Chapitres',
+    de: 'Alle Kapitel anzeigen',
+    pt: 'Mostrar Todos os Capítulos'
+  },
+  // Settings page related translations
+  account: {
+    en: 'Account',
+    es: 'Cuenta',
+    fr: 'Compte',
+    de: 'Konto',
+    pt: 'Conta'
+  },
+  security: {
+    en: 'Security',
+    es: 'Seguridad',
+    fr: 'Sécurité',
+    de: 'Sicherheit',
+    pt: 'Segurança'
+  },
+  notifications: {
+    en: 'Notifications',
+    es: 'Notificaciones',
+    fr: 'Notifications',
+    de: 'Benachrichtigungen',
+    pt: 'Notificações'
+  },
+  preferences: {
+    en: 'Preferences',
+    es: 'Preferencias',
+    fr: 'Préférences',
+    de: 'Einstellungen',
+    pt: 'Preferências'
+  },
+  saveChanges: {
+    en: 'Save Changes',
+    es: 'Guardar Cambios',
+    fr: 'Enregistrer les Modifications',
+    de: 'Änderungen speichern',
+    pt: 'Salvar Alterações'
+  },
+  language: {
+    en: 'Language',
+    es: 'Idioma',
+    fr: 'Langue',
+    de: 'Sprache',
+    pt: 'Idioma'
+  },
+  // Additional settings-related translations
+  profileInfo: {
+    en: 'Profile Information',
+    es: 'Información de Perfil',
+    fr: 'Informations de Profil',
+    de: 'Profilinformationen',
+    pt: 'Informações de Perfil'
+  },
+  updateProfile: {
+    en: 'Update your profile details and information',
+    es: 'Actualiza los detalles de tu perfil e información',
+    fr: 'Mettez à jour les détails de votre profil et vos informations',
+    de: 'Aktualisieren Sie Ihre Profildetails und Informationen',
+    pt: 'Atualize os detalhes do seu perfil e informações'
+  },
+  fullName: {
+    en: 'Full Name',
+    es: 'Nombre Completo',
+    fr: 'Nom Complet',
+    de: 'Vollständiger Name',
+    pt: 'Nome Completo'
+  },
+  email: {
+    en: 'Email',
+    es: 'Correo Electrónico',
+    fr: 'Email',
+    de: 'E-Mail',
+    pt: 'E-mail'
+  },
+  dangerZone: {
+    en: 'Danger Zone',
+    es: 'Zona de Peligro',
+    fr: 'Zone Dangereuse',
+    de: 'Gefahrenzone',
+    pt: 'Zona de Perigo'
+  },
+  deleteAccount: {
+    en: 'Delete Account',
+    es: 'Eliminar Cuenta',
+    fr: 'Supprimer le Compte',
+    de: 'Konto löschen',
+    pt: 'Excluir Conta'
+  },
+  password: {
+    en: 'Password',
+    es: 'Contraseña',
+    fr: 'Mot de Passe',
+    de: 'Passwort',
+    pt: 'Senha'
+  },
+  changePassword: {
+    en: 'Change your password',
+    es: 'Cambiar tu contraseña',
+    fr: 'Changer votre mot de passe',
+    de: 'Ändern Sie Ihr Passwort',
+    pt: 'Alterar sua senha'
+  },
+  currentPassword: {
+    en: 'Current Password',
+    es: 'Contraseña Actual',
+    fr: 'Mot de Passe Actuel',
+    de: 'Aktuelles Passwort',
+    pt: 'Senha Atual'
+  },
+  newPassword: {
+    en: 'New Password',
+    es: 'Nueva Contraseña',
+    fr: 'Nouveau Mot de Passe',
+    de: 'Neues Passwort',
+    pt: 'Nova Senha'
+  },
+  confirmPassword: {
+    en: 'Confirm New Password',
+    es: 'Confirmar Nueva Contraseña',
+    fr: 'Confirmer le Nouveau Mot de Passe',
+    de: 'Neues Passwort bestätigen',
+    pt: 'Confirmar Nova Senha'
+  },
+  updatePassword: {
+    en: 'Update Password',
+    es: 'Actualizar Contraseña',
+    fr: 'Mettre à Jour le Mot de Passe',
+    de: 'Passwort aktualisieren',
+    pt: 'Atualizar Senha'
+  },
+  notificationSettings: {
+    en: 'Notification Settings',
+    es: 'Configuración de Notificaciones',
+    fr: 'Paramètres de Notification',
+    de: 'Benachrichtigungseinstellungen',
+    pt: 'Configurações de Notificação'
+  },
+  chooseNotifications: {
+    en: 'Choose what notifications you\'d like to receive',
+    es: 'Elige qué notificaciones te gustaría recibir',
+    fr: 'Choisissez les notifications que vous souhaitez recevoir',
+    de: 'Wählen Sie aus, welche Benachrichtigungen Sie erhalten möchten',
+    pt: 'Escolha quais notificações você gostaria de receber'
+  },
+  emailNotifications: {
+    en: 'Email Notifications',
+    es: 'Notificaciones por Correo',
+    fr: 'Notifications par Email',
+    de: 'E-Mail-Benachrichtigungen',
+    pt: 'Notificações por E-mail'
+  },
+  receiveNotifications: {
+    en: 'Receive notifications about new books and updates',
+    es: 'Recibir notificaciones sobre nuevos libros y actualizaciones',
+    fr: 'Recevoir des notifications concernant les nouveaux livres et les mises à jour',
+    de: 'Erhalten Sie Benachrichtigungen über neue Bücher und Updates',
+    pt: 'Receber notificações sobre novos livros e atualizações'
+  },
+  marketingEmails: {
+    en: 'Marketing Emails',
+    es: 'Correos de Marketing',
+    fr: 'Emails Marketing',
+    de: 'Marketing-E-Mails',
+    pt: 'E-mails de Marketing'
+  },
+  receivePromotions: {
+    en: 'Receive emails about promotions and special offers',
+    es: 'Recibir correos sobre promociones y ofertas especiales',
+    fr: 'Recevoir des emails concernant les promotions et offres spéciales',
+    de: 'Erhalten Sie E-Mails über Werbeaktionen und Sonderangebote',
+    pt: 'Receber e-mails sobre promoções e ofertas especiais'
+  },
+  savePreferences: {
+    en: 'Save Preferences',
+    es: 'Guardar Preferencias',
+    fr: 'Enregistrer les Préférences',
+    de: 'Einstellungen speichern',
+    pt: 'Salvar Preferências'
+  },
+  languageRegion: {
+    en: 'Language & Region',
+    es: 'Idioma y Región',
+    fr: 'Langue et Région',
+    de: 'Sprache & Region',
+    pt: 'Idioma e Região'
+  },
+  setLanguage: {
+    en: 'Set your preferred language and region settings',
+    es: 'Establece tu idioma y configuración regional preferidos',
+    fr: 'Définissez votre langue et vos paramètres régionaux préférés',
+    de: 'Legen Sie Ihre bevorzugte Sprache und Regioneinstellungen fest',
+    pt: 'Defina seu idioma preferido e configurações regionais'
+  },
+  manageSettings: {
+    en: 'Manage your account settings and preferences',
+    es: 'Administra la configuración y preferencias de tu cuenta',
+    fr: 'Gérez les paramètres et préférences de votre compte',
+    de: 'Verwalten Sie Ihre Kontoeinstellungen und Präferenzen',
+    pt: 'Gerencie as configurações e preferências da sua conta'
+  },
+  loginRequired: {
+    en: 'You need to be logged in to access settings.',
+    es: 'Debes iniciar sesión para acceder a la configuración.',
+    fr: 'Vous devez être connecté pour accéder aux paramètres.',
+    de: 'Sie müssen angemeldet sein, um auf die Einstellungen zuzugreifen.',
+    pt: 'Você precisa estar logado para acessar as configurações.'
+  },
+  goToLogin: {
+    en: 'Go to Login',
+    es: 'Ir a Iniciar sesión',
+    fr: 'Aller à la connexion',
+    de: 'Zur Anmeldung',
+    pt: 'Ir para Login'
   }
   // Add more translations here as needed
 };

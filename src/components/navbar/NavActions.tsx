@@ -6,7 +6,8 @@ import {
   LogOut, 
   BookMarked, 
   ThumbsUp,
-  Settings
+  Settings,
+  Globe
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
@@ -23,9 +24,10 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Language } from '@/translations/types';
 
 const NavActions = () => {
-  const { t } = useLanguage();
+  const { t, language, setLanguage } = useLanguage();
   const isMobile = useIsMobile();
   const { isLoggedIn, logout } = useAuth();
   const navigate = useNavigate();
@@ -46,11 +48,74 @@ const NavActions = () => {
     navigate('/');
   };
 
+  const handleLanguageChange = (newLanguage: Language) => {
+    setLanguage(newLanguage);
+    const languageNames = {
+      en: 'English',
+      es: 'Spanish',
+      fr: 'French',
+      de: 'German',
+      pt: 'Portuguese'
+    };
+    toast(`Language changed to ${languageNames[newLanguage]}`);
+  };
+
+  // Language selector dropdown
+  const LanguageSelector = () => (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button 
+          variant="ghost" 
+          size="icon" 
+          className="relative"
+        >
+          <Globe className="h-5 w-5" />
+          <span className="absolute -top-1 -right-1 text-xs font-bold bg-accent text-accent-foreground w-4 h-4 flex items-center justify-center rounded-full">
+            {language.toUpperCase()}
+          </span>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuItem 
+          onClick={() => handleLanguageChange('en')}
+          className={language === 'en' ? 'bg-accent/20' : ''}
+        >
+          English
+        </DropdownMenuItem>
+        <DropdownMenuItem 
+          onClick={() => handleLanguageChange('es')}
+          className={language === 'es' ? 'bg-accent/20' : ''}
+        >
+          Español
+        </DropdownMenuItem>
+        <DropdownMenuItem 
+          onClick={() => handleLanguageChange('fr')}
+          className={language === 'fr' ? 'bg-accent/20' : ''}
+        >
+          Français
+        </DropdownMenuItem>
+        <DropdownMenuItem 
+          onClick={() => handleLanguageChange('de')}
+          className={language === 'de' ? 'bg-accent/20' : ''}
+        >
+          Deutsch
+        </DropdownMenuItem>
+        <DropdownMenuItem 
+          onClick={() => handleLanguageChange('pt')}
+          className={language === 'pt' ? 'bg-accent/20' : ''}
+        >
+          Português
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+
   // User is not logged in
   if (!isLoggedIn) {
     return (
       <div className="flex items-center gap-2">
         <SearchBar />
+        <LanguageSelector />
         <Button variant="default" size="sm" onClick={loginClickHandler}>
           {t('login')}
         </Button>
@@ -62,6 +127,7 @@ const NavActions = () => {
   return (
     <div className="flex items-center gap-2">
       <SearchBar />
+      <LanguageSelector />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="relative h-8 w-8 rounded-full">
