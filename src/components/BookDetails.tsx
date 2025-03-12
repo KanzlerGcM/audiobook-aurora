@@ -104,14 +104,12 @@ const BookDetails = ({ book, onLibraryUpdate }: BookDetailsProps) => {
         </div>
       </div>
       
-      {isLoggedIn && (
-        <BookPreview 
-          isPreviewPlaying={isPreviewPlaying}
-          title={book.title}
-          author={book.author}
-          coverImage={book.coverImage}
-        />
-      )}
+      <BookPreview 
+        isPreviewPlaying={isPreviewPlaying}
+        title={book.title}
+        author={book.author}
+        coverImage={book.coverImage}
+      />
       
       {!isLoggedIn && <LoginPrompt />}
     </div>

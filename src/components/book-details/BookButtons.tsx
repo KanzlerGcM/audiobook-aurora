@@ -81,7 +81,7 @@ const BookButtons = ({
           onClick={togglePreview}
         >
           <Headphones className="h-4 w-4" />
-          {t('preview')}
+          {isPreviewPlaying ? t('stopPreview') : t('preview')}
         </Button>
       </div>
     );
@@ -104,7 +104,7 @@ const BookButtons = ({
         {isBookInLibrary ? t('removeFromLibrary') : t('addToLibrary')}
       </Button>
       <Button 
-        variant="secondary" 
+        variant={isPreviewPlaying ? "default" : "secondary"}
         className="w-full justify-center gap-2"
         onClick={togglePreview}
       >

@@ -1,6 +1,6 @@
 
 import AudioPlayer from '@/components/AudioPlayer';
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface BookPreviewProps {
   isPreviewPlaying: boolean;
@@ -10,23 +10,25 @@ interface BookPreviewProps {
 }
 
 const BookPreview = ({ isPreviewPlaying, title, author, coverImage }: BookPreviewProps) => {
-  if (!isPreviewPlaying) return null;
-  
   return (
-    <motion.div 
-      initial={{ opacity: 0, height: 0 }}
-      animate={{ opacity: 1, height: 'auto' }}
-      exit={{ opacity: 0, height: 0 }}
-      transition={{ duration: 0.3 }}
-      className="mt-6"
-    >
-      <AudioPlayer 
-        title={title}
-        author={author}
-        coverImage={coverImage}
-        miniPlayer={true}
-      />
-    </motion.div>
+    <AnimatePresence>
+      {isPreviewPlaying && (
+        <motion.div 
+          initial={{ opacity: 0, y: 100 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 100 }}
+          transition={{ duration: 0.3 }}
+          className="fixed bottom-0 left-0 right-0 z-50"
+        >
+          <AudioPlayer 
+            title={title}
+            author={author}
+            coverImage={coverImage}
+            miniPlayer={true}
+          />
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };
 
