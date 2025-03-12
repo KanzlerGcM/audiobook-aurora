@@ -40,10 +40,6 @@ const NavActions = () => {
     navigate('/login');
   };
 
-  const signupClickHandler = () => {
-    navigate('/signup');
-  };
-
   const handleLogout = () => {
     logout();
     navigate('/');
@@ -54,14 +50,9 @@ const NavActions = () => {
     return (
       <div className="flex items-center gap-2">
         <SearchBar />
-        <div className="hidden md:flex items-center gap-2">
-          <Button variant="default" size="sm" onClick={loginClickHandler}>
-            {t('login')}
-          </Button>
-          <Button variant="outline" size="sm" onClick={signupClickHandler}>
-            {t('signUp')}
-          </Button>
-        </div>
+        <Button variant="default" size="sm" onClick={loginClickHandler}>
+          {t('login')}
+        </Button>
       </div>
     );
   }

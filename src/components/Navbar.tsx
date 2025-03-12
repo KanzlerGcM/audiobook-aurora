@@ -53,50 +53,54 @@ const Navbar = () => {
     >
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
+          <div className="flex items-center">
             <Logo size={scrolled ? 'md' : 'lg'} />
           </div>
 
-          {/* Desktop Navigation */}
-          <div className="flex items-center gap-2">
-            <DesktopNav 
-              navLinks={navLinks}
-            />
+          {/* Centered Navigation */}
+          <div className="flex-1 flex justify-center">
+            <div className="flex items-center gap-4">
+              <DesktopNav 
+                navLinks={navLinks}
+              />
 
-            {/* Categories Dropdown */}
-            <div className="hidden md:flex items-center">
-              <DropdownMenu>
-                <DropdownMenuTrigger className="flex items-center px-3 py-2 text-foreground hover:text-accent transition-colors">
-                  {t('categories')}
-                  <ChevronDown className="ml-1 h-4 w-4" />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent 
-                  align="center" 
-                  className="w-56 bg-background/95 backdrop-blur-sm border border-border"
-                >
-                  {categories.slice(0, 8).map((category) => (
-                    <DropdownMenuItem key={category} asChild>
+              {/* Categories Dropdown */}
+              <div className="hidden md:flex items-center">
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="flex items-center px-3 py-2 text-foreground hover:text-accent transition-colors">
+                    {t('categories')}
+                    <ChevronDown className="ml-1 h-4 w-4" />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent 
+                    align="center" 
+                    className="w-56 bg-background/95 backdrop-blur-sm border border-border"
+                  >
+                    {categories.slice(0, 8).map((category) => (
+                      <DropdownMenuItem key={category} asChild>
+                        <Link 
+                          to={`/categories/${categoryToPath(category)}`}
+                          className="cursor-pointer"
+                        >
+                          {category}
+                        </Link>
+                      </DropdownMenuItem>
+                    ))}
+                    <DropdownMenuItem asChild>
                       <Link 
-                        to={`/categories/${categoryToPath(category)}`}
-                        className="cursor-pointer"
+                        to="/categories"
+                        className="text-accent font-medium cursor-pointer"
                       >
-                        {category}
+                        {t('viewAll')}
                       </Link>
                     </DropdownMenuItem>
-                  ))}
-                  <DropdownMenuItem asChild>
-                    <Link 
-                      to="/categories"
-                      className="text-accent font-medium cursor-pointer"
-                    >
-                      {t('viewAll')}
-                    </Link>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
             </div>
+          </div>
 
-            {/* Search, and Account */}
+          {/* Search and Account */}
+          <div className="flex items-center">
             <NavActions />
           
             {/* Menu Icon */}
