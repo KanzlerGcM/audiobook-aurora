@@ -60,24 +60,24 @@ const BookButtons = ({
 
   if (!isLoggedIn) {
     return (
-      <div className="mt-6 flex flex-wrap gap-3">
+      <div className="flex flex-col gap-2 w-full">
         <Button 
           variant="default" 
-          className="gap-2 border-none shadow-none"
+          className="w-full justify-center"
           onClick={handleListenClick}
         >
           {t('listen')}
         </Button>
         <Button 
           variant="outline" 
-          className="gap-2"
+          className="w-full justify-center"
           onClick={handleLogin}
         >
           {t('addToLibrary')}
         </Button>
         <Button 
           variant="secondary" 
-          className="gap-2"
+          className="w-full justify-center gap-2"
           onClick={togglePreview}
         >
           <Headphones className="h-4 w-4" />
@@ -88,24 +88,24 @@ const BookButtons = ({
   }
 
   return (
-    <div className="mt-6 flex flex-wrap gap-3">
+    <div className="flex flex-col gap-2 w-full">
       <Button 
         variant="default" 
-        className="gap-2 border-none shadow-none"
+        className="w-full justify-center"
         onClick={handleListenClick}
       >
         {t('listen')}
       </Button>
       <Button 
         variant={isBookInLibrary ? "secondary" : "outline"} 
-        className="gap-2"
+        className="w-full justify-center"
         onClick={handleLibraryToggle}
       >
         {isBookInLibrary ? t('removeFromLibrary') : t('addToLibrary')}
       </Button>
       <Button 
         variant="secondary" 
-        className="gap-2"
+        className="w-full justify-center gap-2"
         onClick={togglePreview}
       >
         <Headphones className="h-4 w-4" />
