@@ -30,6 +30,11 @@ const RemovableAudiobookCard = ({
   removeLabel,
   children
 }: RemovableAudiobookCardProps) => {
+  const handleRemove = () => {
+    console.log("Remove clicked for book:", id);
+    onRemove(id);
+  };
+
   return (
     <div className="relative group">
       <AudiobookCard
@@ -43,7 +48,7 @@ const RemovableAudiobookCard = ({
         index={index}
       />
       <RemoveButton 
-        onClick={() => onRemove(id)} 
+        onClick={handleRemove} 
         label={removeLabel}
       />
       {children}

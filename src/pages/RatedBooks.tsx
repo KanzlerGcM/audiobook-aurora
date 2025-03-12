@@ -75,14 +75,15 @@ const RatedBooks = () => {
   const removeRating = (book: Book, isLiked: boolean) => {
     if (isLiked) {
       setLikedBooks(prevBooks => prevBooks.filter(b => b.id !== book.id));
-      toast.info(`Removed "${book.title}" from liked books`);
+      toast.success(`Removed "${book.title}" from liked books`);
     } else {
       setDislikedBooks(prevBooks => prevBooks.filter(b => b.id !== book.id));
-      toast.info(`Removed "${book.title}" from disliked books`);
+      toast.success(`Removed "${book.title}" from disliked books`);
     }
   };
 
   const handleRemoveLiked = (bookId: string) => {
+    console.log("Removing liked book with ID:", bookId);
     const book = likedBooks.find(b => b.id === bookId);
     if (book) {
       removeRating(book, true);
@@ -90,6 +91,7 @@ const RatedBooks = () => {
   };
 
   const handleRemoveDisliked = (bookId: string) => {
+    console.log("Removing disliked book with ID:", bookId);
     const book = dislikedBooks.find(b => b.id === bookId);
     if (book) {
       removeRating(book, false);

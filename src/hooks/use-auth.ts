@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
@@ -118,6 +119,7 @@ export const useAuth = () => {
   };
 
   const removeFromLibrary = (bookId: string) => {
+    console.log("Removing from library:", bookId);
     if (!isLoggedIn) {
       return false;
     }
