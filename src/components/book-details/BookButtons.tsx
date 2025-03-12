@@ -63,7 +63,7 @@ const BookButtons = ({
       <div className="mt-6 flex flex-wrap gap-3">
         <Button 
           variant="default" 
-          className="gap-2"
+          className="gap-2 border-none shadow-none"
           onClick={handleListenClick}
         >
           {t('listen')}
@@ -91,7 +91,7 @@ const BookButtons = ({
     <div className="mt-6 flex flex-wrap gap-3">
       <Button 
         variant="default" 
-        className="gap-2"
+        className="gap-2 border-none shadow-none"
         onClick={handleListenClick}
       >
         {t('listen')}

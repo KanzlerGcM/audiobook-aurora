@@ -77,6 +77,12 @@ const BookContentSection = ({ books, initialBook }: BookContentSectionProps) => 
           container.insertBefore(overlay, container.firstChild);
         }
       };
+      
+      // Handle potential CORS issues with a fallback
+      img.onerror = () => {
+        overlay.style.background = 'radial-gradient(circle at top left, rgba(60, 60, 100, 0.7) 0%, rgba(40, 40, 80, 0.8) 50%, rgba(20, 20, 40, 0.9) 100%)';
+        container.insertBefore(overlay, container.firstChild);
+      };
     }
   }, [selectedBook]);
   
