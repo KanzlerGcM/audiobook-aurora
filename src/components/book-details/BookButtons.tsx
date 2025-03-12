@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useLanguage } from "@/hooks/use-language";
 import { useAuth } from '@/hooks/use-auth';
 import { toast } from "sonner";
+import { useEffect, useState } from "react";
 
 interface BookButtonsProps {
   bookId: string;
@@ -25,9 +26,15 @@ const BookButtons = ({
 }: BookButtonsProps) => {
   const { t } = useLanguage();
   const navigate = useNavigate();
-  const { isInLibrary, addToLibrary, removeFromLibrary } = useAuth();
+  const { isInLibrary, addToLibrary, removeFromLibrary, library } = useAuth();
   
-  const isBookInLibrary = isLoggedIn && isInLibrary(bookId);
+  // Track library state locally to ensure UI updates
+  const [isBookInLibrary, setIsBookInLibrary] = useState(isLoggedIn && isInLibrary(bookId));
+  
+  // Update state when library changes or component mounts
+  useEffect(() => {
+    setIsBookInLibrary(isLoggedIn && isInLibrary(bookId));
+  }, [isLoggedIn, bookId, library, isInLibrary]);
 
   const handleListenClick = () => {
     navigate(`/audiobook/${bookId}`);
@@ -42,6 +49,10 @@ const BookButtons = ({
       toast.success(t('addToLibrarySuccess') || "Book added to library");
     }
     
+    // Update local state immediately for responsive UI
+    setIsBookInLibrary(!isBookInLibrary);
+    
+    // Trigger parent component updates if provided
     if (onLibraryUpdate) {
       onLibraryUpdate();
     }

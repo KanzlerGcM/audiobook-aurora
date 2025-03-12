@@ -6,6 +6,7 @@ import { useLanguage } from "@/hooks/use-language";
 import { useLocation } from "react-router-dom";
 import { useAuth } from "@/hooks/use-auth";
 import { toast } from "sonner";
+import { useEffect, useState } from "react";
 
 interface BookListItemProps {
   book: Book;
@@ -24,14 +25,20 @@ const BookListItem = ({
 }: BookListItemProps) => {
   const { t } = useLanguage();
   const location = useLocation();
-  const { isLoggedIn, addToLibrary, isInLibrary, removeFromLibrary } = useAuth();
+  const { isLoggedIn, addToLibrary, isInLibrary, removeFromLibrary, library } = useAuth();
+  
+  // Track library state locally to ensure UI updates
+  const [isBookInLibrary, setIsBookInLibrary] = useState(isLoggedIn && isInLibrary(book.id));
+  
+  // Update state when library changes or component mounts
+  useEffect(() => {
+    setIsBookInLibrary(isLoggedIn && isInLibrary(book.id));
+  }, [isLoggedIn, book.id, library, isInLibrary]);
   
   const handleClick = () => {
     onSelect(book);
     // No navigation, just selecting the book
   };
-  
-  const isBookInLibrary = isLoggedIn && isInLibrary(book.id);
   
   const handleLibraryToggle = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -43,6 +50,9 @@ const BookListItem = ({
       addToLibrary(book.id);
       toast.success(t('addToLibrarySuccess') || "Book added to library");
     }
+    
+    // Update local state immediately for responsive UI
+    setIsBookInLibrary(!isBookInLibrary);
     
     // Trigger re-render in parent components
     if (onLibraryUpdate) {

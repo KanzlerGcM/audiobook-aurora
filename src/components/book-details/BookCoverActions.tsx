@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/hooks/use-language";
 import { useAuth } from "@/hooks/use-auth";
 import { toast } from "sonner";
+import { useEffect, useState } from "react";
 
 interface BookCoverActionsProps {
   coverImage: string;
@@ -14,9 +15,15 @@ interface BookCoverActionsProps {
 
 const BookCoverActions = ({ coverImage, title, bookId, onLibraryUpdate }: BookCoverActionsProps) => {
   const { t } = useLanguage();
-  const { isLoggedIn, addToLibrary, removeFromLibrary, isInLibrary } = useAuth();
+  const { isLoggedIn, addToLibrary, removeFromLibrary, isInLibrary, library } = useAuth();
   
-  const isBookInLibrary = isLoggedIn && isInLibrary(bookId);
+  // Track library state locally to ensure UI updates
+  const [isBookInLibrary, setIsBookInLibrary] = useState(isLoggedIn && isInLibrary(bookId));
+  
+  // Update state when library changes or component mounts
+  useEffect(() => {
+    setIsBookInLibrary(isLoggedIn && isInLibrary(bookId));
+  }, [isLoggedIn, bookId, library, isInLibrary]);
   
   const handleLibraryToggle = () => {
     if (!isLoggedIn) {
@@ -32,6 +39,10 @@ const BookCoverActions = ({ coverImage, title, bookId, onLibraryUpdate }: BookCo
       toast.success(t('addToLibrarySuccess') || "Book added to library");
     }
     
+    // Update local state immediately for responsive UI
+    setIsBookInLibrary(!isBookInLibrary);
+    
+    // Trigger parent component updates if provided
     if (onLibraryUpdate) {
       onLibraryUpdate();
     }
