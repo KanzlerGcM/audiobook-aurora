@@ -50,6 +50,41 @@ const LoginCarousel = ({ books }: LoginCarouselProps) => {
     }
   };
 
+  // Get background colors based on book categories
+  const getCategoryColor = (category?: string) => {
+    switch (category?.toLowerCase()) {
+      case 'fiction':
+        return 'from-blue-500/30 to-indigo-500/30';
+      case 'mystery':
+      case 'mysterythriller':
+        return 'from-purple-500/30 to-pink-500/30';
+      case 'romance':
+        return 'from-pink-500/30 to-red-400/30';
+      case 'scifi':
+        return 'from-teal-500/30 to-emerald-400/30';
+      case 'fantasy':
+        return 'from-amber-500/30 to-orange-400/30';
+      case 'biography':
+        return 'from-green-500/30 to-teal-400/30';
+      case 'history':
+        return 'from-gray-500/30 to-slate-400/30';
+      case 'selfhelp':
+        return 'from-yellow-400/30 to-amber-300/30';
+      case 'business':
+        return 'from-blue-600/30 to-sky-400/30';
+      case 'cookbooks':
+        return 'from-orange-400/30 to-amber-300/30';
+      case 'horror':
+        return 'from-red-800/30 to-red-600/30';
+      case 'nonfiction':
+        return 'from-indigo-400/30 to-violet-300/30';
+      case 'technology':
+        return 'from-cyan-500/30 to-blue-400/30';
+      default:
+        return 'from-hakim-gray/30 to-hakim-medium/30';
+    }
+  };
+
   return (
     <div className="relative hidden h-full flex-col p-8 text-muted-foreground antialiased lg:flex">
       <div className="absolute inset-0 bg-hakim-dark/30 z-0 rounded-r-full" />
@@ -68,7 +103,11 @@ const LoginCarousel = ({ books }: LoginCarouselProps) => {
         {books.length > 0 && currentBook && (
           <div className="mt-6 w-full max-w-md mx-auto">
             <div className="bg-hakim-dark p-6 rounded-xl relative overflow-hidden transition-all duration-500">
-              <div className="flex gap-6 items-center">
+              {/* Dynamic color background blur circle */}
+              <div className={`absolute w-64 h-64 rounded-full bg-gradient-to-br ${getCategoryColor(currentBook.category)} blur-3xl opacity-60 -top-20 -left-20 z-0`}></div>
+              <div className={`absolute w-40 h-40 rounded-full bg-gradient-to-tr ${getCategoryColor(currentBook.category)} blur-2xl opacity-50 -bottom-10 -right-10 z-0`}></div>
+              
+              <div className="flex gap-6 items-center relative z-10">
                 <div className="flex-shrink-0 transform transition-all duration-500 hover:scale-105">
                   <div className="h-48 w-32 overflow-hidden rounded-lg shadow-lg relative group">
                     <img 
