@@ -13,24 +13,40 @@ interface LoginCarouselProps {
 
 const LoginCarousel = ({ books }: LoginCarouselProps) => {
   const [currentBookIndex, setCurrentBookIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const { t, language } = useLanguage();
   const welcomeMessage = useWelcomeMessage();
 
   // Auto switching books in carousel
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentBookIndex(prevIndex => (prevIndex + 1) % books.length);
+      changeBook((prevIndex) => (prevIndex + 1) % books.length);
     }, 5000); // Switch books every 5 seconds
     
     return () => clearInterval(interval);
   }, [books.length]);
 
+  const changeBook = (indexFunction: (prevIndex: number) => number) => {
+    // Start transition
+    setIsTransitioning(true);
+    
+    // Delay the actual change to allow animation to complete
+    setTimeout(() => {
+      setCurrentBookIndex(indexFunction);
+      
+      // End transition after a short delay to trigger fade-in
+      setTimeout(() => {
+        setIsTransitioning(false);
+      }, 50);
+    }, 300);
+  };
+
   const nextBook = () => {
-    setCurrentBookIndex((prevIndex) => (prevIndex + 1) % books.length);
+    changeBook((prevIndex) => (prevIndex + 1) % books.length);
   };
 
   const prevBook = () => {
-    setCurrentBookIndex((prevIndex) => (prevIndex - 1 + books.length) % books.length);
+    changeBook((prevIndex) => (prevIndex - 1 + books.length) % books.length);
   };
 
   // Calculate previous and next book indices
@@ -66,13 +82,13 @@ const LoginCarousel = ({ books }: LoginCarouselProps) => {
           {getLoginDescription()}
         </p>
         
-        {/* New Carousel Design */}
+        {/* Updated Carousel Design with Smooth Transitions */}
         {books.length > 0 && (
           <div className="mt-6 w-full max-w-md mx-auto">
             <div className="relative h-80 mt-8 mb-10">
               {/* Left (Previous) Book */}
               {books[prevIndex] && (
-                <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/4 z-10 transition-all duration-500 opacity-70 scale-75 hover:opacity-90 hover:scale-80">
+                <div className={`absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/4 z-10 transition-all duration-500 opacity-70 scale-75 hover:opacity-90 hover:scale-80 ${isTransitioning ? 'animate-fade-out' : 'animate-fade-in'}`}>
                   <div className="transform transition-all duration-300">
                     <img 
                       src={books[prevIndex].coverImage} 
@@ -85,14 +101,14 @@ const LoginCarousel = ({ books }: LoginCarouselProps) => {
               
               {/* Center (Current) Book */}
               {books[currentBookIndex] && (
-                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 transition-all duration-500">
-                  <div className="transform transition-all duration-300 scale-110 hover:scale-115">
+                <div className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 transition-all duration-500 ${isTransitioning ? 'opacity-0 scale-90' : 'opacity-100 scale-110'}`}>
+                  <div className="transform transition-all duration-300 hover:scale-115">
                     <img 
                       src={books[currentBookIndex].coverImage} 
                       alt={books[currentBookIndex].title} 
-                      className="h-64 w-44 rounded-lg shadow-xl object-cover"
+                      className="h-64 w-44 rounded-lg shadow-xl object-cover transition-smooth"
                     />
-                    <p className="text-center text-white font-medium mt-3">
+                    <p className={`text-center text-white font-medium mt-3 transition-all duration-500 ${isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}>
                       {books[currentBookIndex].title}
                     </p>
                   </div>
@@ -101,7 +117,7 @@ const LoginCarousel = ({ books }: LoginCarouselProps) => {
               
               {/* Right (Next) Book */}
               {books[nextIndex] && (
-                <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/4 z-10 transition-all duration-500 opacity-70 scale-75 hover:opacity-90 hover:scale-80">
+                <div className={`absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/4 z-10 transition-all duration-500 opacity-70 scale-75 hover:opacity-90 hover:scale-80 ${isTransitioning ? 'animate-fade-out' : 'animate-fade-in'}`}>
                   <div className="transform transition-all duration-300">
                     <img 
                       src={books[nextIndex].coverImage} 
@@ -118,7 +134,7 @@ const LoginCarousel = ({ books }: LoginCarouselProps) => {
                   onClick={prevBook} 
                   variant="ghost" 
                   size="icon" 
-                  className="h-8 w-8 rounded-full bg-black/20 hover:bg-black/40 text-white"
+                  className="h-8 w-8 rounded-full bg-black/20 hover:bg-black/40 text-white transition-all duration-300"
                 >
                   <ChevronLeft className="h-4 w-4" />
                 </Button>
@@ -126,22 +142,28 @@ const LoginCarousel = ({ books }: LoginCarouselProps) => {
                   onClick={nextBook} 
                   variant="ghost" 
                   size="icon" 
-                  className="h-8 w-8 rounded-full bg-black/20 hover:bg-black/40 text-white"
+                  className="h-8 w-8 rounded-full bg-black/20 hover:bg-black/40 text-white transition-all duration-300"
                 >
                   <ChevronRight className="h-4 w-4" />
                 </Button>
               </div>
             </div>
             
-            {/* Indicator Dots */}
+            {/* Indicator Dots with Animation */}
             <div className="mt-4 flex justify-center">
               {books.map((_, index) => (
                 <button
                   key={index}
-                  className={`mx-1 h-2 w-2 rounded-full transition-all duration-300 ${
-                    index === currentBookIndex ? "bg-white w-4" : "bg-white/30"
+                  className={`mx-1 h-2 rounded-full transition-all duration-300 ${
+                    index === currentBookIndex 
+                      ? "bg-white w-4" 
+                      : "bg-white/30 w-2 hover:bg-white/50"
                   }`}
-                  onClick={() => setCurrentBookIndex(index)}
+                  onClick={() => {
+                    if (index !== currentBookIndex) {
+                      changeBook(() => index);
+                    }
+                  }}
                 />
               ))}
             </div>
