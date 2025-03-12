@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from 'react';
 import BookList from "@/components/BookList";
 import BookDetails from "@/components/BookDetails";
@@ -20,29 +19,24 @@ const BookContentSection = ({ books, initialBook }: BookContentSectionProps) => 
   const navigate = useNavigate();
   const detailsContainerRef = useRef<HTMLDivElement>(null);
   
-  // Safely handle empty books array
   const [selectedBook, setSelectedBook] = useState<Book | undefined>(
     initialBook || (books && books.length > 0 ? books[0] : undefined)
   );
   
-  // Force re-render when library status changes
   const [forceUpdateCounter, setForceUpdateCounter] = useState(0);
   const forceRerender = () => setForceUpdateCounter(prev => prev + 1);
   
-  // Create background blur effect based on selected book
   useEffect(() => {
     if (selectedBook && detailsContainerRef.current) {
       const container = detailsContainerRef.current;
       container.style.position = 'relative';
       container.style.overflow = 'hidden';
       
-      // Remove any existing overlay
       const existingOverlay = container.querySelector('.book-color-overlay');
       if (existingOverlay) {
         existingOverlay.remove();
       }
       
-      // Create new overlay
       const overlay = document.createElement('div');
       overlay.className = 'book-color-overlay';
       overlay.style.position = 'absolute';
@@ -50,12 +44,11 @@ const BookContentSection = ({ books, initialBook }: BookContentSectionProps) => 
       overlay.style.left = '0';
       overlay.style.right = '0';
       overlay.style.bottom = '0';
-      overlay.style.opacity = '0.45';
-      overlay.style.filter = 'blur(120px)';
+      overlay.style.opacity = '0.55';
+      overlay.style.filter = 'blur(150px)';
       overlay.style.transform = 'translateZ(0)';
       overlay.style.zIndex = '0';
       
-      // Create and use image to extract colors
       const img = new Image();
       img.crossOrigin = 'Anonymous';
       img.src = selectedBook.coverImage;
@@ -67,38 +60,31 @@ const BookContentSection = ({ books, initialBook }: BookContentSectionProps) => 
           canvas.height = img.height;
           context.drawImage(img, 0, 0);
           
-          // Extract colors from different parts of the image
           const topColor = getColorFromCanvas(context, 0, 0);
           const middleColor = getColorFromCanvas(context, Math.floor(img.width/2), Math.floor(img.height/2));
           const bottomColor = getColorFromCanvas(context, Math.floor(img.width/2), img.height - 1);
           
-          // Create radial gradient with improved colors
-          overlay.style.background = `radial-gradient(circle at top left, ${topColor} 0%, ${middleColor} 50%, ${bottomColor} 100%)`;
+          overlay.style.background = `radial-gradient(circle at top left, ${topColor}aa 10%, ${middleColor}99 40%, ${bottomColor}77 90%)`;
           container.insertBefore(overlay, container.firstChild);
         }
       };
       
-      // Handle potential CORS issues with a fallback
       img.onerror = () => {
-        overlay.style.background = 'radial-gradient(circle at top left, rgba(60, 60, 100, 0.7) 0%, rgba(40, 40, 80, 0.8) 50%, rgba(20, 20, 40, 0.9) 100%)';
+        overlay.style.background = 'radial-gradient(circle at top left, rgba(80, 80, 120, 0.6) 0%, rgba(60, 60, 90, 0.7) 50%, rgba(40, 40, 60, 0.8) 100%)';
         container.insertBefore(overlay, container.firstChild);
       };
     }
   }, [selectedBook]);
   
-  // Helper function to extract colors from canvas
   const getColorFromCanvas = (context: CanvasRenderingContext2D, x: number, y: number): string => {
     const pixel = context.getImageData(x, y, 1, 1).data;
-    return `rgba(${pixel[0]}, ${pixel[1]}, ${pixel[2]}, 1)`;
+    return `rgba(${pixel[0]}, ${pixel[1]}, ${pixel[2]}, 0.85)`;
   };
   
-  // Also listen to the library state from useAuth to force updates
   useEffect(() => {
-    // This will trigger re-renders when the library changes
     forceRerender();
   }, [library]);
-
-  // If no books are available, show a placeholder
+  
   if (!books || books.length === 0) {
     return (
       <div className="flex justify-center items-center p-10">
@@ -148,7 +134,7 @@ const BookContentSection = ({ books, initialBook }: BookContentSectionProps) => 
           key={`booklist-${forceUpdateCounter}`}
         />
       </div>
-      <div className="md:col-span-2 rounded-xl overflow-hidden backdrop-blur-sm border border-white/10 shadow-xl relative w-full h-full" ref={detailsContainerRef}>
+      <div className="md:col-span-2 rounded-xl overflow-hidden backdrop-blur-md border border-white/5 shadow-2xl relative w-full h-full transition-all duration-300" ref={detailsContainerRef}>
         <div className="relative z-10">
           <BookDetails 
             book={selectedBook} 

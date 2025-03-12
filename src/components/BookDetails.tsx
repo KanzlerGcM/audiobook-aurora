@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
@@ -55,19 +54,19 @@ const BookDetails = ({ book, onLibraryUpdate }: BookDetailsProps) => {
   };
 
   return (
-    <div className="h-full bg-black/20 backdrop-blur-sm p-6 rounded-xl">
+    <div className="h-full bg-gradient-to-br from-black/40 to-hakim-dark/30 backdrop-blur-sm p-6 rounded-xl">
       <div className="flex flex-col md:flex-row gap-6">
         <div className="flex-shrink-0">
           <img 
             src={book.coverImage} 
             alt={book.title} 
-            className="w-40 h-60 object-cover rounded-xl shadow-lg border border-white/10" 
+            className="w-40 h-60 object-cover rounded-xl shadow-xl border border-white/10 hover:shadow-2xl transition-all duration-300" 
           />
         </div>
         
         <div className="flex-1">
-          <h2 className="text-2xl font-bold mb-2 text-white">{book.title}</h2>
-          <p className="text-hakim-light mb-3">{t('by')} {book.author}</p>
+          <h2 className="text-2xl font-bold mb-2 text-white text-gradient">{book.title}</h2>
+          <p className="text-hakim-light mb-3 text-opacity-90">{t('by')} {book.author}</p>
           
           <BookTags 
             rating={book.rating}
@@ -76,7 +75,7 @@ const BookDetails = ({ book, onLibraryUpdate }: BookDetailsProps) => {
             releaseDate={book.releaseDate}
           />
           
-          <div className="my-4 bg-white/10 p-4 rounded-lg backdrop-blur-md">
+          <div className="my-4 glass-dark p-5 rounded-lg backdrop-blur-md shadow-inner animate-fade-in">
             <BookDescription 
               description={book.description}
               additionalText={book.additionalText}
