@@ -87,13 +87,8 @@ const LoginCarousel = ({ books }: LoginCarouselProps) => {
 
   return (
     <div className="relative hidden h-full flex-col p-8 text-muted-foreground antialiased lg:flex">
-      {/* Uniform background without division */}
+      {/* Solid background color */}
       <div className="absolute inset-0 bg-hakim-dark z-0" />
-      
-      {/* Dynamic colored blurred circles */}
-      <div className={`absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-gradient-to-br ${getCategoryColor(currentBook?.category)} blur-3xl -z-10 transition-colors duration-700`}></div>
-      <div className={`absolute bottom-1/4 right-1/3 w-80 h-80 rounded-full bg-gradient-to-tr ${getCategoryColor(currentBook?.category)} blur-3xl -z-10 transition-colors duration-700`}></div>
-      <div className={`absolute top-2/3 left-1/3 w-72 h-72 rounded-full bg-gradient-to-bl ${getCategoryColor(currentBook?.category)} blur-3xl -z-10 transition-colors duration-700`}></div>
       
       <Link to="/" className="mb-6 font-semibold relative z-10">
         Hakim
@@ -110,10 +105,6 @@ const LoginCarousel = ({ books }: LoginCarouselProps) => {
         {books.length > 0 && currentBook && (
           <div className="mt-6 w-full max-w-md mx-auto">
             <div className="bg-hakim-dark p-6 rounded-xl relative overflow-hidden transition-all duration-500">
-              {/* Dynamic color background blur circle */}
-              <div className={`absolute w-64 h-64 rounded-full bg-gradient-to-br ${getCategoryColor(currentBook.category)} blur-3xl opacity-60 -top-20 -left-20 z-0`}></div>
-              <div className={`absolute w-40 h-40 rounded-full bg-gradient-to-tr ${getCategoryColor(currentBook.category)} blur-2xl opacity-50 -bottom-10 -right-10 z-0`}></div>
-              
               <div className="flex gap-6 items-center relative z-10">
                 <div className="flex-shrink-0 transform transition-all duration-500 hover:scale-105">
                   <div className="h-48 w-32 overflow-hidden rounded-lg shadow-lg relative group">
