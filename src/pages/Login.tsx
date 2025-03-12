@@ -19,7 +19,7 @@ const Login = () => {
   return (
     <>
       <Navbar />
-      <div className="container relative h-[calc(100vh-5rem)] flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0 overflow-hidden">
+      <div className="container relative h-[calc(100vh-5rem)] flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
         <LoginCarousel books={books} />
         <LoginForm />
       </div>
