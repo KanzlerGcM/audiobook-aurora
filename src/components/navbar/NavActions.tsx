@@ -1,71 +1,107 @@
-
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Search, LogIn, User, BookOpen } from 'lucide-react';
+import { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { 
+  User, 
+  LogOut, 
+  BookMarked, 
+  Search,
+  ThumbsUp
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useLanguage } from '@/hooks/use-language';
-import TranslateButton from '../TranslateButton';
-import { useAuth } from '@/hooks/use-auth';
 import { toast } from 'sonner';
+import { useLanguage } from '@/hooks/use-language';
+import { useMobile } from '@/hooks/use-mobile';
+import { useAuth } from '@/hooks/use-auth';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 const NavActions = () => {
   const { t } = useLanguage();
-  const { isLoggedIn, userData, logout } = useAuth();
-  const location = useLocation();
+  const { isMobile } = useMobile();
+  const { isLoggedIn, logout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const [showCategories, setShowCategories] = useState(false);
   
-  const isLibraryActive = location.pathname === '/library';
-  
-  const handleLibraryClick = (e: React.MouseEvent) => {
-    if (!isLoggedIn) {
-      e.preventDefault();
-      toast.info(t('loginToAccessLibrary') || 'Please log in to access your library');
-      navigate('/login');
-    }
+  const renderToast = () => {
+    toast("Soon...", {
+      description: "This feature is under development.",
+    });
   };
-  
+
+  const loginClickHandler = () => {
+    navigate('/login');
+  };
+
+  const signupClickHandler = () => {
+    navigate('/signup');
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
+
+  if (isMobile) {
+    return null;
+  }
+
+  // User is not logged in
+  if (!isLoggedIn) {
+    return (
+      <div className="flex items-center gap-3">
+        <Button variant="default" onClick={loginClickHandler}>
+          {t('login')}
+        </Button>
+        <Button variant="outline" onClick={signupClickHandler}>
+          {t('signUp')}
+        </Button>
+      </div>
+    );
+  }
+
+  // User is logged in
   return (
-    <div className="flex items-center space-x-2">
-      <Button variant="ghost" size="icon" className="text-hakim-gray hover:text-hakim-light">
-        <Search className="h-5 w-5" />
-      </Button>
-      
-      {isLoggedIn && (
-        <Link to="/library">
-          <Button 
-            variant={isLibraryActive ? "default" : "ghost"} 
-            size="icon" 
-            className={isLibraryActive ? "text-white" : "text-hakim-gray hover:text-hakim-light"} 
-            aria-label="Library"
-          >
-            <BookOpen className="h-5 w-5" />
-          </Button>
-        </Link>
-      )}
-      
-      <TranslateButton />
-      
-      {isLoggedIn ? (
-        <div className="flex items-center gap-2">
-          <span className="text-sm hidden md:inline-block">{userData?.name || 'User'}</span>
-          <Button 
-            variant="outline" 
-            size="sm" 
-            onClick={logout}
-            className="gap-2"
-          >
-            <User className="h-4 w-4" />
-            {t('signOut')}
-          </Button>
-        </div>
-      ) : (
-        <Link to="/login">
-          <Button variant="default" size="sm" className="gap-2">
-            <LogIn className="h-4 w-4" />
-            {t('signIn')}
-          </Button>
-        </Link>
-      )}
-    </div>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" className="relative h-10 w-10 rounded-full">
+          <Avatar>
+            <AvatarImage src="" />
+            <AvatarFallback className="bg-accent/10 text-accent">
+              <User className="h-4 w-4" />
+            </AvatarFallback>
+          </Avatar>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-56">
+        <DropdownMenuLabel>{t('myAccount')}</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={() => navigate('/library')}>
+          <BookMarked className="mr-2 h-4 w-4" />
+          <span>{t('myLibrary')}</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => navigate('/rated-books')}>
+          <ThumbsUp className="mr-2 h-4 w-4" />
+          <span>{t('ratedBooks')}</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => navigate('/explore')}>
+          <Search className="mr-2 h-4 w-4" />
+          <span>{t('exploreBooks')}</span>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={handleLogout}>
+          <LogOut className="mr-2 h-4 w-4" />
+          <span>{t('logout')}</span>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 
