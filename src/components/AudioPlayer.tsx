@@ -79,38 +79,42 @@ const AudioPlayer = ({
 
   if (miniPlayer) {
     return (
-      <div className="fixed bottom-0 left-0 right-0 glass-dark shadow-lg border-t border-white/10 animate-slide-up py-3 px-4 z-40">
+      <div className="glass-dark shadow-lg border-t border-white/10 backdrop-blur-md py-4 px-6 animate-slide-up transition-all duration-300">
         <div className="container mx-auto flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <img src={coverImage} alt={title} className="w-12 h-12 rounded-md object-cover" />
+          <div className="flex items-center space-x-4">
+            <img 
+              src={coverImage} 
+              alt={title} 
+              className="w-12 h-12 rounded-md object-cover shadow-md border border-white/10"
+            />
             <div>
               <h3 className="font-medium text-sm line-clamp-1">{title}</h3>
               <p className="text-foreground/70 text-xs">{author}</p>
             </div>
           </div>
           
-          <div className="flex items-center space-x-3">
-            <button className="p-2">
+          <div className="flex items-center space-x-4">
+            <button className="p-2 text-foreground/70 hover:text-accent transition-colors">
               <SkipBack className="w-4 h-4" />
             </button>
             <button 
-              className="w-9 h-9 rounded-full bg-accent flex items-center justify-center hover:bg-accent/90"
+              className="w-10 h-10 rounded-full bg-accent flex items-center justify-center hover:bg-accent/90 shadow-md transition-all duration-200"
               onClick={togglePlay}
               title={isPlaying ? t('pause') : t('play')}
             >
               {isPlaying 
-                ? <Pause className="w-4 h-4 text-white" /> 
-                : <Play className="w-4 h-4 text-white ml-0.5" />
+                ? <Pause className="w-5 h-5 text-white" /> 
+                : <Play className="w-5 h-5 text-white ml-0.5" />
               }
             </button>
-            <button className="p-2">
+            <button className="p-2 text-foreground/70 hover:text-accent transition-colors">
               <SkipForward className="w-4 h-4" />
             </button>
           </div>
           
           <div className="hidden md:block w-1/3">
             <div className="flex items-center">
-              <span className="text-xs mr-2">{currentTime}</span>
+              <span className="text-xs mr-2 text-foreground/70">{currentTime}</span>
               <Slider 
                 value={[progress]} 
                 max={100}
@@ -118,7 +122,7 @@ const AudioPlayer = ({
                 className="w-full"
                 onValueChange={(value) => setProgress(value[0])}
               />
-              <span className="text-xs ml-2">{duration}</span>
+              <span className="text-xs ml-2 text-foreground/70">{duration}</span>
             </div>
           </div>
         </div>

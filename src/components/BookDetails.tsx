@@ -1,5 +1,4 @@
-
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from "@/hooks/use-language";
@@ -24,16 +23,33 @@ const BookDetails = ({ book, onLibraryUpdate }: BookDetailsProps) => {
   const navigate = useNavigate();
   
   const togglePreview = () => {
-    if (!isLoggedIn) {
-      toast.error("Please login to play previews");
-      return;
-    }
-    
     setIsPreviewPlaying(!isPreviewPlaying);
+    
+    // Store the state in localStorage to persist across page navigation
     if (!isPreviewPlaying) {
+      localStorage.setItem('previewPlaying', JSON.stringify({
+        isPlaying: true,
+        bookId: book.id,
+        title: book.title,
+        author: book.author,
+        coverImage: book.coverImage
+      }));
       toast.info(`Playing preview for "${book.title}"`);
+    } else {
+      localStorage.removeItem('previewPlaying');
     }
   };
+
+  // Check for active preview on component mount
+  useEffect(() => {
+    const storedPreview = localStorage.getItem('previewPlaying');
+    if (storedPreview) {
+      const previewData = JSON.parse(storedPreview);
+      if (previewData.bookId === book.id) {
+        setIsPreviewPlaying(true);
+      }
+    }
+  }, [book.id]);
 
   const handleLogin = () => {
     navigate('/login');

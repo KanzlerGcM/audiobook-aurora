@@ -14,18 +14,20 @@ const BookPreview = ({ isPreviewPlaying, title, author, coverImage }: BookPrevie
     <AnimatePresence>
       {isPreviewPlaying && (
         <motion.div 
-          initial={{ opacity: 0, y: 100 }}
+          initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 100 }}
-          transition={{ duration: 0.3 }}
-          className="fixed bottom-0 left-0 right-0 z-50"
+          exit={{ opacity: 0, y: 50 }}
+          transition={{ duration: 0.5, ease: "easeInOut" }}
+          className="fixed bottom-0 left-0 right-0 z-50 shadow-lg"
         >
-          <AudioPlayer 
-            title={title}
-            author={author}
-            coverImage={coverImage}
-            miniPlayer={true}
-          />
+          <div className="glass-effect">
+            <AudioPlayer 
+              title={title}
+              author={author}
+              coverImage={coverImage}
+              miniPlayer={true}
+            />
+          </div>
         </motion.div>
       )}
     </AnimatePresence>
