@@ -19,6 +19,7 @@ import AudioBookPlayer from '@/components/book-detail-page/AudioBookPlayer';
 import BookDetailTabs from '@/components/book-detail-page/BookDetailTabs';
 import { Button } from '@/components/ui/button';
 import BookPreview from '@/components/book-details/BookPreview';
+import MiniPlayer from '@/components/book-detail-page/MiniPlayer';
 
 interface ChapterType {
   id: string;
@@ -183,10 +184,10 @@ const AudiobookDetails = () => {
       <Navbar />
       
       {isPreviewPlaying && book && (
-        <BookPreview 
-          isPreviewPlaying={isPreviewPlaying}
-          title={book.title}
-          author={book.author}
+        <MiniPlayer 
+          show={isPreviewPlaying}
+          chapterTitle={activeChapter ? activeChapter.title : book.title}
+          bookAuthor={book.author}
           coverImage={book.coverImage}
         />
       )}
@@ -277,6 +278,7 @@ const AudiobookDetails = () => {
               bookTitle={book.title}
               bookAuthor={book.author}
               coverImage={book.coverImage}
+              bookId={book.id}
             />
             
             <div className="mt-8">

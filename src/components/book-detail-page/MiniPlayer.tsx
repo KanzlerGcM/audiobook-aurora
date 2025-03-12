@@ -12,12 +12,16 @@ const MiniPlayer = ({ show, chapterTitle, bookAuthor, coverImage }: MiniPlayerPr
   if (!show) return null;
   
   return (
-    <AudioPlayer 
-      title={chapterTitle}
-      author={bookAuthor}
-      coverImage={coverImage}
-      miniPlayer
-    />
+    <div className="fixed bottom-0 left-0 right-0 z-50 shadow-2xl">
+      <div className="glass-effect border-t border-white/10">
+        <AudioPlayer 
+          title={chapterTitle}
+          author={bookAuthor}
+          coverImage={coverImage}
+          miniPlayer={true}
+        />
+      </div>
+    </div>
   );
 };
 

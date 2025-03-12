@@ -90,9 +90,13 @@ export const useAuth = () => {
   };
 
   const logout = () => {
-    // Remove auth data but preserve the preview playing state
+    // Remove auth data
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('userData');
+    
+    // Clear the audio preview when logging out
+    localStorage.removeItem('previewPlaying');
+    
     setIsLoggedIn(false);
     setUserData(null);
     setLibrary([]);
